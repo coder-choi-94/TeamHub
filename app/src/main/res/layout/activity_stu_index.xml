@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".StuIndexActivity">
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="회원님 안녕하세요"/>
+        android:text="학생 인덱스 페이지"/>
 
 </LinearLayout>
