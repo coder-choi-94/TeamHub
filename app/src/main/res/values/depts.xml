@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="depts">
+        <item>신학과</item>
+        <item>기독교교육학과</item>
+        <item>국어국문학과</item>
+        <item>영어영문학과</item>
+        <item>한국사학과</item>
+        <item>문예창작학과</item>
+        <item>독어독문화학과</item>
+        <item>철학과</item>
+        <item>종교문화학과</item>
+        <item>디지털문화콘텐츠학과</item>
+        <item>영상문화학과</item>
+        <item>중국어문화학과</item>
+        <item>한중문화콘텐츠학과</item>
+        <item>IT콘텐츠학과</item>
+        <item>국제관계학부</item>
+        <item>경제학과</item>
+        <item>사회학과</item>
+        <item>미디어영상광고홍보학부</item>
+        <item>사회복지학과</item>
+        <item>재활학과</item>
+        <item>특수체육학과</item>
+        <item>심리아동학부</item>
+        <item>글로벌비즈니스학부</item>
+        <item>중국학과</item>
+        <item>일본학과</item>
+        <item>경영학과</item>
+        <item>IT경영학과</item>
+        <item>국제경제학과</item>
+        <item>수리금융학과</item>
+        <item>응용통계학과</item>
+        <item>컴퓨터공학부</item>
+        <item>정보통신학부</item>
+    </string-array>
+</resources>
