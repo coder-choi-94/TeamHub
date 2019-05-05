@@ -89,11 +89,12 @@ public class LoginActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 Intent intent;
-                                rg = (RadioGroup)findViewById(R.id.typeGroup);
-                                checkedType = (RadioButton)findViewById(rg.getCheckedRadioButtonId());
-                                if(checkedType.getText().toString().equals("학생"))
+                                rg = (RadioGroup) findViewById(R.id.typeGroup);
+                                checkedType = (RadioButton) findViewById(rg.getCheckedRadioButtonId());
+                                if (checkedType.getText().toString().equals("학생")){
                                     intent = new Intent(LoginActivity.this, StuIndexActivity.class);
-                                else {
+                                    intent.putExtra("id", textId.getText().toString());
+                            }else {
                                     intent = new Intent(LoginActivity.this, ProIndexActivity.class);
                                     String[] arr = result.split(":");
                                     String code = arr[1];   //교수 코드
@@ -103,7 +104,6 @@ public class LoginActivity extends AppCompatActivity {
                                     intent.putExtra("professor_name", professorName);
                                 }
                                 startActivity(intent);
-                                finish();
                             }
                         })
                         .create();

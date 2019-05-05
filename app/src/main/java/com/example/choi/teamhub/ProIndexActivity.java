@@ -133,8 +133,19 @@ public class ProIndexActivity extends AppCompatActivity  implements View.OnClick
                         }
 
                         try {
-                            String result = new makeProjectTask().execute(code, name, pwd, professor_name).get();
-                            if(result.equals("success")) {
+                            String result = new validateProject().execute(code, name).get();
+                            if(result.contains("exists")) {
+                                d = builder
+                                        .setMessage("프로젝트 이름이 이미 존재합니다.")
+                                        .setPositiveButton("학인", null)
+                                        .create();
+                                d.show();
+                                return;
+                            }
+
+
+                            result = new makeProjectTask().execute(code, name, pwd, professor_name).get();
+                            if(result.contains("success")) {
                                 d = builder
                                         .setMessage(name + " 프로젝트를 만들었습니다.")
                                         .setPositiveButton("학인", null)
@@ -202,6 +213,47 @@ public class ProIndexActivity extends AppCompatActivity  implements View.OnClick
             return receiveMsg;
         }
     }
+
+    class validateProject extends AsyncTask<String, Void, String> {
+        String sendMsg, receiveMsg;
+
+        @Override
+        protected String doInBackground(String... strings) {
+            try {
+                String str;
+                String urlValue = "";
+
+                urlValue = "http://teamhub.cafe24.com/professor_validate_project.jsp";
+
+                URL url = new URL(urlValue);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("POST");
+                OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
+                sendMsg = "professorcode=" + strings[0] + "&name=" + strings[1];
+                osw.write(sendMsg);
+                osw.flush();
+                if (conn.getResponseCode() == conn.HTTP_OK) {
+                    InputStreamReader tmp = new InputStreamReader(conn.getInputStream(), "UTF-8");
+                    BufferedReader reader = new BufferedReader(tmp);
+                    StringBuffer buffer = new StringBuffer();
+                    while ((str = reader.readLine()) != null) {
+                        buffer.append(str);
+                    }
+                    receiveMsg = buffer.toString();
+
+                } else {
+                    Log.i("통신 결과", conn.getResponseCode() + "에러");
+                }
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return receiveMsg;
+        }
+    }
+
     class makeProjectTask extends AsyncTask<String, Void, String> {
         String sendMsg, receiveMsg;
 
