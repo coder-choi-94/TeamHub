@@ -27,7 +27,8 @@ public class LoginActivity extends AppCompatActivity {
     AlertDialog dialog;
 
     RadioGroup rg;
-
+    int id;
+    RadioButton checkedType;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,8 +36,6 @@ public class LoginActivity extends AppCompatActivity {
 
         textId = (EditText)findViewById(R.id.editText_id);
         textPwd = (EditText)findViewById(R.id.editText_pw);
-
-        rg = (RadioGroup)findViewById(R.id.typeGroup);
     }
 
     public void Click_join_student(View view) {
@@ -64,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         try {
-            String result  = new LoginTask().execute(id,pwd).get();
+            final String result  = new LoginTask().execute(id,pwd).get();
             if(result.equals("id")) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
                 dialog = builder
@@ -81,14 +80,28 @@ public class LoginActivity extends AppCompatActivity {
                         .create();
                 dialog.show();
                 return;
-            } else if(result.equals("success")) {
+            } else if(result.contains("success")) {
+
                 AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
                 dialog = builder
                         .setMessage("접속 성공!")
                         .setPositiveButton("확인", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                Intent intent = new Intent(LoginActivity.this, StuIndexActivity.class);
+                                Intent intent;
+                                rg = (RadioGroup)findViewById(R.id.typeGroup);
+                                checkedType = (RadioButton)findViewById(rg.getCheckedRadioButtonId());
+                                if(checkedType.getText().toString().equals("학생"))
+                                    intent = new Intent(LoginActivity.this, StuIndexActivity.class);
+                                else {
+                                    intent = new Intent(LoginActivity.this, ProIndexActivity.class);
+                                    String[] arr = result.split(":");
+                                    String code = arr[1];   //교수 코드
+                                    String professorName = arr[2];
+                                    Log.v("code", code);
+                                    intent.putExtra("code", code);
+                                    intent.putExtra("professor_name", professorName);
+                                }
                                 startActivity(intent);
                                 finish();
                             }
@@ -109,14 +122,16 @@ public class LoginActivity extends AppCompatActivity {
                 String str;
                 String urlValue = "";
 
-                int id = rg.getCheckedRadioButtonId();
-                RadioButton checkedType = (RadioButton)findViewById(id);
+                rg = (RadioGroup)findViewById(R.id.typeGroup);
+                id = rg.getCheckedRadioButtonId();
+                checkedType = (RadioButton)findViewById(id);
 
                 if(checkedType.getText().toString().equals("학생"))
                     urlValue = "http://teamhub.cafe24.com/student_login.jsp";
                 else
                     urlValue = "http://teamhub.cafe24.com/professor_login.jsp";
 
+                Log.v("요청 url", urlValue);
 
                 URL url = new URL(urlValue);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();

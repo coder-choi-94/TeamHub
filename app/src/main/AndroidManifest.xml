@@ -19,6 +19,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".StuIndexActivity" />
+        <activity android:name=".ProIndexActivity" />
         <activity android:name=".StudentRegisterActivity"></activity>
         <activity android:name=".ProfessorRegisterActivity"></activity>
     </application>
