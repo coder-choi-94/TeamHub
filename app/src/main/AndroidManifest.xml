@@ -24,6 +24,7 @@
         <activity android:name=".ProfessorRegisterActivity"></activity>
         <activity android:name=".StuProjectActivity"></activity>
         <activity android:name=".ProfessorTeamProjectJoin"></activity>
+        <activity android:name=".StuMainActivity"></activity>
     </application>
 
 </manifest>
