@@ -134,7 +134,7 @@ public class StuIndexActivity extends AppCompatActivity {
                                                         getProjects();  //참여중인 프로젝트 리스트뷰를 동기화 한번 해주고 액티비티 이동하기
                                                         Intent intent = new Intent(StuIndexActivity.this, StuProjectActivity.class);
                                                         intent.putExtra("아이디", ID);
-                                                        intent.putExtra("교수 코드", code);
+                                                        intent.putExtra("교수 코드", Integer.parseInt(code));
                                                         intent.putExtra("프로젝트 이름", name);
                                                         intent.putExtra("비밀번호", pwd);
                                                         startActivity(intent);
