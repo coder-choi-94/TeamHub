@@ -82,6 +82,7 @@
                 android:layout_height="wrap_content"
                 android:padding="10dp"
                 android:layout_marginTop="10dp"
+                android:background="@color/colorTeamHub"
                 android:id="@+id/textDept">
             </Spinner>
             <Button
@@ -90,7 +91,7 @@
                 android:textSize="20dp"
                 android:padding="10dp"
                 android:text="중복 확인"
-                android:textColor="#ffffffff"
+                android:textColor="@color/colorTeamHub"
                 android:background="@color/colorTeamHubDark"
                 android:textColorHint="@color/colorFont"
                 android:id="@+id/btnValidate"

@@ -54,6 +54,18 @@ public class ProfessorRegisterActivity extends AppCompatActivity {
         textDept.setAdapter(adapter);
         btnValidate.setOnClickListener(btnListener);
         btnRegister.setOnClickListener(btnListener);
+        textDept.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                ((TextView)parent.getChildAt(0)).setTextColor(Color.rgb(25, 169, 188));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
     View.OnClickListener btnListener = new View.OnClickListener() {
