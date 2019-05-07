@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ProfessorTeamProjectJoin"
+    android:background="@color/colorTeamHub">
+
+    <LinearLayout
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/logo">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/teamhub_logo_transparent"
+            android:layout_gravity="center" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/logo"
+        android:id="@+id/form">
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:rowCount="5"
+            android:columnCount="3"
+            android:padding="30dp"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/textName"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:hint="팀프로젝트 이름"
+                android:padding="10dp"
+                android:textColor="#25A98C"
+                android:textSize="20dp" />
+            <EditText
+                android:inputType="textPassword"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:hint="비밀번호"
+                android:padding="10dp"
+                android:textSize="20dp"
+                android:layout_marginTop="10dp"
+                android:textColor="#25A98C"
+                android:id="@+id/textPassword"/>
+
+            <EditText
+                android:id="@+id/textCode"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:hint="코드"
+                android:padding="10dp"
+                android:textColor="#25A98C"
+                android:textSize="20dp" />
+        </GridLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/form"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="51dp"
+        android:layout_alignParentLeft="true">
+
+        <Button
+            android:id="@+id/btnJoin"
+            android:layout_width="150dp"
+            android:layout_height="60dp"
+            android:layout_centerHorizontal="true"
+            android:background="@color/colorPrimary"
+            android:padding="10dp"
+            android:text="Join"
+            android:textColor="#ffffffff" />
+    </RelativeLayout>
+</RelativeLayout>
+
