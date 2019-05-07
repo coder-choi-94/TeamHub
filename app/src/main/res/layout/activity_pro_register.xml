@@ -41,6 +41,7 @@
                 android:textSize="20dp"
                 android:layout_marginTop="10dp"
                 android:textColor="@color/colorFont"
+                android:textColorHint="@color/colorFont"
                 android:id="@+id/textId"/>
             <EditText
                 android:inputType="textPassword"
@@ -51,6 +52,7 @@
                 android:textSize="20dp"
                 android:layout_marginTop="10dp"
                 android:textColor="@color/colorFont"
+                android:textColorHint="@color/colorFont"
                 android:id="@+id/textPassword"/>
 
             <EditText
@@ -61,15 +63,17 @@
                 android:textSize="20dp"
                 android:layout_marginTop="10dp"
                 android:textColor="@color/colorFont"
+                android:textColorHint="@color/colorFont"
                 android:id="@+id/textName"/>
             <EditText
                 android:layout_width="230dp"
                 android:layout_height="wrap_content"
-                android:hint="010-xxxx-xxxx"
+                android:hint="전화번호"
                 android:padding="10dp"
                 android:textSize="20dp"
                 android:layout_marginTop="10dp"
                 android:textColor="@color/colorFont"
+                android:textColorHint="@color/colorFont"
                 android:lines="1"
                 android:singleLine="true"
                 android:id="@+id/textPhone"/>
@@ -88,6 +92,7 @@
                 android:text="중복 확인"
                 android:textColor="#ffffffff"
                 android:background="@color/colorTeamHubDark"
+                android:textColorHint="@color/colorFont"
                 android:id="@+id/btnValidate"
                 android:layout_marginLeft="20dp"/>
 

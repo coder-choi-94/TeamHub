@@ -86,7 +86,7 @@
             <EditText
                 android:layout_width="230dp"
                 android:layout_height="wrap_content"
-                android:hint="010-xxxx-xxxx"
+                android:hint="전화번호"
                 android:padding="10dp"
                 android:textSize="20dp"
                 android:layout_marginTop="10dp"
