@@ -11,14 +11,14 @@
         android:gravity="center_vertical"
         android:paddingLeft="20dp"
         android:textSize="30dp"
-        android:textColor="#2b8a3e"
+        android:textColor="@color/colorFont"
         android:id="@+id/projectName"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:gravity="right"
         android:paddingRight="20dp"
-        android:textColor="#2b8a3e"
+        android:textColor="@color/colorFont"
         android:id="@+id/professorName"/>
 
 </LinearLayout>

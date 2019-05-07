@@ -40,7 +40,8 @@
                 android:layout_marginTop="10dp"
                 android:hint="팀명"
                 android:padding="10dp"
-                android:textColor="#25A98C"
+                android:textColor="@color/colorFont"
+                android:textColorHint="@color/colorFont"
                 android:textSize="20dp" />
             <EditText
                 android:inputType="textPersonName"
@@ -49,8 +50,9 @@
                 android:hint="팀장"
                 android:padding="10dp"
                 android:textSize="20dp"
+                android:textColor="@color/colorFont"
+                android:textColorHint="@color/colorFont"
                 android:layout_marginTop="10dp"
-                android:textColor="#25A98C"
                 android:id="@+id/textPassword"/>
 
             <EditText
@@ -60,7 +62,8 @@
                 android:layout_marginTop="10dp"
                 android:hint="코드"
                 android:padding="10dp"
-                android:textColor="#25A98C"
+                android:textColor="@color/colorFont"
+                android:textColorHint="@color/colorFont"
                 android:textSize="20dp" />
         </GridLayout>
     </RelativeLayout>
@@ -78,7 +81,7 @@
             android:layout_width="150dp"
             android:layout_height="60dp"
             android:layout_centerHorizontal="true"
-            android:background="@color/colorPrimary"
+            android:background="@color/colorTeamHubDark"
             android:padding="10dp"
             android:text="추가"
             android:textColor="#ffffffff" />

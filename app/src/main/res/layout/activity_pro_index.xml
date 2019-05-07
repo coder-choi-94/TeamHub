@@ -14,12 +14,12 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#d3f9d8">
+        android:background="@color/colorTeamHub">
         <ListView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:choiceMode="singleChoice"
-            android:divider="@color/colorTeamHub"
+            android:divider="@color/colorTeamHubDark"
             android:dividerHeight="1.5dp"
             android:id="@+id/projectListView"
             android:footerDividersEnabled="true"

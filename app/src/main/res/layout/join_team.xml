@@ -10,6 +10,7 @@
         android:scaleType="fitCenter"
         android:background="@color/colorTeamHub"
         android:contentDescription="@string/app_name" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -20,33 +21,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textColor="@color/colorFont"
-            android:text="팀이름" />
-
-        <EditText
-            android:id="@+id/teamName"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="4dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginRight="4dp"
-            android:layout_marginBottom="4dp"
-            android:layout_weight="2"
-            android:textColor="@color/colorFont"
-            android:textColorHint="@color/colorFont"
-            android:inputType="textEmailAddress" />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:layout_margin="10dp">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textColor="@color/colorFont"
             android:text="비밀번호" />
 
         <EditText
@@ -58,8 +32,6 @@
             android:layout_marginRight="4dp"
             android:layout_marginBottom="4dp"
             android:layout_weight="2"
-            android:textColor="@color/colorFont"
-            android:textColorHint="@color/colorFont"
             android:inputType="textEmailAddress" />
     </LinearLayout>
 </LinearLayout>

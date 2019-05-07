@@ -52,9 +52,6 @@ public class StuProjectActivity extends AppCompatActivity implements View.OnClic
     private TeamListAdapter adapter;
     private List<TeamDto> teamList;
 
-    public StuProjectActivity() {
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,9 +85,11 @@ public class StuProjectActivity extends AppCompatActivity implements View.OnClic
 
         // 자료가 없을떄
         getTeams();
+        // 입장 dialog띄우기
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+     //           joinDialog(position);
                 Intent intent = new Intent(StuProjectActivity.this, StuProjectActivity.class);// 다음클래스 만들면 변경하기
                 intent.putExtra("아이디", ID);
                 intent.putExtra("교수 코드", PCODE);
@@ -103,8 +102,55 @@ public class StuProjectActivity extends AppCompatActivity implements View.OnClic
             }
         });
         // 자료가 있을때
-        //>>>
+        //바로 엑티비티 전환하기
     }
+/*
+    class getCheckTask extends AsyncTask<String, Void, String>{
+        String sendMsg, receiveMsg;
+        @Override
+        protected String doInBackground(String... strings) {
+            try {
+                String str;
+                String urlValue = "";
+                urlValue = "http://teamhub.cafe24.com/student_team_check.jsp";
+
+                URL url = new URL(urlValue);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("POST");
+                OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
+                sendMsg = "project=" + strings[0] + "&id=" + strings[1];
+                osw.write(sendMsg);
+                osw.flush();
+                if (conn.getResponseCode() == conn.HTTP_OK) {
+                    InputStreamReader tmp = new InputStreamReader(conn.getInputStream(), "UTF-8");
+                    BufferedReader reader = new BufferedReader(tmp);
+                    StringBuffer buffer = new StringBuffer();
+                    while ((str = reader.readLine()) != null) {
+                        buffer.append(str);
+                    }
+                    receiveMsg = buffer.toString();
+
+                } else {
+                    Log.i("통신 결과", conn.getResponseCode() + "에러");
+                }
+                String result = new StuProjectActivity.validateTeam().execute(s_num, ID).get();
+                if(result.contains("exists")) {
+                    d = builder
+                            .setMessage("이미 팀을 만들었습니다.")
+                            .setPositiveButton("학인", null)
+                            .create();
+                    d.show();
+                    return;
+                }
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return receiveMsg;
+        }
+    }
+    */
     public void getTeams() {
         teamList.clear();
         try {
@@ -180,7 +226,7 @@ public class StuProjectActivity extends AppCompatActivity implements View.OnClic
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("POST");
                 OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
-                sendMsg = "project_Num=" + strings[0] + "&student_id=" + strings[1];
+                sendMsg = "project_Num=" + strings[0] + "&student_id=" + strings[1] + "&team_Num" + strings[2];
                 osw.write(sendMsg);
                 osw.flush();
                 if (conn.getResponseCode() == conn.HTTP_OK) {
@@ -214,7 +260,7 @@ public class StuProjectActivity extends AppCompatActivity implements View.OnClic
             case R.id.fab1:
                 break;
             case R.id.fab2:
-                Dialog();
+                makeDialog();
                 break;
         }
     }
@@ -234,7 +280,71 @@ public class StuProjectActivity extends AppCompatActivity implements View.OnClic
 
         }
     }
-    public void Dialog(){
+    /*
+    public void joinDialog(int position){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        formLayout = inflater.inflate(R.layout.join_team, null);
+        builder.setView(formLayout);
+        final EditText teamPassword = (EditText)formLayout.findViewById(R.id.teamPassword);
+        // 형식 teamList.get(position).getNum()
+        String pwd = teamPassword.getText().toString();
+        final int p = position;
+        builder.setPositiveButton("만들기",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        String pwd = teamPassword.getText().toString();
+                        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(StuProjectActivity.this);
+                        android.app.AlertDialog d;
+
+                        try {
+                            if(pwd.equals(teamList.get(p).getPw())){
+                                d = builder
+                                        .setMessage("성공")
+                                        .setPositiveButton("학인", null)
+                                        .create();
+                            } else{
+                                d = builder
+                                        .setMessage("실패")
+                                        .setPositiveButton("학인", null)
+                                        .create();
+                            }
+
+                            result = new StuProjectActivity.makeTeamTask().execute(s_num, ID, name, pwd).get();
+
+                            if(result.contains("success")) {
+                                d = builder
+                                        .setMessage(name + " 프로젝트를 만들었습니다.")
+                                        .setPositiveButton("학인", null)
+                                        .create();
+                                d.show();
+                                // 결과 : 성공일때 > 자동 방 입장
+                                //        실패일때 > 직접 방 입장
+                                getTeams();
+                            } else {
+                                d = builder
+                                        .setMessage("에러 발생")
+                                        .setPositiveButton("학인", null)
+                                        .create();
+                                d.show();
+                            }
+
+                        }catch (Exception e) {
+
+                        }
+
+                    }
+                })
+                .setNegativeButton("취소",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                .show();
+    }
+    */
+    public void makeDialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
         formLayout = inflater.inflate(R.layout.make_team, null);
@@ -279,7 +389,6 @@ public class StuProjectActivity extends AppCompatActivity implements View.OnClic
                                         .setPositiveButton("학인", null)
                                         .create();
                                 d.show();
-                                String result2 = new joinTeamTask().execute(s_num, ID).get();
                                 // 결과 : 성공일때 > 자동 방 입장
                                 //        실패일때 > 직접 방 입장
                                 getTeams();

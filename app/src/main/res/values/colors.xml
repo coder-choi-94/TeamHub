@@ -2,8 +2,9 @@
 <resources>
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
-    <color name="colorTeamHub">#A4D792</color>
-    <color name="colorTeamHubDark">#94C782</color>
-    <color name="colorTeamHubLight">#B4E7A2</color>
+    <color name="colorAccent">#000000</color>
+    <color name="colorTeamHub">#ffffff</color>
+    <color name="colorTeamHubDark">#ced4da</color>
+    <color name="colorTeamHubLight">#e9ecef</color>
+    <color name="colorFont">#868e96</color>
 </resources>

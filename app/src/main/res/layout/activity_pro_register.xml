@@ -38,10 +38,10 @@
                 android:layout_height="wrap_content"
                 android:hint="아이디"
                 android:padding="10dp"
-            android:textSize="20dp"
-            android:layout_marginTop="10dp"
-            android:textColor="#25A98C"
-            android:id="@+id/textId"/>
+                android:textSize="20dp"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/colorFont"
+                android:id="@+id/textId"/>
             <EditText
                 android:inputType="textPassword"
                 android:layout_width="230dp"
@@ -50,7 +50,7 @@
                 android:padding="10dp"
                 android:textSize="20dp"
                 android:layout_marginTop="10dp"
-                android:textColor="#25A98C"
+                android:textColor="@color/colorFont"
                 android:id="@+id/textPassword"/>
 
             <EditText
@@ -60,7 +60,7 @@
                 android:padding="10dp"
                 android:textSize="20dp"
                 android:layout_marginTop="10dp"
-                android:textColor="#25A98C"
+                android:textColor="@color/colorFont"
                 android:id="@+id/textName"/>
             <EditText
                 android:layout_width="230dp"
@@ -69,7 +69,7 @@
                 android:padding="10dp"
                 android:textSize="20dp"
                 android:layout_marginTop="10dp"
-                android:textColor="#25A98C"
+                android:textColor="@color/colorFont"
                 android:lines="1"
                 android:singleLine="true"
                 android:id="@+id/textPhone"/>
@@ -87,7 +87,7 @@
                 android:padding="10dp"
                 android:text="중복 확인"
                 android:textColor="#ffffffff"
-                android:background="@color/colorPrimary"
+                android:background="@color/colorTeamHubDark"
                 android:id="@+id/btnValidate"
                 android:layout_marginLeft="20dp"/>
 
@@ -105,7 +105,7 @@
             android:layout_centerHorizontal="true"
             android:text="가입 하기"
             android:textColor="#ffffffff"
-            android:background="@color/colorPrimary"
+            android:background="@color/colorTeamHubDark"
             android:id="@+id/btnRegister"/>
     </RelativeLayout>
 </RelativeLayout>
