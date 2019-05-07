@@ -76,6 +76,7 @@ public class StuIndexActivity extends AppCompatActivity {
                 intent.putExtra("교수 코드", projectList.get(position).getProfessor_code());
                 intent.putExtra("프로젝트 이름", projectList.get(position).getName());
                 intent.putExtra("비밀번호", projectList.get(position).getPw());
+                intent.putExtra("프로젝트 번호", projectList.get(position).getNum());
                 startActivity(intent);
             }
         });

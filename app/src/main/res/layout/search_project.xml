@@ -19,6 +19,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:textColor="@color/colorFont"
             android:text="교수 코드"/>
         <EditText
             android:id="@+id/professorCode"
@@ -29,18 +30,22 @@
             android:layout_marginTop="16dp"
             android:layout_marginLeft="4dp"
             android:layout_marginRight="4dp"
-            android:layout_marginBottom="4dp"/>
+            android:layout_marginBottom="4dp"
+            android:textColor="@color/colorFont"
+            android:textColorHint="@color/colorFont"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        android:layout_margin="10dp">
+        android:layout_margin="10dp"
+        android:textColor="@color/colorFont">
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="프로젝트 이름"/>
+            android:text="프로젝트 이름"
+            android:textColor="@color/colorFont"/>
         <EditText
             android:id="@+id/roomName"
             android:layout_weight="2"
@@ -50,7 +55,9 @@
             android:layout_marginTop="16dp"
             android:layout_marginLeft="4dp"
             android:layout_marginRight="4dp"
-            android:layout_marginBottom="4dp"/>
+            android:layout_marginBottom="4dp"
+            android:textColor="@color/colorFont"
+            android:textColorHint="@color/colorFont"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -61,7 +68,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="비밀번호"/>
+            android:text="비밀번호"
+            android:textColor="@color/colorFont"/>
         <EditText
             android:id="@+id/roomPassword"
             android:layout_weight="2"
@@ -71,6 +79,8 @@
             android:layout_marginTop="16dp"
             android:layout_marginLeft="4dp"
             android:layout_marginRight="4dp"
-            android:layout_marginBottom="4dp"/>
+            android:layout_marginBottom="4dp"
+            android:textColor="@color/colorFont"
+            android:textColorHint="@color/colorFont"/>
     </LinearLayout>
 </LinearLayout>

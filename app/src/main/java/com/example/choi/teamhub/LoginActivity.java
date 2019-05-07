@@ -1,5 +1,6 @@
 package com.example.choi.teamhub;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -116,6 +117,7 @@ public class LoginActivity extends AppCompatActivity {
 
     class LoginTask extends AsyncTask<String, Void, String> {
         String sendMsg, receiveMsg;
+        @SuppressLint("WrongThread")
         @Override
         protected String doInBackground(String... strings) {
             try {
@@ -125,6 +127,10 @@ public class LoginActivity extends AppCompatActivity {
                 rg = (RadioGroup)findViewById(R.id.typeGroup);
                 id = rg.getCheckedRadioButtonId();
                 checkedType = (RadioButton)findViewById(id);
+
+                @SuppressLint("WrongThread") int id = rg.getCheckedRadioButtonId();
+                RadioButton checkedType = (RadioButton)findViewById(id);
+
 
                 if(checkedType.getText().toString().equals("학생"))
                     urlValue = "http://teamhub.cafe24.com/student_login.jsp";
@@ -161,6 +167,4 @@ public class LoginActivity extends AppCompatActivity {
             return receiveMsg;
         }
     }
-
-
 }

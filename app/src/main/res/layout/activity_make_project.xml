@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".StudentRegisterActivity"
+    tools:context=".ProfessorTeamProjectJoin"
     android:background="@color/colorTeamHub">
 
     <LinearLayout
@@ -29,83 +29,62 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:rowCount="5"
-            android:columnCount="2"
+            android:columnCount="3"
             android:padding="30dp"
             android:orientation="vertical">
 
             <EditText
-                android:layout_width="230dp"
+                android:id="@+id/textName"
+                android:layout_width="350dp"
                 android:layout_height="wrap_content"
-                android:hint="아이디"
-                android:padding="10dp"
-                android:textSize="20dp"
                 android:layout_marginTop="10dp"
+                android:hint="팀명"
+                android:padding="10dp"
                 android:textColor="@color/colorFont"
-                android:id="@+id/textId"/>
+                android:textColorHint="@color/colorFont"
+                android:textSize="20dp" />
             <EditText
-                android:inputType="textPassword"
-                android:layout_width="230dp"
+                android:inputType="textPersonName"
+                android:layout_width="350dp"
                 android:layout_height="wrap_content"
-                android:hint="비밀번호"
+                android:hint="팀장"
                 android:padding="10dp"
                 android:textSize="20dp"
-                android:layout_marginTop="10dp"
                 android:textColor="@color/colorFont"
+                android:textColorHint="@color/colorFont"
+                android:layout_marginTop="10dp"
                 android:id="@+id/textPassword"/>
 
             <EditText
-                android:layout_width="230dp"
+                android:id="@+id/textCode"
+                android:layout_width="350dp"
                 android:layout_height="wrap_content"
-                android:hint="이름"
-                android:padding="10dp"
-                android:textSize="20dp"
                 android:layout_marginTop="10dp"
+                android:hint="코드"
+                android:padding="10dp"
                 android:textColor="@color/colorFont"
-                android:id="@+id/textName"/>
-            <EditText
-                android:layout_width="230dp"
-                android:layout_height="wrap_content"
-                android:hint="010-xxxx-xxxx"
-                android:padding="10dp"
-                android:textSize="20dp"
-                android:layout_marginTop="10dp"
-                android:textColor="@color/colorFont"
-                android:lines="1"
-                android:singleLine="true"
-                android:id="@+id/textPhone"/>
-            <Spinner
-                android:layout_width="230dp"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:layout_marginTop="10dp"
-                android:id="@+id/textDept">
-            </Spinner>
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="20dp"
-                android:padding="10dp"
-                android:text="중복 확인"
-                android:textColor="#ffffffff"
-                android:background="@color/colorTeamHubDark"
-                android:id="@+id/btnValidate"
-                android:layout_marginLeft="20dp"/>
-
+                android:textColorHint="@color/colorFont"
+                android:textSize="20dp" />
         </GridLayout>
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/form">
+        android:layout_below="@+id/form"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="51dp"
+        android:layout_alignParentLeft="true">
+
         <Button
+            android:id="@+id/btnJoin"
             android:layout_width="150dp"
             android:layout_height="60dp"
-            android:padding="10dp"
             android:layout_centerHorizontal="true"
-            android:text="가입 하기"
-            android:textColor="#ffffffff"
             android:background="@color/colorTeamHubDark"
-            android:id="@+id/btnRegister"/>
+            android:padding="10dp"
+            android:text="추가"
+            android:textColor="#ffffffff" />
     </RelativeLayout>
 </RelativeLayout>
+

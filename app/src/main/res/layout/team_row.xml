@@ -12,13 +12,15 @@
         android:paddingLeft="20dp"
         android:textSize="30dp"
         android:textColor="@color/colorFont"
-        android:id="@+id/projectName"/>
+
+        android:id="@+id/teamName"/>
+
     <TextView
+        android:id="@+id/stuName"
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:gravity="right"
         android:paddingRight="20dp"
-        android:textColor="@color/colorFont"
-        android:id="@+id/professorName"/>
+        android:textColor="@color/colorFont" />
 
 </LinearLayout>

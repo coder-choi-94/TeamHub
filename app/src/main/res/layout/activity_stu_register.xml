@@ -40,7 +40,8 @@
                 android:padding="10dp"
                 android:textSize="20dp"
                 android:layout_marginTop="10dp"
-                android:textColor="#25A98C"
+                android:textColor="@color/colorFont"
+                android:textColorHint="@color/colorFont"
                 android:lines="1"
                 android:singleLine="true"
                 android:id="@+id/textId"/>
@@ -52,7 +53,8 @@
                 android:padding="10dp"
                 android:textSize="20dp"
                 android:layout_marginTop="10dp"
-                android:textColor="#25A98C"
+                android:textColor="@color/colorFont"
+                android:textColorHint="@color/colorFont"
                 android:lines="1"
                 android:singleLine="true"
                 android:id="@+id/textPassword"/>
@@ -64,7 +66,8 @@
                 android:padding="10dp"
                 android:textSize="20dp"
                 android:layout_marginTop="10dp"
-                android:textColor="#25A98C"
+                android:textColor="@color/colorFont"
+                android:textColorHint="@color/colorFont"
                 android:lines="1"
                 android:singleLine="true"
                 android:id="@+id/textSno"/>
@@ -75,7 +78,8 @@
                 android:padding="10dp"
                 android:textSize="20dp"
                 android:layout_marginTop="10dp"
-                android:textColor="#25A98C"
+                android:textColor="@color/colorFont"
+                android:textColorHint="@color/colorFont"
                 android:lines="1"
                 android:singleLine="true"
                 android:id="@+id/textName"/>
@@ -86,7 +90,8 @@
                 android:padding="10dp"
                 android:textSize="20dp"
                 android:layout_marginTop="10dp"
-                android:textColor="#25A98C"
+                android:textColor="@color/colorFont"
+                android:textColorHint="@color/colorFont"
                 android:lines="1"
                 android:singleLine="true"
                 android:id="@+id/textPhone"/>
@@ -104,7 +109,7 @@
                 android:padding="10dp"
                 android:text="중복 확인"
                 android:textColor="#ffffffff"
-                android:background="@color/colorPrimary"
+                android:background="@color/colorTeamHubDark"
                 android:id="@+id/btnValidate"
                 android:layout_marginLeft="20dp"/>
 
@@ -122,7 +127,7 @@
             android:layout_centerHorizontal="true"
             android:text="가입 하기"
             android:textColor="#ffffffff"
-            android:background="@color/colorPrimary"
+            android:background="@color/colorTeamHubDark"
             android:id="@+id/btnRegister"/>
     </RelativeLayout>
 </RelativeLayout>
