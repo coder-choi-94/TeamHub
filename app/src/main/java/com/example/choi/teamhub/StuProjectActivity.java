@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -69,7 +70,7 @@ public class StuProjectActivity extends AppCompatActivity implements View.OnClic
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
 //------------------------------------------------------------------------
         Context context = this;
-        LayoutInflater inflater = (LayoutInflater)context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
+        final LayoutInflater inflater = (LayoutInflater)context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
         formLayout = inflater.inflate(R.layout.make_team, null, false);
         fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
         fab_close = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_close);
@@ -85,7 +86,24 @@ public class StuProjectActivity extends AppCompatActivity implements View.OnClic
         adapter = new TeamListAdapter(getApplicationContext(), teamList);
         listView.setAdapter(adapter);
 
+        // 자료가 없을떄
         getTeams();
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(StuProjectActivity.this, StuProjectActivity.class);// 다음클래스 만들면 변경하기
+                intent.putExtra("아이디", ID);
+                intent.putExtra("교수 코드", PCODE);
+                intent.putExtra("프로젝트이름", PNAME);
+                intent.putExtra("프로젝트 번호", P_NUM);
+                intent.putExtra("팀 이름", teamList.get(position).getName());
+                intent.putExtra("팀 번호", teamList.get(position).getNum());
+                //intent.putExtra("비밀번호", teamList.get(position).getPw());
+                startActivity(intent);
+            }
+        });
+        // 자료가 있을때
+        //>>>
     }
     public void getTeams() {
         teamList.clear();
