@@ -3,6 +3,7 @@
     package="com.example.choi.teamhub">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -18,8 +19,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".StuIndexActivity" />
+        <activity android:name=".ProIndexActivity" />
         <activity android:name=".StudentRegisterActivity"></activity>
         <activity android:name=".ProfessorRegisterActivity"></activity>
+        <activity android:name=".StuProjectActivity"></activity>
         <activity android:name=".ProfessorTeamProjectJoin"></activity>
     </application>
 
