@@ -504,7 +504,7 @@ public class StuProjectActivity extends AppCompatActivity implements View.OnClic
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("POST");
                 OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
-                sendMsg = "project_Num=" + strings[0] + "&student_id=" + strings[1] + "&name=" + strings[2] + "&pw=" + strings[3] + "&student_name" + strings[4];
+                sendMsg = "project_Num=" + strings[0] + "&student_id=" + strings[1] + "&name=" + strings[2] + "&pw=" + strings[3];
                 osw.write(sendMsg);
                 osw.flush();
                 if (conn.getResponseCode() == conn.HTTP_OK) {

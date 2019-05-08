@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -39,6 +40,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class ProIndexActivity extends AppCompatActivity  implements View.OnClickListener {
     private Animation fab_open, fab_close;
@@ -76,9 +78,54 @@ public class ProIndexActivity extends AppCompatActivity  implements View.OnClick
         listView.setAdapter(adapter);
 
         getProjects();
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(ProIndexActivity.this, "Position: " + position + ", projectList: " + projectList.get(position).getName(), Toast.LENGTH_LONG).show();
+                // 이부분에 클릭시 팀선택화면으로 넘어가도록 만들기.
+                /*
+                try {
+                    String r = new ProIndexActivity.getCheckTask().execute(projectList.get(position).getStringNum(), ID, s_num).get();
+                    Log.e("onItemClick", r);
+                    if(r.equals("next")){
+                        Log.e("onItemClick", "6");
+                        // activity 전환
+                        mainIntent(position);
+                        Log.e("onItemClick", "7");
+                    } else if(r.equals("success")){
+                        Log.e("onItemClick", "8");
+                        joinDialog(position);
+                        Log.e("onItemClick", "9");
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+
+            */
+            }
+        });
 
     }
+    /*
+    public void projectIntent(int position){
+        try{
+            Intent intent = new Intent(ProIndexActivity.this, ProProjectActivity.class);// 다음클래스 만들면 변경하기
+            intent.putExtra("아이디", ID);
+            intent.putExtra("교수 코드", PCODE);
+            intent.putExtra("프로젝트이름", PNAME);
+            intent.putExtra("프로젝트 번호", P_NUM);
+            intent.putExtra("팀 이름", teamList.get(position).getName());
+            intent.putExtra("팀 번호", teamList.get(position).getNum());
+            //intent.putExtra("비밀번호", teamList.get(position).getPw());
+            startActivity(intent);
+        }catch (Exception e) {
+            Log.e("intent", e.getMessage());
+        }
+    }
 
+    */
     public void getProjects() {
         projectList.clear();
         try {
