@@ -81,51 +81,29 @@ public class ProIndexActivity extends AppCompatActivity  implements View.OnClick
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(ProIndexActivity.this, "Position: " + position + ", projectList: " + projectList.get(position).getName(), Toast.LENGTH_LONG).show();
+                Toast.makeText(ProIndexActivity.this, "code : " + code + ", projectList: " + projectList.get(position).getName(), Toast.LENGTH_LONG).show();
                 // 이부분에 클릭시 팀선택화면으로 넘어가도록 만들기.
-                /*
-                try {
-                    String r = new ProIndexActivity.getCheckTask().execute(projectList.get(position).getStringNum(), ID, s_num).get();
-                    Log.e("onItemClick", r);
-                    if(r.equals("next")){
-                        Log.e("onItemClick", "6");
-                        // activity 전환
-                        mainIntent(position);
-                        Log.e("onItemClick", "7");
-                    } else if(r.equals("success")){
-                        Log.e("onItemClick", "8");
-                        joinDialog(position);
-                        Log.e("onItemClick", "9");
-                    }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                }
-
-            */
+                projectIntent(position);
             }
         });
 
     }
-    /*
+
+
     public void projectIntent(int position){
         try{
-            Intent intent = new Intent(ProIndexActivity.this, ProProjectActivity.class);// 다음클래스 만들면 변경하기
-            intent.putExtra("아이디", ID);
-            intent.putExtra("교수 코드", PCODE);
-            intent.putExtra("프로젝트이름", PNAME);
-            intent.putExtra("프로젝트 번호", P_NUM);
-            intent.putExtra("팀 이름", teamList.get(position).getName());
-            intent.putExtra("팀 번호", teamList.get(position).getNum());
-            //intent.putExtra("비밀번호", teamList.get(position).getPw());
+            Intent intent = new Intent(ProIndexActivity.this, ProProjectActivity.class);
+            intent.putExtra("프로젝트 번호", projectList.get(position).getNum());
+            intent.putExtra("프로젝트 이름", projectList.get(position).getName());
+            intent.putExtra("교수 이름", professor_name);
+            intent.putExtra("교수 코드", code);
             startActivity(intent);
         }catch (Exception e) {
-            Log.e("intent", e.getMessage());
+            Log.e("ProjectActivity.Intent", e.getMessage());
         }
     }
 
-    */
+
     public void getProjects() {
         projectList.clear();
         try {
