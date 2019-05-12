@@ -11,21 +11,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/NoActionBar">
-        <activity android:name=".LoginActivity">
+        <activity android:name=".StuMainActivity1">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".StuIndexActivity" />
         <activity android:name=".ProIndexActivity" />
-        <activity android:name=".StudentRegisterActivity"></activity>
-        <activity android:name=".ProfessorRegisterActivity"></activity>
-        <activity android:name=".StuProjectActivity"></activity>
-        <activity android:name=".ProfessorTeamProjectJoin"></activity>
-        <activity android:name=".StuMainActivity"></activity>
-        <activity android:name=".ProProjectActivity"></activity>
+        <activity android:name=".StudentRegisterActivity" />
+        <activity android:name=".ProfessorRegisterActivity" />
+        <activity android:name=".StuProjectActivity" />
+        <activity android:name=".ProfessorTeamProjectJoin" />
+        <activity android:name=".StuMainActivity" />
+        <activity android:name=".ProProjectActivity" />
+        <!-- <activity -->
+        <!-- android:name=".StuMainActivity1" -->
+        <!-- android:label="@string/title_activity_stu_main1"></activity> -->
     </application>
 
 </manifest>
