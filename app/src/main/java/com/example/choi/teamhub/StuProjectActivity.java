@@ -126,6 +126,7 @@ public class StuProjectActivity extends AppCompatActivity implements View.OnClic
             intent.putExtra("팀 이름", teamList.get(position).getName());
             intent.putExtra("팀 번호", teamList.get(position).getNum());
             //intent.putExtra("비밀번호", teamList.get(position).getPw());
+
             startActivity(intent);
         }catch (Exception e) {
             Log.e("intent", e.getMessage());
