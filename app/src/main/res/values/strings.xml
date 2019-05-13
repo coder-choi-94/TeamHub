@@ -3,6 +3,7 @@
     <string name="title_activity_stu_main1">StuMainActivity1</string>
     <string name="title_notice">알림</string>
     <string name="title_chats">채팅</string>
+    <string name="title_todo">할일</string>
     <string name="title_setting">설정</string>
     <string name="title_activity_test">test</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>

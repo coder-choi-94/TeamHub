@@ -44,7 +44,14 @@ public class StuProjectActivity extends AppCompatActivity implements View.OnClic
     private FloatingActionButton fab, fab1, fab2;
     private Boolean isFabOpen =false;
     private View formLayout;
-    private String ID;
+
+    //유저 정보
+    private String userId;
+    private String userName;
+    private String userPhone;
+    private String userDept;
+    private String userSno;
+
     private int PCODE;
     private String PNAME;
     private String PW;
@@ -60,13 +67,18 @@ public class StuProjectActivity extends AppCompatActivity implements View.OnClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stu_in_project);
         Intent intent = getIntent();
-        ID = intent.getStringExtra("아이디");
+        userId = intent.getStringExtra("userId");
+        userName = intent.getStringExtra("userName");
+        userPhone = intent.getStringExtra("userPhone");
+        userDept = intent.getStringExtra("userDept");
+        userSno = intent.getStringExtra("userSno");
+
         PCODE = intent.getIntExtra("교수 코드", 0);
         PNAME = intent.getStringExtra("프로젝트 이름");
         PW = intent.getStringExtra("비밀번호");
         P_NUM = intent.getIntExtra("프로젝트 번호", 0);
         s_num = String.valueOf(P_NUM);
-        String message = "학생 아이디 : " + ID + " / 이 프로젝트의 교수 코드 : " + PCODE + " / 프로젝트 이름 : " + PNAME + " / 이 프로젝트 비밀번호 : " + PW + " / 프로젝트 번호 : " + P_NUM;
+        String message = "학생 아이디 : " + userId + " / 이 프로젝트의 교수 코드 : " + PCODE + " / 프로젝트 이름 : " + PNAME + " / 이 프로젝트 비밀번호 : " + PW + " / 프로젝트 번호 : " + P_NUM;
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
 //------------------------------------------------------------------------
         Context context = this;
@@ -93,7 +105,7 @@ public class StuProjectActivity extends AppCompatActivity implements View.OnClic
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 try {
-                    String r = new getCheckTask().execute(teamList.get(position).getStringNum(), ID, s_num).get();
+                    String r = new getCheckTask().execute(teamList.get(position).getStringNum(), userId, s_num).get();
                     Log.e("onItemClick", r);
                     if(r.equals("next")){
                         Log.e("onItemClick", "6");
@@ -119,7 +131,11 @@ public class StuProjectActivity extends AppCompatActivity implements View.OnClic
     public void mainIntent(int position){
         try{
             Intent intent = new Intent(StuProjectActivity.this, StuMainActivity.class);// 다음클래스 만들면 변경하기
-            intent.putExtra("아이디", ID);
+            intent.putExtra("userId", userId);
+            intent.putExtra("userName", userName);
+            intent.putExtra("userPhone", userPhone);
+            intent.putExtra("userDept", userDept);
+            intent.putExtra("userSno", userSno);
             intent.putExtra("교수 코드", PCODE);
             intent.putExtra("프로젝트이름", PNAME);
             intent.putExtra("프로젝트 번호", P_NUM);
@@ -173,7 +189,7 @@ public class StuProjectActivity extends AppCompatActivity implements View.OnClic
     public void getTeams() {
         teamList.clear();
         try {
-            String result = new getTeamsTask().execute(s_num, ID).get();
+            String result = new getTeamsTask().execute(s_num, userId).get();
             JSONObject resultJsonObj = new JSONObject(result);
             JSONArray resultJsonData = resultJsonObj.getJSONArray("teams");
             JSONObject jsonObj;
@@ -271,7 +287,7 @@ public class StuProjectActivity extends AppCompatActivity implements View.OnClic
         // 형식 teamList.get(position).getNum()
         String pwd = teamPassword.getText().toString();
         final int p = position;
-        builder.setPositiveButton("만들기",
+        builder.setPositiveButton("팀방 들어가기",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         String pwd = teamPassword.getText().toString();
@@ -283,8 +299,8 @@ public class StuProjectActivity extends AppCompatActivity implements View.OnClic
                             Log.e("a", "pwd = " + pwd + ", getPwd = " + teamList.get(p).getPw());
                             if(pwd.equals(teamList.get(p).getPw())){
                                 Log.e("b", "pwd == getPw()");
-                                Log.e("b2", "s_num = " + s_num + "ID = " + ID + "num = " + num);
-                                String result = new StuProjectActivity.joinTeamTask().execute(s_num, ID, num).get();
+                                Log.e("b2", "s_num = " + s_num + "ID = " + userId + "num = " + num);
+                                String result = new StuProjectActivity.joinTeamTask().execute(s_num, userId, num).get();
                                 Log.e("c", "result = " + result);
                                 if(result.contains("success")) {
                                     Log.e("d", "success");
@@ -397,7 +413,7 @@ public class StuProjectActivity extends AppCompatActivity implements View.OnClic
                         }
 
                         try {
-                            String result = new StuProjectActivity.validateTeam().execute(s_num, ID).get();
+                            String result = new StuProjectActivity.validateTeam().execute(s_num, userId).get();
                             if(result.contains("exists")) {
                                 d = builder
                                         .setMessage("이미 팀을 만들었습니다.")
@@ -408,7 +424,7 @@ public class StuProjectActivity extends AppCompatActivity implements View.OnClic
                             }
 
 
-                            result = new StuProjectActivity.makeTeamTask().execute(s_num, ID, name, pwd).get();
+                            result = new StuProjectActivity.makeTeamTask().execute(s_num, userId, name, pwd, userName).get();
 
                             if(result.contains("success")) {
                                 d = builder
@@ -505,7 +521,7 @@ public class StuProjectActivity extends AppCompatActivity implements View.OnClic
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("POST");
                 OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
-                sendMsg = "project_Num=" + strings[0] + "&student_id=" + strings[1] + "&name=" + strings[2] + "&pw=" + strings[3];
+                sendMsg = "project_Num=" + strings[0] + "&student_id=" + strings[1] + "&name=" + strings[2] + "&pw=" + strings[3] + "&student_name=" + strings[4];
                 osw.write(sendMsg);
                 osw.flush();
                 if (conn.getResponseCode() == conn.HTTP_OK) {

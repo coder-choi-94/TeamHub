@@ -12,6 +12,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
+
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -62,48 +65,69 @@ public class LoginActivity extends AppCompatActivity {
             dialog.show();
             return;
         }
-
         try {
             final String result  = new LoginTask().execute(id,pwd).get();
-            if(result.equals("id")) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
-                dialog = builder
-                        .setMessage("존재하지 않는 아이디입니다!")
-                        .setNegativeButton("확인", null)
-                        .create();
-                dialog.show();
-                return;
-            }else if(result.equals("password")) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
-                dialog = builder
-                        .setMessage("비밀번호를 잘못 입력하셨습니다.")
-                        .setNegativeButton("확인", null)
-                        .create();
-                dialog.show();
-                return;
-            } else if(result.contains("success")) {
+            final JSONObject resultJsonObj = new JSONObject(result);
 
+            Toast.makeText(this, resultJsonObj.toString(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, resultJsonObj.getString("result"), Toast.LENGTH_SHORT).show();
+
+            if(resultJsonObj.getString("result").equals("FAILURE")) { //로그인 실패시
+                if(resultJsonObj.getString("content").equals("id")) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+                    dialog = builder
+                            .setMessage("존재하지 않는 아이디입니다!")
+                            .setNegativeButton("확인", null)
+                            .create();
+                    dialog.show();
+                    return;
+                } else if(resultJsonObj.getString("content").equals("pw")) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+                    dialog = builder
+                            .setMessage("비밀번호를 잘못 입력하셨습니다.")
+                            .setNegativeButton("확인", null)
+                            .create();
+                    dialog.show();
+                    return;
+                }
+            } else {    //로그인 성공시
+                final String userId;
+                final String userName;
+                final String userPhone;
+                final String userDept;
+                final String userSno;
+                final String professorCode;
+                final String professorName;
                 AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+                final Intent intent;
+
+                if (checkedType.getText().toString().equals("학생")) { //학생 로그인의 경우 학생 로그인 jsp페이지로부터 온 데이터를 받는다.
+                    userId = resultJsonObj.getString("id");
+                    userName = resultJsonObj.getString("name");
+                    userPhone = resultJsonObj.getString("phone");
+                    userDept = resultJsonObj.getString("dept");
+                    userSno = resultJsonObj.getString("sno");
+
+                    intent = new Intent(LoginActivity.this, StuIndexActivity.class);
+                    intent.putExtra("userId", userId);
+                    intent.putExtra("userName", userName);
+                    intent.putExtra("userPhone", userPhone);
+                    intent.putExtra("userDept", userDept);
+                    intent.putExtra("userSno", userSno);
+                } else {                                                 //교수 로그인의 경우 교수 로그인 jsp페이지로부터 온 데이터를 받는다.
+                    professorCode = resultJsonObj.getString("code");
+                    professorName = resultJsonObj.getString("name");
+
+                    intent = new Intent(LoginActivity.this, ProIndexActivity.class);
+                    intent.putExtra("code", professorCode);
+                    intent.putExtra("professor_name", professorName);
+                }
+
                 dialog = builder
                         .setMessage("접속 성공!")
                         .setPositiveButton("확인", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                Intent intent;
-                                rg = (RadioGroup) findViewById(R.id.typeGroup);
-                                checkedType = (RadioButton) findViewById(rg.getCheckedRadioButtonId());
-                                if (checkedType.getText().toString().equals("학생")){
-                                    intent = new Intent(LoginActivity.this, StuIndexActivity.class);
-                                    intent.putExtra("id", textId.getText().toString());
-                            }else {
-                                    intent = new Intent(LoginActivity.this, ProIndexActivity.class);
-                                    String[] arr = result.split(":");
-                                    String code = arr[1];   //교수 코드
-                                    String professorName = arr[2];
-                                    Log.v("code", code);
-                                    intent.putExtra("code", code);
-                                    intent.putExtra("professor_name", professorName);
-                                }
                                 startActivity(intent);
                             }
                         })

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "869013593493",
+    "firebase_url": "https://team-hub-bdbb6.firebaseio.com",
+    "project_id": "team-hub-bdbb6",
+    "storage_bucket": "team-hub-bdbb6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:869013593493:android:f31d9748b476fcdd",
+        "android_client_info": {
+          "package_name": "com.example.choi.teamhub"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "869013593493-m59ripeihtddpmis244u3cddl7ggasc2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBw41lMtvN92wZh0jvVIGUKF1XovS0mvi0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "869013593493-m59ripeihtddpmis244u3cddl7ggasc2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

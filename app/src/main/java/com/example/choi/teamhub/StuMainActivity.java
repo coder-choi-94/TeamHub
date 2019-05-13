@@ -1,6 +1,7 @@
 package com.example.choi.teamhub;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -18,6 +19,7 @@ import com.example.choi.teamhub.DTO.ChatDto;
 import com.example.choi.teamhub.Fragment.ChatFragment;
 import com.example.choi.teamhub.Fragment.NoticeFrament;
 import com.example.choi.teamhub.Fragment.SettingFragment;
+import com.example.choi.teamhub.Fragment.TodoFrament;
 
 import java.util.List;
 
@@ -36,11 +38,29 @@ public class StuMainActivity extends AppCompatActivity {
     private ChatFragment chatFragment = new ChatFragment();
     private NoticeFrament noticeFrament = new NoticeFrament();
     private SettingFragment settingFragment = new SettingFragment();
+    private TodoFrament todoFragment = new TodoFrament();
 
+    private int projectNum;
+    private int teamNum;
+    private String userId;
+    private String userName;
+    private String userPhone;
+    private String userDept;
+    private String userSno;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stu_main);
+
+        Intent intent = getIntent();
+        projectNum = intent.getIntExtra("프로젝트 번호", -1);
+        teamNum = intent.getIntExtra("팀 번호", -1);
+        userId = intent.getStringExtra("userId");
+        userName = intent.getStringExtra("userName");
+        userPhone = intent.getStringExtra("userPhone");
+        userDept = intent.getStringExtra("userDept");
+        userSno = intent.getStringExtra("userSno");
+
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.navigation);
         // 첫 화면 지정
@@ -52,14 +72,58 @@ public class StuMainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
+                Bundle bundle;
                 switch (item.getItemId()) {
                     case R.id.navigation_notice:
+                        bundle = new Bundle(7);
+                        bundle.putInt("프로젝트 번호", projectNum);
+                        bundle.putInt("팀 번호", teamNum);
+                        bundle.putString("userId", userId);
+                        bundle.putString("userName", userName);
+                        bundle.putString("userPhone", userPhone);
+                        bundle.putString("userDept", userDept);
+                        bundle.putString("userSno", userSno);
+
+                        noticeFrament.setArguments(bundle);
                         transaction.replace(R.id.frame_layout, noticeFrament).commitAllowingStateLoss();
                         break;
+                    case R.id.navigation_todo:
+                        bundle = new Bundle(7);
+                        bundle.putInt("프로젝트 번호", projectNum);
+                        bundle.putInt("팀 번호", teamNum);
+                        bundle.putString("userId", userId);
+                        bundle.putString("userName", userName);
+                        bundle.putString("userPhone", userPhone);
+                        bundle.putString("userDept", userDept);
+                        bundle.putString("userSno", userSno);
+
+                        noticeFrament.setArguments(bundle);
+                        transaction.replace(R.id.frame_layout, todoFragment).commitAllowingStateLoss();
+                        break;
                     case R.id.navigation_chat:
+                        bundle = new Bundle(7);
+                        bundle.putInt("프로젝트 번호", projectNum);
+                        bundle.putInt("팀 번호", teamNum);
+                        bundle.putString("userId", userId);
+                        bundle.putString("userName", userName);
+                        bundle.putString("userPhone", userPhone);
+                        bundle.putString("userDept", userDept);
+                        bundle.putString("userSno", userSno);
+
+                        chatFragment.setArguments(bundle);
                         transaction.replace(R.id.frame_layout, chatFragment).commitAllowingStateLoss();
                         break;
                     case R.id.navigation_setting:
+                        bundle = new Bundle(7);
+                        bundle.putInt("프로젝트 번호", projectNum);
+                        bundle.putInt("팀 번호", teamNum);
+                        bundle.putString("userId", userId);
+                        bundle.putString("userName", userName);
+                        bundle.putString("userPhone", userPhone);
+                        bundle.putString("userDept", userDept);
+                        bundle.putString("userSno", userSno);
+
+                        settingFragment.setArguments(bundle);
                         transaction.replace(R.id.frame_layout, settingFragment).commitAllowingStateLoss();
                         break;
                 }
@@ -98,7 +162,7 @@ public class StuMainActivity extends AppCompatActivity {
         //가장 중요한 부분
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
-            View v = View.inflate(context, R.layout.chat_row, null);
+            View v = View.inflate(context, R.layout.chat_row_from_other, null);
 
             //뷰에 다음 컴포넌트들을 연결시켜줌
             TextView writer = (TextView) v.findViewById(R.id.writer);

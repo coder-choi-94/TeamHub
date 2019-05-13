@@ -1,46 +1,56 @@
 package com.example.choi.teamhub.Fragment;
 
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
+import android.util.DisplayMetrics;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.choi.teamhub.DTO.ChatDto;
 import com.example.choi.teamhub.R;
-import com.example.choi.teamhub.StuIndexActivity;
-import com.example.choi.teamhub.StuProjectActivity;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class ChatFragment extends Fragment {
+
+    private FirebaseDatabase database;
+    private DatabaseReference myRef;
+
+
     private ListView chatListView;
     private ChatListViewAdapter adapter;
     private List<ChatDto> chatList;
 
     private EditText message;
     private Button sendButton;
+
+    private String userId;
+    private String userName;
+    private String userPhone;
+    private String userDept;
+    private String userSno;
+    private int projectNum;
+    private int teamNum;
 
     @Nullable
     @Override
@@ -57,62 +67,92 @@ public class ChatFragment extends Fragment {
         adapter = new ChatListViewAdapter(getActivity(), chatList);
         chatListView.setAdapter(adapter);
 
+        userId = getArguments().getString("userId");
+        userName = getArguments().getString("userName");
+        userPhone = getArguments().getString("userPhone");
+        userDept = getArguments().getString("userDept");
+        userSno = getArguments().getString("userSno");
+        projectNum = getArguments().getInt("프로젝트 번호");
+        teamNum = getArguments().getInt("팀 번호");
+
+
+
+        // Write a message to the database
+        database = FirebaseDatabase.getInstance();
+        myRef = database.getReference(projectNum+"/"+teamNum);  //프로젝트번호/팀번호 레퍼런스를 가져옴(식별자용도) -> 내 팀의 채팅db만 가져옴
+
+
+
+
+
+        myRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                ChatDto chatDto = dataSnapshot.getValue(ChatDto.class);
+
+                chatList.add(chatDto);
+
+                adapter.notifyDataSetChanged();
+
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                ChatDto chatDto = new ChatDto();
-                chatDto.setName("최종명");
-                chatDto.setMessage(message.getText().toString());
+                if(message.getText().toString() == null ||message.getText().toString().equals("")) {
+                    return;
+                }
 
-                chatList.add(chatDto);
-                adapter.notifyDataSetChanged();
-//                try {
-//                    final String result = new sendChatTask().execute().get();
-//                    if (!result.contains("exists")) {// 존재하지않는 방이라면
-//                        d = builder
-//                                .setMessage("해당 프로젝트 방을 찾을 수 없습니다.")
-//                                .setPositiveButton("학인", null)
-//                                .create();
-//                        d.show();
-//                        return;
-//                    } else {
-//                        d = builder
-//                                .setMessage(name + " 프로젝트에 참여하시겠습니까?")
-//                                .setPositiveButton("학인", new DialogInterface.OnClickListener() {
-//                                    @Override
-//                                    public void onClick(DialogInterface dialog, int which) {
-//                                        String[] resultArr = result.split(":");
-//                                        String projectNum = resultArr[1];    //프로젝트 기본키 얻어옴
-//
-//                                        try {
-//                                            String rst = new StuIndexActivity.joinProjectTask().execute(projectNum, ID).get();
-//                                            if(rst.equals("success")) {
-//                                                getProjects();  //참여중인 프로젝트 리스트뷰를 동기화 한번 해주고 액티비티 이동하기
-//                                                Intent intent = new Intent(StuIndexActivity.this, StuProjectActivity.class);
-//                                                intent.putExtra("아이디", ID);
-//                                                intent.putExtra("교수 코드", Integer.parseInt(code));
-//                                                intent.putExtra("프로젝트 이름", name);
-//                                                intent.putExtra("비밀번호", pwd);
-//                                                startActivity(intent);
-//                                            } else {
-//                                                Toast.makeText(StuIndexActivity.this, "오류 발생.. 다시 시도해 주세요.", Toast.LENGTH_SHORT).show();
-//                                            }
-//
-//                                        }catch(Exception e) {
-//
-//                                        }
-//                                    }
-//                                })
-//                                .setNegativeButton("취소",null)
-//                                .create();
-//                        d.show();
-//
-//                    }
-//
-//                } catch(Exception e) {
-//                    e.printStackTrace();
-//                }
+                Calendar calendar = Calendar.getInstance();
+                Date date = calendar.getTime();
+//                String today = (new SimpleDateFormat("yyyyMMddHHmmss")).format(date);
+                String time = (new SimpleDateFormat("HH:mm")).format(date);
+                String hour, minute;
+                String parsedTime;
+
+                if(Integer.parseInt(time.toString().split(":")[0]) > 12) {
+                    hour = Integer.parseInt(time.toString().split(":")[0]) - 12 + "";
+                    minute = time.toString().split(":")[1];
+                    parsedTime = "오후 " + hour + ":" + minute;
+                } else {
+                    hour = Integer.parseInt(time.toString().split(":")[0]) + "";
+                    minute = time.toString().split(":")[1];
+                    parsedTime = "오전 " + hour + ":" + minute;
+                }
+
+
+
+
+
+                ChatDto chatDto = new ChatDto();
+                chatDto.setUserId(userId);
+                chatDto.setWriter(userName);
+                chatDto.setMessage(message.getText().toString());
+                chatDto.setTime(parsedTime);
+                myRef.push().setValue(chatDto);
+                message.setText("");
             }
         });
         return view;
@@ -127,6 +167,7 @@ public class ChatFragment extends Fragment {
             this.context = context;
             this.chatList = chatList;
         }
+
 
         //출력할 총갯수를 설정하는 메소드
         @Override
@@ -149,57 +190,44 @@ public class ChatFragment extends Fragment {
 
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
-            View v = View.inflate(context, R.layout.chat_row, null);
+
+            View v;
+            if(chatList.get(i).getUserId().equals(userId)) {
+                v = View.inflate(context, R.layout.chat_row_from_me, null);
+            } else {
+                v = View.inflate(context, R.layout.chat_row_from_other, null);
+            }
 
             //뷰에 다음 컴포넌트들을 연결시켜줌
             TextView writer = (TextView) v.findViewById(R.id.writer);
             TextView message = (TextView) v.findViewById(R.id.message);
+            TextView time = (TextView) v.findViewById(R.id.time);
+
+
 
             writer.setText(chatList.get(i).getWriter());
             message.setText(chatList.get(i).getMessage());
+            time.setText(chatList.get(i).getTime());
 
+//            if(chatList.get(i).getUserId().equals(userId)) {
+////                //내가 보낸 메세지라면
+////                //이름부분을 그래비티 오른쪽으로
+////                v.findViewById(R.id.writer).setTextAlignment(View.TEXT_ALIGNMENT_VIEW_END);
+////
+////                //메세지부분을 그래비티 오른쪽으로
+////
+////                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.MATCH_PARENT);
+////                DisplayMetrics dm = getResources().getDisplayMetrics();
+////                params.rightMargin = Math.round(70 * dm.density);
+////                params.leftMargin = Math.round(70 * dm.density);
+////                params.gravity = Gravity.END;
+////                v.findViewById(R.id.message).setLayoutParams(params);
+//            }
+
+            // 가장 아래로 스크롤
+            chatListView.setSelection(this.getCount()-1);
             //만든뷰를 반환함
             return v;
-        }
-    }
-
-    class sendChatTask extends AsyncTask<String, Void, String> {
-        String sendMsg, receiveMsg;
-
-        @Override
-        protected String doInBackground(String... strings) {
-            try {
-                String str;
-                String urlValue = "";
-
-                urlValue = "http://teamhub.cafe24.com/student_send_chat.jsp";
-
-                URL url = new URL(urlValue);
-                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                conn.setRequestMethod("POST");
-                OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
-                sendMsg = "studentId=" + strings[0];
-                osw.write(sendMsg);
-                osw.flush();
-                if (conn.getResponseCode() == conn.HTTP_OK) {
-                    InputStreamReader tmp = new InputStreamReader(conn.getInputStream(), "UTF-8");
-                    BufferedReader reader = new BufferedReader(tmp);
-                    StringBuffer buffer = new StringBuffer();
-                    while ((str = reader.readLine()) != null) {
-                        buffer.append(str);
-                    }
-                    receiveMsg = buffer.toString();
-
-                } else {
-                    Log.i("통신 결과", conn.getResponseCode() + "에러");
-                }
-
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return receiveMsg;
         }
     }
 }

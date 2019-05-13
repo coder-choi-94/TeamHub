@@ -40,7 +40,11 @@ import java.util.List;
 public class StuIndexActivity extends AppCompatActivity {
     FloatingActionButton fab;
     View formLayout;
-    private String ID;
+    private String userId;
+    private String userName;
+    private String userPhone;
+    private String userDept;
+    private String userSno;
 
     private ListView listView;
     private ProjectListAdapter adapter;
@@ -53,7 +57,13 @@ public class StuIndexActivity extends AppCompatActivity {
 
 
 
-        ID = getIntent().getStringExtra("id");
+        userId = getIntent().getStringExtra("userId");
+        userName = getIntent().getStringExtra("userName");
+        userPhone = getIntent().getStringExtra("userPhone");
+        userDept = getIntent().getStringExtra("userDept");
+        userSno = getIntent().getStringExtra("userSno");
+
+
 
         fab = (FloatingActionButton)findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener(){
@@ -74,7 +84,11 @@ public class StuIndexActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(StuIndexActivity.this, StuProjectActivity.class);
-                intent.putExtra("아이디", ID);
+                intent.putExtra("userId", userId);
+                intent.putExtra("userName", userName);
+                intent.putExtra("userPhone", userPhone);
+                intent.putExtra("userDept", userDept);
+                intent.putExtra("userSno", userSno);
                 intent.putExtra("교수 코드", projectList.get(position).getProfessor_code());
                 intent.putExtra("프로젝트 이름", projectList.get(position).getName());
                 intent.putExtra("비밀번호", projectList.get(position).getPw());
@@ -132,15 +146,21 @@ public class StuIndexActivity extends AppCompatActivity {
                                                 String projectNum = resultArr[1];    //프로젝트 기본키 얻어옴
 
                                                 try {
-                                                    String rst = new joinProjectTask().execute(projectNum, ID).get();
+                                                    String rst = new joinProjectTask().execute(projectNum, userId).get();
                                                     if(rst.equals("success")) {
                                                         getProjects();  //참여중인 프로젝트 리스트뷰를 동기화 한번 해주고 액티비티 이동하기
-                                                        Intent intent = new Intent(StuIndexActivity.this, StuProjectActivity.class);
-                                                        intent.putExtra("아이디", ID);
-                                                        intent.putExtra("교수 코드", Integer.parseInt(code));
-                                                        intent.putExtra("프로젝트 이름", name);
-                                                        intent.putExtra("비밀번호", pwd);
-                                                        startActivity(intent);
+                                                        //startactivity 뺀 이유가 여기서 교수코드 프로젝트 번호 등등 넣어줘야하는데
+                                                        // 아래처럼 해줄때 position에 접근이 불가능함 나중에 시간남으면 고쳐보기로하고
+                                                        //일단은 참여버튼 누르면 프로젝트 리스트만 갱신되게끔함
+                                                        //intent.putExtra("프로젝트 번호", projectList.get(position).getNum());
+
+//                                                        getProjects();  //참여중인 프로젝트 리스트뷰를 동기화 한번 해주고 액티비티 이동하기
+//                                                        Intent intent = new Intent(StuIndexActivity.this, StuProjectActivity.class);
+//                                                        intent.putExtra("아이디", userId);
+//                                                        intent.putExtra("교수 코드", Integer.parseInt(code));
+//                                                        intent.putExtra("프로젝트 이름", name);
+//                                                        intent.putExtra("비밀번호", pwd);
+//                                                        startActivity(intent);
                                                     } else {
                                                         Toast.makeText(StuIndexActivity.this, "오류 발생.. 다시 시도해 주세요.", Toast.LENGTH_SHORT).show();
                                                     }
@@ -262,7 +282,7 @@ public class StuIndexActivity extends AppCompatActivity {
     public void getProjects() {
         projectList.clear();
         try {
-            String result = new getProjectsTask().execute(ID).get();
+            String result = new getProjectsTask().execute(userId).get();
 
             JSONObject resultJsonObj = new JSONObject(result);
             JSONArray resultJsonData = resultJsonObj.getJSONArray("projects");
