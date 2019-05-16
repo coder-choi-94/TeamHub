@@ -19,7 +19,7 @@ import com.example.choi.teamhub.DTO.ChatDto;
 import com.example.choi.teamhub.Fragment.ChatFragment;
 import com.example.choi.teamhub.Fragment.NoticeFrament;
 import com.example.choi.teamhub.Fragment.SettingFragment;
-import com.example.choi.teamhub.Fragment.TodoFrament;
+import com.example.choi.teamhub.Fragment.TodoFragment;
 
 import java.util.List;
 
@@ -38,7 +38,7 @@ public class StuMainActivity extends AppCompatActivity {
     private ChatFragment chatFragment = new ChatFragment();
     private NoticeFrament noticeFrament = new NoticeFrament();
     private SettingFragment settingFragment = new SettingFragment();
-    private TodoFrament todoFragment = new TodoFrament();
+    private TodoFragment todoFragment = new TodoFragment();
 
     private int projectNum;
     private int teamNum;
