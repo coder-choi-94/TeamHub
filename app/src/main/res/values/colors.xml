@@ -7,4 +7,6 @@
     <color name="colorTeamHubDark">#ced4da</color>
     <color name="colorTeamHubLight">#e9ecef</color>
     <color name="colorFont">#868e96</color>
+    <color name="colorChat">#ccffcc</color>
+    <color name="colorChatO">#eaeaea</color>
 </resources>
