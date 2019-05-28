@@ -23,7 +23,7 @@ import java.util.List;
 public class TodoFragment extends Fragment {
 
     private ListView chatListView;
-    private TodoFragment.TodoListViewAdapter adapter;
+   // private TodoFragment.TodoListViewAdapter adapter;
     private List<TodoDto> todoList;
 
     private String userId;
@@ -42,7 +42,7 @@ public class TodoFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_todo_fragment, container, false);
-
+/*
         chatListView = view.findViewById(R.id.chatList);
         todoList = new ArrayList<TodoDto>();
 
@@ -59,9 +59,11 @@ public class TodoFragment extends Fragment {
 
 
 
-
+*/
         return inflater.inflate(R.layout.activity_todo_fragment, container, false);
     }
+
+    /*
     public class TodoListViewAdapter extends BaseAdapter {
 
         private Context context;
@@ -136,4 +138,5 @@ public class TodoFragment extends Fragment {
             return v;
         }
     }
+    */
 }
