@@ -49,7 +49,7 @@ public class ProIndexActivity extends AppCompatActivity  implements View.OnClick
     private View formLayout;
     private Intent intent;
     private String code;    ///인텐트로 받은 교수코드
-    private String professor_name;// 인텐트로받은 교수이름
+    //private String professor_name;// 인텐트로받은 교수이름
     private ListView listView;
     private ProjectListAdapter adapter;
     private List<ProjectDto> projectList;
@@ -62,7 +62,7 @@ public class ProIndexActivity extends AppCompatActivity  implements View.OnClick
 
         intent = getIntent();
         code = intent.getStringExtra("code");
-        professor_name = intent.getStringExtra("professor_name");
+        //professor_name = intent.getStringExtra("professor_name");
 
         Context context = this;
         LayoutInflater inflater = (LayoutInflater)context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
@@ -95,7 +95,7 @@ public class ProIndexActivity extends AppCompatActivity  implements View.OnClick
             Intent intent = new Intent(ProIndexActivity.this, ProProjectActivity.class);
             intent.putExtra("프로젝트 번호", projectList.get(position).getNum());
             intent.putExtra("프로젝트 이름", projectList.get(position).getName());
-            intent.putExtra("교수 이름", professor_name);
+            intent.putExtra("교수 이름", projectList.get(position).getProfessor_name());
             intent.putExtra("교수 코드", code);
             startActivity(intent);
         }catch (Exception e) {
@@ -115,11 +115,11 @@ public class ProIndexActivity extends AppCompatActivity  implements View.OnClick
             for(int i=0 ; i<resultJsonData.length() ; i++) {
                 jsonObj = resultJsonData.getJSONObject(i);
                 ProjectDto projectDto = new ProjectDto();
+                projectDto.setProfessor_name(jsonObj.getString("professor_name"));
                 projectDto.setNum(jsonObj.getInt("num"));
                 projectDto.setProfessor_code(jsonObj.getInt("professor_code"));
                 projectDto.setName(jsonObj.getString("name"));
                 projectDto.setPw(jsonObj.getString("pw"));
-                projectDto.setProfessor_name(jsonObj.getString("professor_name"));
                 projectList.add(projectDto);    //리스트뷰에 한개씩 추가
             }
 
@@ -171,7 +171,7 @@ public class ProIndexActivity extends AppCompatActivity  implements View.OnClick
                             }
 
 
-                            result = new makeProjectTask().execute(code, name, pwd, professor_name).get();
+                            result = new makeProjectTask().execute(code, name, pwd).get();
                             if(result.contains("success")) {
                                 d = builder
                                         .setMessage(name + " 프로젝트를 만들었습니다.")
@@ -306,7 +306,7 @@ public class ProIndexActivity extends AppCompatActivity  implements View.OnClick
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("POST");
                 OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
-                sendMsg = "code=" + strings[0] + "&name=" + strings[1] + "&pw=" + strings[2] + "&pname=" + strings[3];
+                sendMsg = "code=" + strings[0] + "&name=" + strings[1] + "&pw=" + strings[2];
                 osw.write(sendMsg);
                 osw.flush();
                 if (conn.getResponseCode() == conn.HTTP_OK) {

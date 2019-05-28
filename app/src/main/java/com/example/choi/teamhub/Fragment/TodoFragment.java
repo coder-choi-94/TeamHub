@@ -33,6 +33,11 @@ public class TodoFragment extends Fragment {
     private String userSno;
     private int projectNum;
     private int teamNum;
+
+    String student_id;
+    String title;
+    String content;
+    String filePath;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -41,7 +46,7 @@ public class TodoFragment extends Fragment {
         chatListView = view.findViewById(R.id.chatList);
         todoList = new ArrayList<TodoDto>();
 
-        adapter = new TodoFragment.ChatListViewAdapter(getActivity(), todoList);
+        adapter = new TodoFragment.TodoListViewAdapter(getActivity(), todoList);
         chatListView.setAdapter(adapter);
 
         userId = getArguments().getString("userId");
@@ -62,7 +67,7 @@ public class TodoFragment extends Fragment {
         private Context context;
         private List<TodoDto> todoList;
 
-        public ChatListViewAdapter(Context context, List<TodoDto> chatList) {
+        public TodoListViewAdapter(Context context, List<TodoDto> chatList) {
             this.context = context;
             this.todoList = chatList;
         }
@@ -77,7 +82,7 @@ public class TodoFragment extends Fragment {
         //특정한 유저를 반환하는 메소드
         @Override
         public Object getItem(int i) {
-            return chatList.get(i);
+            return todoList.get(i);
         }
 
         //아이템별 아이디를 반환하는 메소드
@@ -90,8 +95,9 @@ public class TodoFragment extends Fragment {
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
 
-            View v;
-            if(chatList.get(i).getUserId().equals(userId)) {
+            View v = null;
+            /*
+            if(todoList.get(i).getUserId().equals(userId)) {
                 v = View.inflate(context, R.layout.chat_row_from_me, null);
             } else {
                 v = View.inflate(context, R.layout.chat_row_from_other, null);
@@ -104,9 +110,9 @@ public class TodoFragment extends Fragment {
 
 
 
-            writer.setText(chatList.get(i).getWriter());
-            message.setText(chatList.get(i).getMessage());
-            time.setText(chatList.get(i).getTime());
+            writer.setText(todoList.get(i).getWriter());
+            message.setText(todoList.get(i).getMessage());
+            time.setText(todoList.get(i).getTime());
 
 //            if(chatList.get(i).getUserId().equals(userId)) {
 ////                //내가 보낸 메세지라면
@@ -126,6 +132,7 @@ public class TodoFragment extends Fragment {
             // 가장 아래로 스크롤
             chatListView.setSelection(this.getCount()-1);
             //만든뷰를 반환함
+            */
             return v;
         }
     }

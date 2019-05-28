@@ -120,7 +120,7 @@ public class LoginActivity extends AppCompatActivity {
 
                     intent = new Intent(LoginActivity.this, ProIndexActivity.class);
                     intent.putExtra("code", professorCode);
-                    intent.putExtra("professor_name", professorName);
+                    //intent.putExtra("professor_name", professorName);
                 }
 
                 dialog = builder
