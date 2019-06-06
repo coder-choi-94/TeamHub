@@ -23,7 +23,7 @@ import java.util.List;
 public class TodoFragment extends Fragment {
 
     private ListView chatListView;
-   // private TodoFragment.TodoListViewAdapter adapter;
+    // private TodoFragment.TodoListViewAdapter adapter;
     private List<TodoDto> todoList;
 
     private String userId;

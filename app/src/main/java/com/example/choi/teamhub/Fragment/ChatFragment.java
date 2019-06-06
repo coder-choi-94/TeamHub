@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +25,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -52,6 +54,48 @@ public class ChatFragment extends Fragment {
     private int projectNum;
     private int teamNum;
 
+    ChildEventListener myRefEvent = new ChildEventListener() {
+        @Override
+        public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+            ChatDto chatDto = dataSnapshot.getValue(ChatDto.class);
+            chatList.add(chatDto);
+            Log.v("##@@ add!!", chatList.size()+"");
+            adapter.notifyDataSetChanged();
+            chatListView.setSelection(chatList.size()-1);
+
+        }
+
+        @Override
+        public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+        }
+
+        @Override
+        public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+        }
+
+        @Override
+        public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+        }
+    };
+
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Log.v("##@@ OnCreate()", "");
+    }
+
+
+
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -75,55 +119,26 @@ public class ChatFragment extends Fragment {
         projectNum = getArguments().getInt("프로젝트 번호");
         teamNum = getArguments().getInt("팀 번호");
 
-
-
-        // Write a message to the database
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference(projectNum+"/"+teamNum);  //프로젝트번호/팀번호 레퍼런스를 가져옴(식별자용도) -> 내 팀의 채팅db만 가져옴
+        Log.v("##@@ OnCreateView()", myRef.getKey());
 
-        myRef.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                ChatDto chatDto = dataSnapshot.getValue(ChatDto.class);
 
-                chatList.add(chatDto);
 
-                adapter.notifyDataSetChanged();
+        myRef.addChildEventListener(myRefEvent);
 
-            }
 
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
 
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if(message.getText().toString() == null ||message.getText().toString().equals("")) {
+                Log.v("##@@ buttonCLicked", "@");
+                if(message.getText().toString() == null || message.getText().toString().equals("")) {
                     return;
                 }
 
                 Calendar calendar = Calendar.getInstance();
                 Date date = calendar.getTime();
-//                String today = (new SimpleDateFormat("yyyyMMddHHmmss")).format(date);
                 String time = (new SimpleDateFormat("HH:mm")).format(date);
                 String hour, minute;
                 String parsedTime;
@@ -137,11 +152,6 @@ public class ChatFragment extends Fragment {
                     minute = time.toString().split(":")[1];
                     parsedTime = "오전 " + hour + ":" + minute;
                 }
-
-
-
-
-
                 ChatDto chatDto = new ChatDto();
                 chatDto.setUserId(userId);
                 chatDto.setWriter(userName);
@@ -154,15 +164,24 @@ public class ChatFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.v("##@@ OnPause()", "");
+
+        myRef.removeEventListener(myRefEvent);
+    }
+
     public class ChatListViewAdapter extends BaseAdapter {
 
-        private Context context;
+        private Context my_context;
         private List<ChatDto> chatList;
 
         public ChatListViewAdapter(Context context, List<ChatDto> chatList) {
-            this.context = context;
+            this.my_context = context;
             this.chatList = chatList;
         }
+
 
 
         //출력할 총갯수를 설정하는 메소드
@@ -185,45 +204,37 @@ public class ChatFragment extends Fragment {
 
 
         @Override
-        public View getView(int i, View view, ViewGroup viewGroup) {
+        public View getView(int i, View convertView, ViewGroup parent) {
+            Log.v("##@@ getView()", "@");
+            ListViewHolder viewHolder;
+            if (convertView == null) {
+                LayoutInflater inflater = (LayoutInflater) my_context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                if(chatList.get(i).getUserId().equals(userId)) {
+                    convertView = inflater.inflate(R.layout.chat_row_from_me, parent, false);
+                } else {
+                    convertView = inflater.inflate(R.layout.chat_row_from_other, parent, false);
+                }
+                viewHolder = new ListViewHolder();
+                viewHolder.writer = (TextView)convertView.findViewById(R.id.writer);
+                viewHolder.message = (TextView)convertView.findViewById(R.id.message);
+                viewHolder.time = (TextView)convertView.findViewById(R.id.time);
 
-            View v;
-            if(chatList.get(i).getUserId().equals(userId)) {
-                v = View.inflate(context, R.layout.chat_row_from_me, null);
+                convertView.setTag(viewHolder);
             } else {
-                v = View.inflate(context, R.layout.chat_row_from_other, null);
+                viewHolder = (ListViewHolder)convertView.getTag();
             }
-
-            //뷰에 다음 컴포넌트들을 연결시켜줌
-            TextView writer = (TextView) v.findViewById(R.id.writer);
-            TextView message = (TextView) v.findViewById(R.id.message);
-            TextView time = (TextView) v.findViewById(R.id.time);
-
-
-
-            writer.setText(chatList.get(i).getWriter());
-            message.setText(chatList.get(i).getMessage());
-            time.setText(chatList.get(i).getTime());
-
-//            if(chatList.get(i).getUserId().equals(userId)) {
-////                //내가 보낸 메세지라면
-////                //이름부분을 그래비티 오른쪽으로
-////                v.findViewById(R.id.writer).setTextAlignment(View.TEXT_ALIGNMENT_VIEW_END);
-////
-////                //메세지부분을 그래비티 오른쪽으로
-////
-////                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.MATCH_PARENT);
-////                DisplayMetrics dm = getResources().getDisplayMetrics();
-////                params.rightMargin = Math.round(70 * dm.density);
-////                params.leftMargin = Math.round(70 * dm.density);
-////                params.gravity = Gravity.END;
-////                v.findViewById(R.id.message).setLayoutParams(params);
-//            }
-
-            // 가장 아래로 스크롤
-            chatListView.setSelection(this.getCount()-1);
-            //만든뷰를 반환함
-            return v;
+            viewHolder.writer.setText(chatList.get(i).getWriter());
+            viewHolder.message.setText(chatList.get(i).getMessage());
+            viewHolder.time.setText(chatList.get(i).getTime());
+//            chatListView.setSelection(this.getCount()-1);
+            return convertView;
         }
+        private class ListViewHolder {
+            TextView writer;
+            TextView message;
+            TextView time;
+
+        }
+
     }
 }
