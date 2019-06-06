@@ -63,7 +63,7 @@ public class TodoFragment extends Fragment {
         return inflater.inflate(R.layout.activity_todo_fragment, container, false);
     }
 
-    /*
+
     public class TodoListViewAdapter extends BaseAdapter {
 
         private Context context;
@@ -138,5 +138,5 @@ public class TodoFragment extends Fragment {
             return v;
         }
     }
-    */
+
 }

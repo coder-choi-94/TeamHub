@@ -74,19 +74,19 @@ public class StuMainActivity extends AppCompatActivity {
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
                 Bundle bundle;
                 switch (item.getItemId()) {
-                    case R.id.navigation_notice:
-                        bundle = new Bundle(7);
-                        bundle.putInt("프로젝트 번호", projectNum);
-                        bundle.putInt("팀 번호", teamNum);
-                        bundle.putString("userId", userId);
-                        bundle.putString("userName", userName);
-                        bundle.putString("userPhone", userPhone);
-                        bundle.putString("userDept", userDept);
-                        bundle.putString("userSno", userSno);
-
-                        noticeFrament.setArguments(bundle);
-                        transaction.replace(R.id.frame_layout, noticeFrament).commitAllowingStateLoss();
-                        break;
+//                    case R.id.navigation_notice:
+//                        bundle = new Bundle(7);
+//                        bundle.putInt("프로젝트 번호", projectNum);
+//                        bundle.putInt("팀 번호", teamNum);
+//                        bundle.putString("userId", userId);
+//                        bundle.putString("userName", userName);
+//                        bundle.putString("userPhone", userPhone);
+//                        bundle.putString("userDept", userDept);
+//                        bundle.putString("userSno", userSno);
+//
+//                        noticeFrament.setArguments(bundle);
+//                        transaction.replace(R.id.frame_layout, noticeFrament).commitAllowingStateLoss();
+//                        break;
                     case R.id.navigation_todo:
                         bundle = new Bundle(7);
                         bundle.putInt("프로젝트 번호", projectNum);
