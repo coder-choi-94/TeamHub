@@ -58,7 +58,7 @@ public class PersonalData extends AppCompatActivity {
         t9 = (TextView) findViewById(R.id.textView10);
         t10 = (TextView) findViewById(R.id.textView11);
 
-
+        //dddddddddddd
         if (bool == 1){ // 학생일때 정보
             t1.setText("아이디");
             t2.setText(userId);
