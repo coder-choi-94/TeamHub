@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -32,6 +33,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class ProProjectActivity extends AppCompatActivity {
     private Animation fab_open, fab_close;
@@ -83,7 +85,92 @@ public class ProProjectActivity extends AppCompatActivity {
         listView.setAdapter(adapter);
 
         getTeams();
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                try {
+                    String r = new ProProjectActivity.getCheckTask().execute(teamList.get(position).getStringNum(), s_num).get();
+                    Log.e("onItemClick", r);
+                    if(r.equals("next")){
+                        Log.e("onItemClick", "6");
+                        // activity 전환
+                        mainIntent(position);
+                        Log.e("onItemClick", "7");
+                    }
+//                    else if(r.equals("success")){
+//                        Log.e("onItemClick", "8");
+//                        joinDialog(position);
+//                        Log.e("onItemClick", "9");
+//                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
     }
+
+    public void mainIntent(int position){
+        try{
+            Intent intent = new Intent(ProProjectActivity.this, ProMainActivity.class);// 다음클래스 만들면 변경하기
+            intent.putExtra("교수 코드", PCODE);
+            intent.putExtra("교수 이름", PNAME);
+            intent.putExtra("프로젝트이름", P_NAME);
+            intent.putExtra("프로젝트 번호", P_NUM);
+
+            intent.putExtra("팀 이름", teamList.get(position).getName());
+            intent.putExtra("팀 번호", teamList.get(position).getNum());
+            //intent.putExtra("비밀번호", teamList.get(position).getPw());
+
+            startActivity(intent);
+        }catch (Exception e) {
+            Log.e("intent", e.getMessage());
+        }
+
+    }
+
+    // 교수 팀이 맞는지 확인, 정보 가져오기
+    class getCheckTask extends AsyncTask<String, Void, String>{
+        String sendMsg, receiveMsg;
+        @Override
+        protected String doInBackground(String... strings) {
+            try {
+                String str;
+                String urlValue = "";
+                urlValue = "http://teamhub.cafe24.com/professor_team_check.jsp";
+
+                URL url = new URL(urlValue);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("POST");
+                OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
+                sendMsg = "team_num=" + strings[0] + "&project_num=" + strings[1];
+                Log.e("two num ", "str0 : " + strings[0] + "str1 : " + strings[1]);
+                osw.write(sendMsg);
+                osw.flush();
+                if (conn.getResponseCode() == conn.HTTP_OK) {
+                    InputStreamReader tmp = new InputStreamReader(conn.getInputStream(), "UTF-8");
+                    BufferedReader reader = new BufferedReader(tmp);
+                    StringBuffer buffer = new StringBuffer();
+                    while ((str = reader.readLine()) != null) {
+                        buffer.append(str);
+                    }
+                    receiveMsg = buffer.toString();
+                    Log.e("check", receiveMsg);
+                } else {
+                    Log.i("통신 결과", conn.getResponseCode() + "에러");
+                }
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return receiveMsg;
+        }
+    }
+
     public void getTeams() {
         teamList.clear();
         try {
