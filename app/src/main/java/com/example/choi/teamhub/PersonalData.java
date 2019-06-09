@@ -9,6 +9,13 @@ import android.widget.TextView;
 
 public class PersonalData extends AppCompatActivity {
     TextView t1, t2, t3,t4, t5, t6, t7, t8, t9, t10;
+    int projectNum;
+    int teamNum;
+    String userId;
+    String userName;
+    String userPhone;
+    String userDept;
+    String userSno;
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.personal_data);
@@ -16,20 +23,13 @@ public class PersonalData extends AppCompatActivity {
         Intent intent = getIntent();
         int bool = intent.getIntExtra("구분", 0);
         if (bool == 1){ // 학생일때 정보
-            int projectNum = intent.getIntExtra("프로젝트 번호", -1);
-            int teamNum = intent.getIntExtra("팀 번호", -1);
-            String userId = intent.getStringExtra("userId");
-            String userName = intent.getStringExtra("userName");
-            String userPhone = intent.getStringExtra("userPhone");
-            String userDept = intent.getStringExtra("userDept");
-            String userSno = intent.getStringExtra("userSno");
-//            String userId = getArguments().getString("userId");
-//            userName = getArguments().getString("userName");
-//            userPhone = getArguments().getString("userPhone");
-//            userDept = getArguments().getString("userDept");
-//            userSno = getArguments().getString("userSno");
-//            projectNum = getArguments().getInt("프로젝트 번호");
-//            teamNum = getArguments().getInt("팀 번호");
+            projectNum = intent.getIntExtra("프로젝트 번호", -1);
+            teamNum = intent.getIntExtra("팀 번호", -1);
+            userId = intent.getStringExtra("userId");
+            userName = intent.getStringExtra("userName");
+            userPhone = intent.getStringExtra("userPhone");
+            userDept = intent.getStringExtra("userDept");
+            userSno = intent.getStringExtra("userSno");
         } else if (bool == 2){ // 교수일때 정보
             int projectNum = intent.getIntExtra("프로젝트 번호", -1);
             int teamNum = intent.getIntExtra("팀 번호", -1);
