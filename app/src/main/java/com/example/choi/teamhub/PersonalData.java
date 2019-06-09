@@ -52,38 +52,12 @@ public class PersonalData extends AppCompatActivity {
         t3 = (TextView) findViewById(R.id.textView4);
         t4 = (TextView) findViewById(R.id.textView5);
         t5 = (TextView) findViewById(R.id.textView6);
-        t6 = (TextView) findViewById(R.id.textView7);
-        t7 = (TextView) findViewById(R.id.textView8);
-        t8 = (TextView) findViewById(R.id.textView9);
-        t9 = (TextView) findViewById(R.id.textView10);
-        t10 = (TextView) findViewById(R.id.textView11);
 
-        //dddddddddddd
-        if (bool == 1){ // 학생일때 정보
-            t1.setText("아이디");
-            t2.setText(userId);
-            t3.setText("이름");
-            t4.setText(userName);
-            t5.setText("전화번호");
-            t6.setText(userPhone);
-            t7.setText("학과");
-            t8.setText(userDept);
-            t9.setText("학번");
-            t10.setText(userSno);
-        } else if (bool == 2){ // 교수일때 정보
-            projectNum = intent.getIntExtra("프로젝트 번호", -1);
-            teamNum = intent.getIntExtra("팀 번호", -1);
-            processNum = intent.getStringExtra("교수 코드");
-            userName = intent.getStringExtra("교수 이름");
-            projectName = intent.getStringExtra("프로젝트 이름");
-            teamName = intent.getStringExtra("팀 이름");
-            userSno = intent.getStringExtra("userSno");
-
-        }
         t1.setText(userId);
         t2.setText(userName);
         t5.setText(userPhone);
         t3.setText(userDept);
         t4.setText(userSno);
+
     }
 }
