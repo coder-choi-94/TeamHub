@@ -80,6 +80,10 @@ public class PersonalData extends AppCompatActivity {
             userSno = intent.getStringExtra("userSno");
 
         }
-
+        t1.setText(userId);
+        t2.setText(userName);
+        t5.setText(userPhone);
+        t3.setText(userDept);
+        t4.setText(userSno);
     }
 }
