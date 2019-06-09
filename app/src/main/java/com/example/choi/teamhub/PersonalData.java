@@ -16,6 +16,10 @@ public class PersonalData extends AppCompatActivity {
     String userPhone;
     String userDept;
     String userSno;
+    String processNum;
+    String projectName;
+    String teamName;
+
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.personal_data);
@@ -31,19 +35,14 @@ public class PersonalData extends AppCompatActivity {
             userDept = intent.getStringExtra("userDept");
             userSno = intent.getStringExtra("userSno");
         } else if (bool == 2){ // 교수일때 정보
-            int projectNum = intent.getIntExtra("프로젝트 번호", -1);
-            int teamNum = intent.getIntExtra("팀 번호", -1);
-            String userId = intent.getStringExtra("userId");
-            String userName = intent.getStringExtra("userName");
-            String userPhone = intent.getStringExtra("userPhone");
-            String userDept = intent.getStringExtra("userDept");
-            String userSno = intent.getStringExtra("userSno");
-//            projectNum = getArguments().getInt("프로젝트 번호");
-//            teamNum = getArguments().getInt("팀 번호");
-//            professorNum = getArguments().getInt("교수 코드");
-//            userName = getArguments().getString("교수 이름");
-//            projectName = getArguments().getString("프로젝트 이름");
-//            teamName = getArguments().getString("팀 이름");
+            projectNum = intent.getIntExtra("프로젝트 번호", -1);
+            teamNum = intent.getIntExtra("팀 번호", -1);
+            processNum = intent.getStringExtra("교수 코드");
+            userName = intent.getStringExtra("교수 이름");
+            projectName = intent.getStringExtra("프로젝트 이름");
+            teamName = intent.getStringExtra("팀 이름");
+            userSno = intent.getStringExtra("userSno");
+
         }
 
 
@@ -59,15 +58,28 @@ public class PersonalData extends AppCompatActivity {
         t9 = (TextView) findViewById(R.id.textView10);
         t10 = (TextView) findViewById(R.id.textView11);
 
-        t1.setText("아이디");
-        t2.setText(userId);
-        t3.setText("이름");
-        t4.setText(userName);
-        t5.setText("전화번호");
-        t6.setText(userPhone);
-        t7.setText("학과");
-        t8.setText(userDept);
-        t9.setText("학번");
-        t10.setText(userSno);
+
+        if (bool == 1){ // 학생일때 정보
+            t1.setText("아이디");
+            t2.setText(userId);
+            t3.setText("이름");
+            t4.setText(userName);
+            t5.setText("전화번호");
+            t6.setText(userPhone);
+            t7.setText("학과");
+            t8.setText(userDept);
+            t9.setText("학번");
+            t10.setText(userSno);
+        } else if (bool == 2){ // 교수일때 정보
+            projectNum = intent.getIntExtra("프로젝트 번호", -1);
+            teamNum = intent.getIntExtra("팀 번호", -1);
+            processNum = intent.getStringExtra("교수 코드");
+            userName = intent.getStringExtra("교수 이름");
+            projectName = intent.getStringExtra("프로젝트 이름");
+            teamName = intent.getStringExtra("팀 이름");
+            userSno = intent.getStringExtra("userSno");
+
+        }
+
     }
 }
