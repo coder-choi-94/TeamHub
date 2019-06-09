@@ -92,7 +92,7 @@ public class ProProjectActivity extends AppCompatActivity {
                 try {
                     String r = new ProProjectActivity.getCheckTask().execute(teamList.get(position).getStringNum(), s_num).get();
                     Log.e("onItemClick", r);
-                    if(r.equals("next")){
+                    if(r.equals("\tnext")){
                         Log.e("onItemClick", "6");
                         // activity 전환
                         mainIntent(position);
@@ -120,7 +120,6 @@ public class ProProjectActivity extends AppCompatActivity {
             intent.putExtra("교수 이름", PNAME);
             intent.putExtra("프로젝트이름", P_NAME);
             intent.putExtra("프로젝트 번호", P_NUM);
-
             intent.putExtra("팀 이름", teamList.get(position).getName());
             intent.putExtra("팀 번호", teamList.get(position).getNum());
             //intent.putExtra("비밀번호", teamList.get(position).getPw());

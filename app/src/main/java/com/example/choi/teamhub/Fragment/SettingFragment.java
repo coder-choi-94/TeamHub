@@ -29,6 +29,17 @@ import java.util.List;
 
 public class SettingFragment extends Fragment {
     ListView listView;
+    String userId;
+    String userName;
+    String userPhone;
+    String userDept;
+    String userSno;
+    String projectName;
+    String teamName;
+    int projectNum;
+    int professorNum;
+    int teamNum;
+
     public SettingFragment(){
 
     }
@@ -37,13 +48,24 @@ public class SettingFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_setting_fragment, container, false);
 
-        final String userId = getArguments().getString("userId");
-        final String userName = getArguments().getString("userName");
-        final String userPhone = getArguments().getString("userPhone");
-        final String userDept = getArguments().getString("userDept");
-        final String userSno = getArguments().getString("userSno");
-        final int projectNum = getArguments().getInt("프로젝트 번호");
-        final int teamNum = getArguments().getInt("팀 번호");
+        final int bool = getArguments().getInt("구분");
+        if (bool == 1){ // 학생일때 정보
+            String userId = getArguments().getString("userId");
+            userName = getArguments().getString("userName");
+            userPhone = getArguments().getString("userPhone");
+            userDept = getArguments().getString("userDept");
+            userSno = getArguments().getString("userSno");
+            projectNum = getArguments().getInt("프로젝트 번호");
+            teamNum = getArguments().getInt("팀 번호");
+        } else if (bool == 2){ // 교수일때 정보
+            projectNum = getArguments().getInt("프로젝트 번호");
+            teamNum = getArguments().getInt("팀 번호");
+            professorNum = getArguments().getInt("교수 코드");
+            userName = getArguments().getString("교수 이름");
+            projectName = getArguments().getString("프로젝트 이름");
+            teamName = getArguments().getString("팀 이름");
+        }
+
 
         //final String[] ListMenu = getResources().getStringArray(R.array.setting_array);
 
@@ -59,13 +81,25 @@ public class SettingFragment extends Fragment {
                     Intent intent = new Intent(getActivity(), PersonalData.class);
                     //Intent intent = new Intent(getContext(), PersonalData.class);
                     Log.e("intent : ", ""+intent);
-                    intent.putExtra("userId", userId);
-                    intent.putExtra("userName", userName);
-                    intent.putExtra("userPhone", userPhone);
-                    intent.putExtra("userDept", userDept);
-                    intent.putExtra("userSno", userSno);
-                    intent.putExtra("프로젝트 번호", projectNum);
-                    intent.putExtra("팀 번호", teamNum);
+                    if (bool == 1){ // 학생일때 정보
+                        intent.putExtra("구분", 1);
+                        intent.putExtra("userId", userId);
+                        intent.putExtra("userName", userName);
+                        intent.putExtra("userPhone", userPhone);
+                        intent.putExtra("userDept", userDept);
+                        intent.putExtra("userSno", userSno);
+                        intent.putExtra("프로젝트 번호", projectNum);
+                        intent.putExtra("팀 번호", teamNum);
+                    } else if (bool == 2){ // 교수일때 정보
+                        intent.putExtra("구분", 2);
+                        intent.putExtra("프로젝트 이름", projectName);
+                        intent.putExtra("교수 이름", userName);
+                        intent.putExtra("팀 이름", teamName);
+                        intent.putExtra("교수 코드", professorNum);
+                        intent.putExtra("프로젝트 번호", projectNum);
+                        intent.putExtra("팀 번호", teamNum);
+                    }
+
                     startActivity(intent);
                 } else if(position == 1){
                     Intent email = new Intent(Intent.ACTION_SEND);

@@ -115,6 +115,7 @@ public class StuMainActivity extends AppCompatActivity {
                         break;
                     case R.id.navigation_setting:
                         bundle = new Bundle(7);
+                        bundle.putInt("구분", 1);
                         bundle.putInt("프로젝트 번호", projectNum);
                         bundle.putInt("팀 번호", teamNum);
                         bundle.putString("userId", userId);
