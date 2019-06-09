@@ -14,13 +14,39 @@ public class PersonalData extends AppCompatActivity {
         setContentView(R.layout.personal_data);
 
         Intent intent = getIntent();
-        int projectNum = intent.getIntExtra("프로젝트 번호", -1);
-        int teamNum = intent.getIntExtra("팀 번호", -1);
-        String userId = intent.getStringExtra("userId");
-        String userName = intent.getStringExtra("userName");
-        String userPhone = intent.getStringExtra("userPhone");
-        String userDept = intent.getStringExtra("userDept");
-        String userSno = intent.getStringExtra("userSno");
+        int bool = intent.getIntExtra("구분", 0);
+        if (bool == 1){ // 학생일때 정보
+            int projectNum = intent.getIntExtra("프로젝트 번호", -1);
+            int teamNum = intent.getIntExtra("팀 번호", -1);
+            String userId = intent.getStringExtra("userId");
+            String userName = intent.getStringExtra("userName");
+            String userPhone = intent.getStringExtra("userPhone");
+            String userDept = intent.getStringExtra("userDept");
+            String userSno = intent.getStringExtra("userSno");
+//            String userId = getArguments().getString("userId");
+//            userName = getArguments().getString("userName");
+//            userPhone = getArguments().getString("userPhone");
+//            userDept = getArguments().getString("userDept");
+//            userSno = getArguments().getString("userSno");
+//            projectNum = getArguments().getInt("프로젝트 번호");
+//            teamNum = getArguments().getInt("팀 번호");
+        } else if (bool == 2){ // 교수일때 정보
+            int projectNum = intent.getIntExtra("프로젝트 번호", -1);
+            int teamNum = intent.getIntExtra("팀 번호", -1);
+            String userId = intent.getStringExtra("userId");
+            String userName = intent.getStringExtra("userName");
+            String userPhone = intent.getStringExtra("userPhone");
+            String userDept = intent.getStringExtra("userDept");
+            String userSno = intent.getStringExtra("userSno");
+//            projectNum = getArguments().getInt("프로젝트 번호");
+//            teamNum = getArguments().getInt("팀 번호");
+//            professorNum = getArguments().getInt("교수 코드");
+//            userName = getArguments().getString("교수 이름");
+//            projectName = getArguments().getString("프로젝트 이름");
+//            teamName = getArguments().getString("팀 이름");
+        }
+
+
 
         t1 = (TextView) findViewById(R.id.textView2);
         t2 = (TextView) findViewById(R.id.textView3);
