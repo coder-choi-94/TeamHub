@@ -78,6 +78,7 @@ import static android.app.Activity.RESULT_OK;
 
 public class TodoFragment extends Fragment {
 
+    View fragmentView;
     private String userId;
     private String userName;
     private String userPhone;
@@ -147,9 +148,9 @@ public class TodoFragment extends Fragment {
         Log.v("@RECV", "스트릭트모드직후");
 
 
-        View view = inflater.inflate(R.layout.activity_todo_fragment, container, false);
+        View fragmentView = inflater.inflate(R.layout.activity_todo_fragment, container, false);
 
-        listView = view.findViewById(R.id.todoListView);
+        listView = fragmentView.findViewById(R.id.todoListView);
         todoList = new ArrayList<TodoDto>();
 
         adapter = new TodoListViewAdapter(getActivity().getApplicationContext(), todoList);
@@ -157,6 +158,11 @@ public class TodoFragment extends Fragment {
 
         Log.v("@RECV", "투두가져오기직전");
         getTodos();
+        if(todoList.size() == 0) {
+            ((View)fragmentView.findViewById(R.id.warningText)).setVisibility(View.VISIBLE);
+        } else {
+            ((View)fragmentView.findViewById(R.id.warningText)).setVisibility(View.INVISIBLE);
+        }
         Log.v("@RECV", "투두가져오기직후");
         listView.setSelection(todoList.size()-1);
 
@@ -164,8 +170,9 @@ public class TodoFragment extends Fragment {
 
 
 
-        imageView = (ImageView)view.findViewById(R.id.imageView);
-        fab = (FloatingActionButton) view.findViewById(R.id.fab);
+        imageView = (ImageView)fragmentView.findViewById(R.id.imageView);
+        fab = (FloatingActionButton) fragmentView.findViewById(R.id.fab);
+        final View rootView = fragmentView;
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -196,6 +203,7 @@ public class TodoFragment extends Fragment {
 //                final EditText roomName = (EditText)formLayout.findViewById(R.id.roomName);
 //                final EditText roomPassword = (EditText)formLayout.findViewById(R.id.roomPassword);
 
+
                 builder.setPositiveButton("파일 올리기",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
@@ -220,6 +228,11 @@ public class TodoFragment extends Fragment {
                                         DoFileUpload(serverURL, file_path);
                                         Log.v("send", "upload SUCCESS");
                                         getTodos();
+                                        if(todoList.size() == 0) {
+                                            ((View)rootView.findViewById(R.id.warningText)).setVisibility(View.VISIBLE);
+                                        } else {
+                                            ((View)rootView.findViewById(R.id.warningText)).setVisibility(View.INVISIBLE);
+                                        }
                                         adapter.notifyDataSetChanged();
                                         listView.setSelection(todoList.size()-1);
                                     } catch (Exception e) {
@@ -250,6 +263,7 @@ public class TodoFragment extends Fragment {
         });
 
 
+        final View rootView2 = fragmentView;
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
@@ -266,6 +280,12 @@ public class TodoFragment extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         deleteTodo(index);
+                        adapter.notifyDataSetChanged();
+                        if(todoList.size() == 0) {
+                            ((View)rootView2.findViewById(R.id.warningText)).setVisibility(View.VISIBLE);
+                        } else {
+                            ((View)rootView2.findViewById(R.id.warningText)).setVisibility(View.INVISIBLE);
+                        }
                     }
                 });
                 alert.setNegativeButton("취소", new DialogInterface.OnClickListener() {
@@ -372,7 +392,7 @@ public class TodoFragment extends Fragment {
                 builder.show();
             }
         });
-        return view;
+        return fragmentView;
     }
 
     public void deleteTodo(int position) {
@@ -383,6 +403,11 @@ public class TodoFragment extends Fragment {
             if(result.equals("SUCCESS")) {
                 Toast.makeText(getActivity().getApplicationContext(), "삭제 되었습니다.", Toast.LENGTH_SHORT).show();
                 getTodos();
+                if(todoList.size() == 0) {
+                    ((View)fragmentView.findViewById(R.id.warningText)).setVisibility(View.VISIBLE);
+                } else {
+                    ((View)fragmentView.findViewById(R.id.warningText)).setVisibility(View.INVISIBLE);
+                }
                 adapter.notifyDataSetChanged();
                 listView.setSelection(todoList.size()-1);
             } else {
