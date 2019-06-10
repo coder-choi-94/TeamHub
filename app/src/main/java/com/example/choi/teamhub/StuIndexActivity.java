@@ -392,7 +392,7 @@ public class StuIndexActivity extends AppCompatActivity {
             TextView professorName = (TextView)v.findViewById(R.id.professorName);
             TextView projectName = (TextView)v.findViewById(R.id.projectName);
 
-            professorName.setText(projectList.get(i).getProfessor_name());
+            professorName.setText(projectList.get(i).getProfessor_name() + " 교수님");
             projectName.setText(projectList.get(i).getName());
 
             //이렇게하면 findViewWithTag를 쓸 수 있음 없어도 되는 문장임

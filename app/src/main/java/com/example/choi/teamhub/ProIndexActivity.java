@@ -93,6 +93,11 @@ public class ProIndexActivity extends AppCompatActivity  implements View.OnClick
         listView.setAdapter(adapter);
 
         getProjects();
+        if(projectList.size() == 0) {
+            ((View)findViewById(R.id.warningText)).setVisibility(View.VISIBLE);
+        } else {
+            ((View)findViewById(R.id.warningText)).setVisibility(View.INVISIBLE);
+        }
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -154,6 +159,7 @@ public class ProIndexActivity extends AppCompatActivity  implements View.OnClick
         }catch (Exception e) {
 
         }
+        adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -205,6 +211,11 @@ public class ProIndexActivity extends AppCompatActivity  implements View.OnClick
                                         .create();
                                 d.show();
                                 getProjects();
+                                if(projectList.size() == 0) {
+                                    ((View)findViewById(R.id.warningText)).setVisibility(View.VISIBLE);
+                                } else {
+                                    ((View)findViewById(R.id.warningText)).setVisibility(View.INVISIBLE);
+                                }
                             } else {
                                 d = builder
                                         .setMessage("에러 발생")
@@ -388,17 +399,15 @@ public class ProIndexActivity extends AppCompatActivity  implements View.OnClick
         //가장 중요한 부분
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
-            View v = View.inflate(context, R.layout.project_row, null);
+            View v = View.inflate(context, R.layout.project_row_for_professor, null);
 
             //뷰에 다음 컴포넌트들을 연결시켜줌
-            TextView professorName = (TextView)v.findViewById(R.id.professorName);
             TextView projectName = (TextView)v.findViewById(R.id.projectName);
 
-            professorName.setText(projectList.get(i).getProfessor_name());
             projectName.setText(projectList.get(i).getName());
 
             //이렇게하면 findViewWithTag를 쓸 수 있음 없어도 되는 문장임
-            v.setTag(projectList.get(i).getProfessor_name());
+//            v.setTag(projectList.get(i).getProfessor_name());
 
             //만든뷰를 반환함
             return v;
