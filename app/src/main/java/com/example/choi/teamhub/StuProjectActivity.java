@@ -99,6 +99,13 @@ public class StuProjectActivity extends AppCompatActivity implements View.OnClic
             ((View)findViewById(R.id.warningText)).setVisibility(View.INVISIBLE);
         }
         // 입장 dialog띄우기
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+
+                return true;
+            }
+        });
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -407,6 +414,11 @@ public class StuProjectActivity extends AppCompatActivity implements View.OnClic
                                 // 결과 : 성공일때 > 자동 방 입장
                                 //        실패일때 > 직접 방 입장
                                 getTeams();
+                                if(teamList.size() == 0) {
+                                    ((View)findViewById(R.id.warningText)).setVisibility(View.VISIBLE);
+                                } else {
+                                    ((View)findViewById(R.id.warningText)).setVisibility(View.INVISIBLE);
+                                }
                             } else {
                                 d = builder
                                         .setMessage("에러 발생")

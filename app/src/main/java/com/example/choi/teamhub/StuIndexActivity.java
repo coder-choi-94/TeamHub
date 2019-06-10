@@ -262,6 +262,7 @@ public class StuIndexActivity extends AppCompatActivity {
                 conn.setRequestMethod("POST");
                 OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
                 sendMsg = "studentId=" + strings[0];
+                Log.v("@@@@@", "param = " + sendMsg);
                 osw.write(sendMsg);
                 osw.flush();
                 if (conn.getResponseCode() == conn.HTTP_OK) {
@@ -290,7 +291,8 @@ public class StuIndexActivity extends AppCompatActivity {
         projectList.clear();
         try {
             String result = new getProjectsTask().execute(userId).get();
-
+            Log.v("@@@@@", "userID : " + userId);
+            Log.v("@@@@@", "result = " + result);
             JSONObject resultJsonObj = new JSONObject(result);
             JSONArray resultJsonData = resultJsonObj.getJSONArray("projects");
             JSONObject jsonObj;
@@ -299,9 +301,9 @@ public class StuIndexActivity extends AppCompatActivity {
                 ProjectDto projectDto = new ProjectDto();
                 projectDto.setNum(jsonObj.getInt("num"));
                 projectDto.setProfessor_code(jsonObj.getInt("professor_code"));
-                projectDto.setName(jsonObj.getString("name"));
+                projectDto.setName(jsonObj.getString("projName"));
                 projectDto.setPw(jsonObj.getString("pw"));
-                projectDto.setProfessor_name(jsonObj.getString("professor_name"));
+                projectDto.setProfessor_name(jsonObj.getString("prName"));
                 projectList.add(projectDto);    //리스트뷰에 한개씩 추가
             }
 
