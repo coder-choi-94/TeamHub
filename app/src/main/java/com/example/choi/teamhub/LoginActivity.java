@@ -116,10 +116,23 @@ public class LoginActivity extends AppCompatActivity {
                     intent.putExtra("userSno", userSno);
                 } else {                                                 //교수 로그인의 경우 교수 로그인 jsp페이지로부터 온 데이터를 받는다.
                     professorCode = resultJsonObj.getString("code");
-                    professorName = resultJsonObj.getString("name");
+                    userName = resultJsonObj.getString("name");
+                    userId = resultJsonObj.getString("id");
+                    userPhone = resultJsonObj.getString("phone");
+                    userDept = resultJsonObj.getString("dept");
 
                     intent = new Intent(LoginActivity.this, ProIndexActivity.class);
                     intent.putExtra("code", professorCode);
+                    intent.putExtra("name", userName);
+                    intent.putExtra("id", userId);
+                    intent.putExtra("phone", userPhone);
+                    intent.putExtra("dept", userDept);
+                    Log.e("login", String.valueOf(professorCode));
+                    Log.e("login", String.valueOf(userName));
+                    Log.e("login", String.valueOf(userId));
+                    Log.e("login", String.valueOf(userPhone));
+                    Log.e("login", String.valueOf(userDept));
+
                     //intent.putExtra("professor_name", professorName);
                 }
 

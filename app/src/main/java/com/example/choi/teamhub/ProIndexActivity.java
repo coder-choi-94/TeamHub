@@ -49,6 +49,11 @@ public class ProIndexActivity extends AppCompatActivity  implements View.OnClick
     private View formLayout;
     private Intent intent;
     private String code;    ///인텐트로 받은 교수코드
+    private String userId;
+    private String userName;
+    private String userPhone;
+    private String userDept;
+
     //private String professor_name;// 인텐트로받은 교수이름
     private ListView listView;
     private ProjectListAdapter adapter;
@@ -62,6 +67,16 @@ public class ProIndexActivity extends AppCompatActivity  implements View.OnClick
 
         intent = getIntent();
         code = intent.getStringExtra("code");
+        userName = intent.getStringExtra("name");
+        userId = intent.getStringExtra("id");
+        userPhone = intent.getStringExtra("phone");
+        userDept = intent.getStringExtra("dept");
+
+        Log.e("proindex", String.valueOf(code));
+        Log.e("proindex", String.valueOf(userName));
+        Log.e("proindex", String.valueOf(userId));
+        Log.e("proindex", String.valueOf(userPhone));
+        Log.e("proindex", String.valueOf(userDept));
         //professor_name = intent.getStringExtra("professor_name");
 
         Context context = this;
@@ -95,8 +110,19 @@ public class ProIndexActivity extends AppCompatActivity  implements View.OnClick
             Intent intent = new Intent(ProIndexActivity.this, ProProjectActivity.class);
             intent.putExtra("프로젝트 번호", projectList.get(position).getNum());
             intent.putExtra("프로젝트 이름", projectList.get(position).getName());
-            intent.putExtra("교수 이름", projectList.get(position).getProfessor_name());
-            intent.putExtra("교수 코드", code);
+            intent.putExtra("name", userName);
+            intent.putExtra("id", userId);
+            intent.putExtra("phone", userPhone);
+            intent.putExtra("dept", userDept);
+            intent.putExtra("code", code);
+
+            Log.e("proindex", String.valueOf(projectList.get(position).getNum()));
+            Log.e("proindex", String.valueOf(projectList.get(position).getName()));
+            Log.e("proindex", String.valueOf(code));
+            Log.e("proindex", String.valueOf(userName));
+            Log.e("proindex", String.valueOf(userId));
+            Log.e("proindex", String.valueOf(userPhone));
+            Log.e("proindex", String.valueOf(userDept));
             startActivity(intent);
         }catch (Exception e) {
             Log.e("ProjectActivity.Intent", e.getMessage());

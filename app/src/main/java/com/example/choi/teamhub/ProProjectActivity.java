@@ -41,10 +41,14 @@ public class ProProjectActivity extends AppCompatActivity {
     private Boolean isFabOpen =false;
     private View formLayout;
     private String PNAME;
-    private int PCODE;
+    private String PCODE;
     private int P_NUM;
     private String P_NAME;
     private String s_num;
+    private String userId;
+    private String userName;
+    private String userPhone;
+    private String userDept;
 
     private ListView listView;
     private TeamListAdapter adapter;
@@ -55,13 +59,26 @@ public class ProProjectActivity extends AppCompatActivity {
         setContentView(R.layout.activity_pro_in_project);
 
         Intent intent = getIntent();
-        PCODE = intent.getIntExtra("교수 코드", 0);
-        PNAME = intent.getStringExtra("교수 이름");
+
+        userId = intent.getStringExtra("id");
+        userPhone = intent.getStringExtra("phone");
+        userDept = intent.getStringExtra("dept");
+        PCODE = intent.getStringExtra("code");
+
+        PNAME = intent.getStringExtra("name");
         P_NAME = intent.getStringExtra("프로젝트 이름");
         P_NUM = intent.getIntExtra("프로젝트 번호", 0);
         s_num = String.valueOf(P_NUM);
-        String message = "교수 코드 : " + PCODE + " / 교수 이름 : " + PNAME + " / 프로젝트 이름 : " + P_NAME + " / 프로젝트 번호 : " + P_NUM;
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        Log.e("교수코드", String.valueOf(PCODE));
+
+
+        Log.e("proProject", String.valueOf(P_NAME));
+        Log.e("proProject", String.valueOf(P_NUM));
+        Log.e("proProject", String.valueOf(PCODE));
+        Log.e("proProject", String.valueOf(PNAME));
+        Log.e("proProject", String.valueOf(userId));
+        Log.e("proProject", String.valueOf(userPhone));
+        Log.e("proProject", String.valueOf(userDept));
 
         Context context = this;
         final LayoutInflater inflater = (LayoutInflater)context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
@@ -116,14 +133,23 @@ public class ProProjectActivity extends AppCompatActivity {
     public void mainIntent(int position){
         try{
             Intent intent = new Intent(ProProjectActivity.this, ProMainActivity.class);// 다음클래스 만들면 변경하기
-            intent.putExtra("교수 코드", PCODE);
-            intent.putExtra("교수 이름", PNAME);
-            intent.putExtra("프로젝트이름", P_NAME);
+            intent.putExtra("code", PCODE);
+            intent.putExtra("name", PNAME);
+            intent.putExtra("프로젝트 이름", P_NAME);
             intent.putExtra("프로젝트 번호", P_NUM);
             intent.putExtra("팀 이름", teamList.get(position).getName());
             intent.putExtra("팀 번호", teamList.get(position).getNum());
+            intent.putExtra("id", userId);
+            intent.putExtra("phone", userPhone);
+            intent.putExtra("dept", userDept);
             //intent.putExtra("비밀번호", teamList.get(position).getPw());
-
+            Log.e("proProject", String.valueOf(P_NAME));
+            Log.e("proProject", String.valueOf(P_NUM));
+            Log.e("proProject", String.valueOf(PCODE));
+            Log.e("proProject", String.valueOf(PNAME));
+            Log.e("proProject", String.valueOf(userId));
+            Log.e("proProject", String.valueOf(userPhone));
+            Log.e("proProject", String.valueOf(userDept));
             startActivity(intent);
         }catch (Exception e) {
             Log.e("intent", e.getMessage());
