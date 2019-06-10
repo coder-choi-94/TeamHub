@@ -253,6 +253,12 @@ public class TodoFragment extends Fragment {
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                //내가 올린게 아니라면 리턴
+
+                if(!todoList.get(position).getUploaderId().equals(userId)) {
+                    Toast.makeText(getActivity().getApplicationContext(), "내가 올린 파일만 삭제 가능합니다.", Toast.LENGTH_SHORT).show();
+                    return true;
+                }
                 AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
                 alert.setMessage(todoList.get(position).getTitle() + " 파일을 지우시겠습니까?");
                 final int index = position;
