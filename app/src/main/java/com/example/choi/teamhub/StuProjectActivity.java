@@ -239,7 +239,7 @@ public class StuProjectActivity extends AppCompatActivity implements View.OnClic
                         buffer.append(str);
                     }
                     receiveMsg = buffer.toString();
-
+//test
                 } else {
                     Log.i("통신 결과", conn.getResponseCode() + "에러");
                 }
