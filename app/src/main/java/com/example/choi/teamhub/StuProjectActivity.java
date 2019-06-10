@@ -239,7 +239,7 @@ public class StuProjectActivity extends AppCompatActivity implements View.OnClic
                         buffer.append(str);
                     }
                     receiveMsg = buffer.toString();
-
+//test
                 } else {
                     Log.i("통신 결과", conn.getResponseCode() + "에러");
                 }
@@ -403,11 +403,12 @@ public class StuProjectActivity extends AppCompatActivity implements View.OnClic
                             }
 
 
-                            result = new StuProjectActivity.makeTeamTask().execute(s_num, userId, name, pwd, userName).get();
+                            //result = new StuProjectActivity.makeTeamTask().execute(s_num, userId, name, pwd, userName).get();
+                            result = new StuProjectActivity.makeTeamTask().execute(s_num, userId, name, pwd).get();
 
                             if(result.contains("success")) {
                                 d = builder
-                                        .setMessage(name + " 프로젝트를 만들었습니다.")
+                                        .setMessage(name + " 팀을 만들었습니다.")
                                         .setPositiveButton("학인", null)
                                         .create();
                                 d.show();
@@ -505,7 +506,8 @@ public class StuProjectActivity extends AppCompatActivity implements View.OnClic
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("POST");
                 OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
-                sendMsg = "project_Num=" + strings[0] + "&student_id=" + strings[1] + "&name=" + strings[2] + "&pw=" + strings[3] + "&student_name=" + strings[4];
+                //sendMsg = "project_Num=" + strings[0] + "&student_id=" + strings[1] + "&name=" + strings[2] + "&pw=" + strings[3] + "&student_name=" + strings[4];
+                sendMsg = "project_Num=" + strings[0] + "&student_id=" + strings[1] + "&name=" + strings[2] + "&pw=" + strings[3];
                 osw.write(sendMsg);
                 osw.flush();
                 if (conn.getResponseCode() == conn.HTTP_OK) {
