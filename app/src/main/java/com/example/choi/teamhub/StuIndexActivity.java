@@ -101,9 +101,9 @@ public class StuIndexActivity extends AppCompatActivity {
         getProjects();
 
         if(projectList.size() == 0) {
-            ((TextView)findViewById(R.id.warnText)).setVisibility(View.VISIBLE);
+            ((View)findViewById(R.id.warningText)).setVisibility(View.VISIBLE);
         } else {
-            ((TextView)findViewById(R.id.warnText)).setVisibility(View.INVISIBLE);
+            ((View)findViewById(R.id.warningText)).setVisibility(View.INVISIBLE);
         }
     }
     public void search(){

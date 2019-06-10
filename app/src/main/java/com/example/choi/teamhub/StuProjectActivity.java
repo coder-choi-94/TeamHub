@@ -93,6 +93,11 @@ public class StuProjectActivity extends AppCompatActivity implements View.OnClic
 
         // 자료가 없을떄
         getTeams();
+        if(teamList.size() == 0) {
+            ((View)findViewById(R.id.warningText)).setVisibility(View.VISIBLE);
+        } else {
+            ((View)findViewById(R.id.warningText)).setVisibility(View.INVISIBLE);
+        }
         // 입장 dialog띄우기
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
