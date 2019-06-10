@@ -398,7 +398,7 @@ public class TodoFragment extends Fragment {
     public void deleteTodo(int position) {
         try {
             Log.v("@RECV", "num@ => " + todoList.get(position).getNum());
-            String result = new delTodoTask().execute(todoList.get(position).getNum()+"").get();
+            String result = new delTodoTask().execute(todoList.get(position).getNum()+"", todoList.get(position).getFilePath().substring(todoList.get(position).getFilePath().lastIndexOf("/")+1, todoList.get(position).getFilePath().length())).get();
             Log.v("@RECV", result.length()+"/"+result);
             if(result.equals("SUCCESS")) {
                 Toast.makeText(getActivity().getApplicationContext(), "삭제 되었습니다.", Toast.LENGTH_SHORT).show();
@@ -513,8 +513,8 @@ public class TodoFragment extends Fragment {
                 Log.v("@RECV", "삭제 커넥트직후");
                 conn.setRequestMethod("POST");
                 OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
-                sendMsg = "num=" + strings[0];
-                Log.v("@GET TODOS","전송전");
+                sendMsg = "num=" + strings[0] + "&name=" + URLEncoder.encode(strings[1], "UTF-8");
+                Log.v("@GET TODOS","전송전 / 전송메세지 : " + sendMsg);
                 osw.write(sendMsg);
                 osw.flush();
                 Log.v("@RECV", "삭제 데이터보냄");
