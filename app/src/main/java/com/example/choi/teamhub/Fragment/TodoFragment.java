@@ -92,7 +92,7 @@ public class TodoFragment extends Fragment {
     String fileURL; // URL
     String Save_Path;
     String Save_folder;
-
+//ㅏㅏㅏㅏㅏㅏㅏ
     ProgressDialog progress;
     DownloadThread dThread;
 
