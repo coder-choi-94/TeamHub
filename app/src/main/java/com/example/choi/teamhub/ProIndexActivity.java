@@ -72,6 +72,8 @@ public class ProIndexActivity extends AppCompatActivity  implements View.OnClick
         userPhone = intent.getStringExtra("phone");
         userDept = intent.getStringExtra("dept");
 
+        ((TextView)findViewById(R.id.professorCode)).setText(code);
+
         Log.e("proindex", String.valueOf(code));
         Log.e("proindex", String.valueOf(userName));
         Log.e("proindex", String.valueOf(userId));
