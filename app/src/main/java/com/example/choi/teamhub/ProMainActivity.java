@@ -74,7 +74,17 @@ public class ProMainActivity extends AppCompatActivity {
 
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.navigation);
+        Bundle bundle = new Bundle(7);
+        bundle.putInt("구분", 2);
+        bundle.putInt("프로젝트 번호", P_NUM);
+        bundle.putInt("팀 번호", teamNum);
+        bundle.putString("code", PCODE);
+        bundle.putString("name", PNAME);
+        bundle.putString("id", userId);
+        bundle.putString("phone", userPhone);
+        bundle.putString("dept", userDept);
 
+        todoFragment.setArguments(bundle);
         // 첫 화면 지정
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.frame_layout, todoFragment).commitAllowingStateLoss();
@@ -101,13 +111,14 @@ public class ProMainActivity extends AppCompatActivity {
 //                        break;
                     case R.id.navigation_todo:
                         bundle = new Bundle(7);
+                        bundle.putInt("구분", 2);
                         bundle.putInt("프로젝트 번호", P_NUM);
                         bundle.putInt("팀 번호", teamNum);
-                        bundle.putString("userId", userId);
-                        bundle.putString("userName", userName);
-                        bundle.putString("userPhone", userPhone);
-                        bundle.putString("userDept", userDept);
-                        bundle.putString("userSno", userSno);
+                        bundle.putString("code", PCODE);
+                        bundle.putString("name", PNAME);
+                        bundle.putString("id", userId);
+                        bundle.putString("phone", userPhone);
+                        bundle.putString("dept", userDept);
                         //
                         todoFragment.setArguments(bundle);
                         transaction.replace(R.id.frame_layout, todoFragment).commitAllowingStateLoss();

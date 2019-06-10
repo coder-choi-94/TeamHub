@@ -68,6 +68,7 @@ public class StuMainActivity extends AppCompatActivity {
 
         // 첫 화면 지정
         Bundle bundle = new Bundle(7);
+        bundle.putInt("구분", 1);
         bundle.putInt("프로젝트 번호", projectNum);
         bundle.putInt("팀 번호", teamNum);
         bundle.putString("userId", userId);
@@ -89,6 +90,7 @@ public class StuMainActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.navigation_todo:
                         bundle = new Bundle(7);
+                        bundle.putInt("구분", 1);
                         bundle.putInt("프로젝트 번호", projectNum);
                         bundle.putInt("팀 번호", teamNum);
                         bundle.putString("userId", userId);
