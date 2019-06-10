@@ -249,6 +249,32 @@ public class TodoFragment extends Fragment {
             }
         });
 
+
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
+                alert.setMessage(todoList.get(position).getTitle() + " 파일을 지우시겠습니까?");
+                final int index = position;
+                alert.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        deleteTodo(index);
+                    }
+                });
+                alert.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                alert.show();
+
+                return true;
+            }
+        });
+
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -343,6 +369,26 @@ public class TodoFragment extends Fragment {
         return view;
     }
 
+    public void deleteTodo(int position) {
+        try {
+            Log.v("@RECV", "num@ => " + todoList.get(position).getNum());
+            String result = new delTodoTask().execute(todoList.get(position).getNum()+"").get();
+            Log.v("@RECV", result.length()+"/"+result);
+            if(result.equals("SUCCESS")) {
+                Toast.makeText(getActivity().getApplicationContext(), "삭제 되었습니다.", Toast.LENGTH_SHORT).show();
+                getTodos();
+                adapter.notifyDataSetChanged();
+                listView.setSelection(todoList.size()-1);
+            } else {
+                Toast.makeText(getActivity().getApplicationContext(), "잠시 후 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
+            }
+
+        } catch(Exception e) {
+            Log.v("@GET TODOS", e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
     public void getTodos() {
         todoList.clear();
         Log.v("@GET TODOS", "todoListSIze" + todoList.size());
@@ -396,6 +442,51 @@ public class TodoFragment extends Fragment {
                 osw.write(sendMsg);
                 osw.flush();
                 Log.v("@RECV", "투두가져오기 데이터보냄");
+                Log.v("@RECV","전송후");
+                if (conn.getResponseCode() == conn.HTTP_OK) {
+                    Log.v("@RECV","응답옴");
+                    InputStreamReader tmp = new InputStreamReader(conn.getInputStream(), "UTF-8");
+                    BufferedReader reader = new BufferedReader(tmp);
+                    StringBuffer buffer = new StringBuffer();
+                    while ((str = reader.readLine()) != null) {
+                        buffer.append(str);
+                        Log.v("@RECV res=>", str);
+                    }
+                    receiveMsg = buffer.toString();
+
+                } else {
+                    Log.i("통신 결과", conn.getResponseCode() + "에러");
+                }
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return receiveMsg;
+        }
+    }
+
+    class delTodoTask extends AsyncTask<String, Void, String> {
+
+        String sendMsg, receiveMsg;
+        @Override
+        protected String doInBackground(String... strings) {
+            try {
+                String str;
+                String urlValue = "";
+                urlValue = "http://teamhub.cafe24.com/student_del_todo.jsp";
+                URL url = new URL(urlValue);
+                Log.v("@RECV", "삭제 커넥트직전");
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                Log.v("@RECV", "삭제 커넥트직후");
+                conn.setRequestMethod("POST");
+                OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
+                sendMsg = "num=" + strings[0];
+                Log.v("@GET TODOS","전송전");
+                osw.write(sendMsg);
+                osw.flush();
+                Log.v("@RECV", "삭제 데이터보냄");
                 Log.v("@RECV","전송후");
                 if (conn.getResponseCode() == conn.HTTP_OK) {
                     Log.v("@RECV","응답옴");
