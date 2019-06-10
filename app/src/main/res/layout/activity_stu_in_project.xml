@@ -13,7 +13,8 @@
         android:background="#7de27b"
         android:textSize="20dp"
         android:textStyle="bold"
-        android:text="팀 목록"/>
+        android:text="팀 목록"
+        android:textColor="@color/colorTeamHub"/>
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
