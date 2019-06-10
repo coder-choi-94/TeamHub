@@ -40,8 +40,7 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class StuProjectActivity extends AppCompatActivity implements View.OnClickListener{
-    private Animation fab_open, fab_close;
-    private FloatingActionButton fab, fab1, fab2;
+    private FloatingActionButton fab;
     private Boolean isFabOpen =false;
     private View formLayout;
 
@@ -84,15 +83,9 @@ public class StuProjectActivity extends AppCompatActivity implements View.OnClic
         Context context = this;
         final LayoutInflater inflater = (LayoutInflater)context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
         formLayout = inflater.inflate(R.layout.make_team, null, false);
-        fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
-        fab_close = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_close);
 
         fab = (FloatingActionButton)findViewById(R.id.fab);
-        fab1 = (FloatingActionButton)findViewById(R.id.fab1);
-        fab2 = (FloatingActionButton)findViewById(R.id.fab2);
         fab.setOnClickListener(this);
-        fab1.setOnClickListener(this);
-        fab2.setOnClickListener(this);
         listView = findViewById(R.id.teamListView);
         teamList = new ArrayList<TeamDto>();
         adapter = new TeamListAdapter(getApplicationContext(), teamList);
@@ -249,33 +242,7 @@ public class StuProjectActivity extends AppCompatActivity implements View.OnClic
     }
     @Override
     public void onClick(View v) {
-        int id = v.getId();
-        switch(id){
-            case R.id.fab:
-                animation();
-                break;
-            case R.id.fab1:
-                break;
-            case R.id.fab2:
-                makeDialog();
-                break;
-        }
-    }
-    public void animation(){
-        if(isFabOpen){
-            fab1.startAnimation(fab_close);
-            fab2.startAnimation(fab_close);
-            fab1.setClickable(false);
-            fab2.setClickable(false);
-            isFabOpen = false;
-        } else {
-            fab1.startAnimation(fab_open);
-            fab2.startAnimation(fab_open);
-            fab1.setClickable(true);
-            fab2.setClickable(true);
-            isFabOpen = true;
-
-        }
+        makeDialog();
     }
 
     public void joinDialog(int position){
@@ -583,7 +550,7 @@ public class StuProjectActivity extends AppCompatActivity implements View.OnClic
             TextView stuName= (TextView)v.findViewById(R.id.stuName);
             TextView teamName = (TextView)v.findViewById(R.id.teamName);
 
-            stuName.setText(teamList.get(i).getStudent_name());
+            stuName.setText(teamList.get(i).getStudent_name() + " 팀장");
             teamName.setText(teamList.get(i).getName());
 
             //이렇게하면 findViewWithTag를 쓸 수 있음 없어도 되는 문장임

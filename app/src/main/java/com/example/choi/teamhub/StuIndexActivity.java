@@ -26,6 +26,7 @@ import com.example.choi.teamhub.DTO.ProjectDto;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -98,6 +99,12 @@ public class StuIndexActivity extends AppCompatActivity {
         });
 
         getProjects();
+
+        if(projectList.size() == 0) {
+            ((TextView)findViewById(R.id.warnText)).setVisibility(View.VISIBLE);
+        } else {
+            ((TextView)findViewById(R.id.warnText)).setVisibility(View.INVISIBLE);
+        }
     }
     public void search(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);

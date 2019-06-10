@@ -1,5 +1,6 @@
 package com.example.choi.teamhub.Fragment;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.choi.teamhub.DTO.ChatDto;
@@ -52,6 +54,10 @@ public class ChatFragment extends Fragment {
     private String userSno;
     private int projectNum;
     private int teamNum;
+
+    ProgressDialog progress;
+    GetChatsThread dThread;
+
 
     ChildEventListener myRefEvent = new ChildEventListener() {
         @Override
@@ -118,13 +124,11 @@ public class ChatFragment extends Fragment {
         projectNum = getArguments().getInt("프로젝트 번호");
         teamNum = getArguments().getInt("팀 번호");
 
-        database = FirebaseDatabase.getInstance();
-        myRef = database.getReference(projectNum+"/"+teamNum);  //프로젝트번호/팀번호 레퍼런스를 가져옴(식별자용도) -> 내 팀의 채팅db만 가져옴
-        Log.v("##@@ OnCreateView()", myRef.getKey());
-
-
-
-        myRef.addChildEventListener(myRefEvent);
+//        database = FirebaseDatabase.getInstance();
+//        myRef = database.getReference(projectNum+"/"+teamNum);  //프로젝트번호/팀번호 레퍼런스를 가져옴(식별자용도) -> 내 팀의 채팅db만 가져옴
+        progress = ProgressDialog.show(getActivity(), "", "채팅 가져오는 중..");
+        dThread = new GetChatsThread();
+        dThread.start();
 
 
 
@@ -171,6 +175,16 @@ public class ChatFragment extends Fragment {
         myRef.removeEventListener(myRefEvent);
     }
 
+    class GetChatsThread extends Thread {
+        @Override
+        public void run() {
+            database = FirebaseDatabase.getInstance();
+            myRef = database.getReference(projectNum+"/"+teamNum);  //프로젝트번호/팀번호 레퍼런스를 가져옴(식별자용도) -> 내 팀의 채팅db만 가져옴
+            myRef.addChildEventListener(myRefEvent);
+            Log.v("##@@ OnCreateView()", myRef.getKey());
+            progress.dismiss();
+        }
+    }
     public class ChatListViewAdapter extends BaseAdapter {
 
         private Context my_context;
