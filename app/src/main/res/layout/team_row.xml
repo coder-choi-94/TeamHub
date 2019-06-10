@@ -1,29 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="#ffffff"
     android:gravity="center_vertical"
     android:orientation="vertical">
+
+
     <TextView
-        android:layout_marginLeft="20dp"
+        android:id="@+id/teamName"
         android:layout_width="match_parent"
         android:layout_height="60dp"
+        android:layout_marginLeft="20dp"
         android:gravity="center_vertical"
         android:paddingLeft="20dp"
+        android:text="팀허브"
+        android:textColor="#4CAF50"
         android:textSize="25dp"
-        android:textColor="@color/colorFont"
-        android:id="@+id/teamName"/>
+        android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/stuName"
-        android:layout_marginRight="20dp"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="right"
-        android:paddingRight="20dp"
-        android:textSize="20dp"
-        android:textColor="@color/colorFont"
-        android:paddingBottom="10dp"/>
+        android:orientation="horizontal"
+        >
 
+        <ImageView
+            android:layout_width="311dp"
+            android:layout_height="match_parent"
+            android:paddingLeft="280dp"
+            android:src="@drawable/person" />
+
+        <TextView
+            android:id="@+id/stuName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingTop="5dp"
+            android:gravity="right"
+            android:paddingBottom="10dp"
+            android:text="최종명 팀장"
+            android:textColor="#46834E"
+            android:textSize="15dp"
+            android:textStyle="bold" />
+    </LinearLayout>
 </LinearLayout>
