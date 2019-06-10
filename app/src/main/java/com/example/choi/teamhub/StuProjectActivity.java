@@ -98,6 +98,7 @@ public class StuProjectActivity extends AppCompatActivity implements View.OnClic
         } else {
             ((View)findViewById(R.id.warningText)).setVisibility(View.INVISIBLE);
         }
+
         // 입장 dialog띄우기
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -106,6 +107,7 @@ public class StuProjectActivity extends AppCompatActivity implements View.OnClic
                 return true;
             }
         });
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

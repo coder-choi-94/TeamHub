@@ -40,6 +40,8 @@ public class ProMainActivity extends AppCompatActivity {
     private String teamName;
     private int P_NUM;
     private int teamNum;
+    private String userName;
+    private String userSno;
     private String userId;
     private String userPhone;
     private String userDept;
@@ -72,9 +74,10 @@ public class ProMainActivity extends AppCompatActivity {
 
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.navigation);
+
         // 첫 화면 지정
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.frame_layout, noticeFrament).commitAllowingStateLoss();
+        transaction.replace(R.id.frame_layout, todoFragment).commitAllowingStateLoss();
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -100,13 +103,13 @@ public class ProMainActivity extends AppCompatActivity {
                         bundle = new Bundle(7);
                         bundle.putInt("프로젝트 번호", P_NUM);
                         bundle.putInt("팀 번호", teamNum);
-//                        bundle.putString("userId", userId);
-//                        bundle.putString("userName", userName);
-//                        bundle.putString("userPhone", userPhone);
-//                        bundle.putString("userDept", userDept);
-//                        bundle.putString("userSno", userSno);
-
-                        noticeFrament.setArguments(bundle);
+                        bundle.putString("userId", userId);
+                        bundle.putString("userName", userName);
+                        bundle.putString("userPhone", userPhone);
+                        bundle.putString("userDept", userDept);
+                        bundle.putString("userSno", userSno);
+                        //
+                        todoFragment.setArguments(bundle);
                         transaction.replace(R.id.frame_layout, todoFragment).commitAllowingStateLoss();
                         break;
 //                    case R.id.navigation_chat:
