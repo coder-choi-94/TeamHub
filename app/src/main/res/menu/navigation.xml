@@ -8,7 +8,7 @@
     <item
         android:id="@+id/navigation_todo"
         android:icon="@drawable/todo_icon"
-        android:title="@string/title_todo"/>
+        android:title="할일"/>
     <item
         android:id="@+id/navigation_chat"
         android:icon="@drawable/chat_icon"

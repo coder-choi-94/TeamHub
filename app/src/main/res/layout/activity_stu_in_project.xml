@@ -40,7 +40,7 @@
             android:visibility="invisible"
             android:backgroundTint="@color/colorTeamHub"
             android:scaleType="fitCenter"
-            android:src="@android:drawable/ic_menu_add" />
+            android:src="@drawable/fab_add" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab1"
@@ -56,7 +56,7 @@
             android:visibility="invisible"
             android:backgroundTint="@color/colorTeamHub"
             android:scaleType="fitCenter"
-            android:src="@android:drawable/ic_menu_add" />
+            android:src="@drawable/fab_add" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab"

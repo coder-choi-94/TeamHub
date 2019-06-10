@@ -13,6 +13,7 @@
                       <PersistentState>
                         <option name="children">
                           <map>
+<<<<<<< HEAD
                             <entry key="actionbar">
                               <value>
                                 <PersistentState>
@@ -40,6 +41,8 @@
                                 </PersistentState>
                               </value>
                             </entry>
+=======
+>>>>>>> origin/master
                             <entry key="launcher">
                               <value>
                                 <PersistentState>
@@ -50,8 +53,12 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
+<<<<<<< HEAD
                                                 <entry key="color" value="000000" />
                                                 <entry key="scalingPercent" value="22" />
+=======
+                                                <entry key="scalingPercent" value="400" />
+>>>>>>> origin/master
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -62,6 +69,7 @@
                                   <option name="values">
                                     <map>
                                       <entry key="backgroundLayerName" value="ic_launcher_background" />
+<<<<<<< HEAD
                                       <entry key="foregroundImage" value="C:\Users\vvv33\Downloads\document.png" />
                                       <entry key="foregroundLayerName" value="ic_launcher_foreground" />
                                       <entry key="outputName" value="ic_launcher_list" />
@@ -107,11 +115,41 @@
                                           </PersistentState>
                                         </value>
                                       </entry>
+=======
+                                      <entry key="foregroundImage" value="C:\Users\Choi\Desktop\fab.png" />
+                                      <entry key="foregroundLayerName" value="ic_fab_add_layer" />
+                                      <entry key="outputName" value="ic_fab_add" />
+>>>>>>> origin/master
                                     </map>
                                   </option>
                                 </PersistentState>
                               </value>
                             </entry>
+                          </map>
+                        </option>
+                      </PersistentState>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </PersistentState>
+          </value>
+        </entry>
+<<<<<<< HEAD
+=======
+        <entry key="vectorWizard">
+          <value>
+            <PersistentState>
+              <option name="children">
+                <map>
+                  <entry key="vectorAssetStep">
+                    <value>
+                      <PersistentState>
+                        <option name="values">
+                          <map>
+                            <entry key="assetSourceType" value="FILE" />
+                            <entry key="outputName" value="ic_alert_icon" />
+                            <entry key="sourceFile" value="C:\Users\Choi\Desktop\alert_icon.svg" />
                           </map>
                         </option>
                       </PersistentState>
