@@ -45,7 +45,6 @@ public class PersonalData extends AppCompatActivity {
 
         }
 
-//llll
 
         t1 = (TextView) findViewById(R.id.textView2);
         t2 = (TextView) findViewById(R.id.textView3);
