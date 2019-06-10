@@ -5,9 +5,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,10 +37,10 @@ public class StuMainActivity extends AppCompatActivity {
     private FragmentManager fragmentManager = getSupportFragmentManager();
 
     // 3개의 메뉴에 들어갈 Fragment들
-    private ChatFragment chatFragment = new ChatFragment();
-    private NoticeFrament noticeFrament = new NoticeFrament();
-    private SettingFragment settingFragment = new SettingFragment();
     private TodoFragment todoFragment = new TodoFragment();
+    private ChatFragment chatFragment = new ChatFragment();
+    private SettingFragment settingFragment = new SettingFragment();
+
 
     private int projectNum;
     private int teamNum;
@@ -63,9 +65,20 @@ public class StuMainActivity extends AppCompatActivity {
 
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.navigation);
+
         // 첫 화면 지정
+        Bundle bundle = new Bundle(7);
+        bundle.putInt("프로젝트 번호", projectNum);
+        bundle.putInt("팀 번호", teamNum);
+        bundle.putString("userId", userId);
+        bundle.putString("userName", userName);
+        bundle.putString("userPhone", userPhone);
+        bundle.putString("userDept", userDept);
+        bundle.putString("userSno", userSno);
+
+        todoFragment.setArguments(bundle);
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.frame_layout, noticeFrament).commitAllowingStateLoss();
+        transaction.replace(R.id.frame_layout, todoFragment).commitAllowingStateLoss();
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -74,19 +87,6 @@ public class StuMainActivity extends AppCompatActivity {
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
                 Bundle bundle;
                 switch (item.getItemId()) {
-//                    case R.id.navigation_notice:
-//                        bundle = new Bundle(7);
-//                        bundle.putInt("프로젝트 번호", projectNum);
-//                        bundle.putInt("팀 번호", teamNum);
-//                        bundle.putString("userId", userId);
-//                        bundle.putString("userName", userName);
-//                        bundle.putString("userPhone", userPhone);
-//                        bundle.putString("userDept", userDept);
-//                        bundle.putString("userSno", userSno);
-//
-//                        noticeFrament.setArguments(bundle);
-//                        transaction.replace(R.id.frame_layout, noticeFrament).commitAllowingStateLoss();
-//                        break;
                     case R.id.navigation_todo:
                         bundle = new Bundle(7);
                         bundle.putInt("프로젝트 번호", projectNum);
@@ -97,7 +97,7 @@ public class StuMainActivity extends AppCompatActivity {
                         bundle.putString("userDept", userDept);
                         bundle.putString("userSno", userSno);
 
-                        noticeFrament.setArguments(bundle);
+                        todoFragment.setArguments(bundle);
                         transaction.replace(R.id.frame_layout, todoFragment).commitAllowingStateLoss();
                         break;
                     case R.id.navigation_chat:
@@ -175,6 +175,16 @@ public class StuMainActivity extends AppCompatActivity {
             return v;
         }
     }
+
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        Log.v("#@$#@$", "onActivityResult in activity");
+//        super.onActivityResult(requestCode, resultCode, data);
+//        for (Fragment fragment : getSupportFragmentManager().getFragments()) {
+//            Log.v("#@$#@$", "fragment : " + fragment);
+//            fragment.onActivityResult(requestCode, resultCode, data);
+//        }
+//    }
 }
 
 

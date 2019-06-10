@@ -1,17 +1,44 @@
 package com.example.choi.teamhub.DTO;
 
 public class TodoDto {
-    String student_id;
+    int num;
+    int teamNum;
+    String uploaderId;
+    String uploader;
     String title;
     String content;
     String filePath;
 
-    public String getStudent_id() {
-        return student_id;
+    public int getTeamNum() {
+        return teamNum;
     }
 
-    public void setStudent_id(String student_id) {
-        this.student_id = student_id;
+    public void setTeamNum(int teamNum) {
+        this.teamNum = teamNum;
+    }
+
+    public String getUploaderId() {
+        return uploaderId;
+    }
+
+    public void setUploaderId(String uploaderId) {
+        this.uploaderId = uploaderId;
+    }
+
+    public int getNum() {
+        return num;
+    }
+
+    public void setNum(int num) {
+        this.num = num;
+    }
+
+    public String getUploader() {
+        return uploader;
+    }
+
+    public void setUploader(String uploader) {
+        this.uploader = uploader;
     }
 
     public String getTitle() {
