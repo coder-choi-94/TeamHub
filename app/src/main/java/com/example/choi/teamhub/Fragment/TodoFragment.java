@@ -86,6 +86,7 @@ public class TodoFragment extends Fragment {
     private String userSno;
     private int projectNum;
     private int teamNum;
+    private String professorNum;
 
     String File_Name;
     String File_extend;
@@ -130,13 +131,24 @@ public class TodoFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
 
-        userId = getArguments().getString("userId");
-        userName = getArguments().getString("userName");
-        userPhone = getArguments().getString("userPhone");
-        userDept = getArguments().getString("userDept");
-        userSno = getArguments().getString("userSno");
-        projectNum = getArguments().getInt("프로젝트 번호");
-        teamNum = getArguments().getInt("팀 번호");
+        final int bool = getArguments().getInt("구분");
+        if (bool == 1){ // 학생일때 정보
+            userId = getArguments().getString("userId");
+            userName = getArguments().getString("userName");
+            userPhone = getArguments().getString("userPhone");
+            userDept = getArguments().getString("userDept");
+            userSno = getArguments().getString("userSno");
+            projectNum = getArguments().getInt("프로젝트 번호");
+            teamNum = getArguments().getInt("팀 번호");
+        } else if (bool == 2){ // 교수일때 정보
+            projectNum = getArguments().getInt("프로젝트 번호");
+            teamNum = getArguments().getInt("팀 번호");
+            professorNum = getArguments().getString("code");
+            userName = getArguments().getString("name");
+            userId = getArguments().getString("id");
+            userPhone = getArguments().getString("phone");
+            userDept = getArguments().getString("dept");
+        }
 
 
 
@@ -398,7 +410,7 @@ public class TodoFragment extends Fragment {
     public void deleteTodo(int position) {
         try {
             Log.v("@RECV", "num@ => " + todoList.get(position).getNum());
-            String result = new delTodoTask().execute(todoList.get(position).getNum()+"").get();
+            String result = new delTodoTask().execute(todoList.get(position).getNum()+"", todoList.get(position).getFilePath().substring(todoList.get(position).getFilePath().lastIndexOf("/")+1, todoList.get(position).getFilePath().length())).get();
             Log.v("@RECV", result.length()+"/"+result);
             if(result.equals("SUCCESS")) {
                 Toast.makeText(getActivity().getApplicationContext(), "삭제 되었습니다.", Toast.LENGTH_SHORT).show();
@@ -513,8 +525,8 @@ public class TodoFragment extends Fragment {
                 Log.v("@RECV", "삭제 커넥트직후");
                 conn.setRequestMethod("POST");
                 OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
-                sendMsg = "num=" + strings[0];
-                Log.v("@GET TODOS","전송전");
+                sendMsg = "num=" + strings[0] + "&name=" + URLEncoder.encode(strings[1], "UTF-8");
+                Log.v("@GET TODOS","전송전 / 전송메세지 : " + sendMsg);
                 osw.write(sendMsg);
                 osw.flush();
                 Log.v("@RECV", "삭제 데이터보냄");

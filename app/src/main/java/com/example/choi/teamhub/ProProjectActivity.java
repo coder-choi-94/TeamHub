@@ -65,11 +65,14 @@ public class ProProjectActivity extends AppCompatActivity {
         userDept = intent.getStringExtra("dept");
         PCODE = intent.getStringExtra("code");
 
+        ((TextView)findViewById(R.id.professorCode)).setText(PCODE);
+
         PNAME = intent.getStringExtra("name");
         P_NAME = intent.getStringExtra("프로젝트 이름");
         P_NUM = intent.getIntExtra("프로젝트 번호", 0);
         s_num = String.valueOf(P_NUM);
         Log.e("교수코드", String.valueOf(PCODE));
+
 
 
         Log.e("proProject", String.valueOf(P_NAME));
