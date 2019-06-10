@@ -10,12 +10,37 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:padding="20dp"
+        android:background="#7de27b"
+        android:textSize="20dp"
+        android:textStyle="bold"
         android:text="팀 목록"/>
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorTeamHub">
-
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible"
+            android:id="@+id/warningText">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_warning_icon"
+                    android:backgroundTint="#fca402"
+                    android:layout_marginRight="10dp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="학생들이 아직 팀을 만들지 않았어요.."
+                    android:textSize="20dp"
+                    android:textColor="#000000" />
+            </LinearLayout>
+        </RelativeLayout>
         <ListView
             android:id="@+id/teamListView"
             android:layout_width="match_parent"
@@ -25,52 +50,5 @@
             android:dividerHeight="1.5dp"
             android:footerDividersEnabled="true"
             android:headerDividersEnabled="true" />
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
-            android:layout_gravity="bottom|end"
-            android:layout_marginEnd="32dp"
-            android:layout_marginRight="32dp"
-            android:layout_marginBottom="133dp"
-            android:visibility="invisible"
-            android:backgroundTint="@color/colorTeamHub"
-            android:scaleType="fitCenter"
-            android:src="@android:drawable/ic_menu_add" />
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
-            android:layout_gravity="bottom|end"
-            android:layout_marginEnd="32dp"
-            android:layout_marginRight="32dp"
-            android:layout_marginBottom="83dp"
-            android:visibility="invisible"
-            android:backgroundTint="@color/colorTeamHub"
-            android:scaleType="fitCenter"
-            android:src="@android:drawable/ic_menu_add" />
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
-            android:layout_gravity="bottom|end"
-            android:layout_marginEnd="32dp"
-            android:layout_marginRight="32dp"
-            android:layout_marginBottom="33dp"
-            android:backgroundTint="@color/colorTeamHub"
-            android:scaleType="fitCenter"
-            android:src="@drawable/fab_add" />
     </FrameLayout>
 </LinearLayout>

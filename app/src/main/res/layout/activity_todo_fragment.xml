@@ -9,7 +9,29 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorTeamHub">
-
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible"
+            android:id="@+id/warningText">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_warning_icon"
+                    android:backgroundTint="#fca402"
+                    android:layout_marginRight="10dp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="아직 아무도 일을 하지 않았어요.."
+                    android:textSize="20dp"
+                    android:textColor="#000000" />
+            </LinearLayout>
+        </RelativeLayout>
 
         <ListView
             android:id="@+id/todoListView"

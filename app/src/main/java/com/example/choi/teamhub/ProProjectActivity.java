@@ -102,6 +102,11 @@ public class ProProjectActivity extends AppCompatActivity {
         listView.setAdapter(adapter);
 
         getTeams();
+        if(teamList.size() == 0) {
+            ((View)findViewById(R.id.warningText)).setVisibility(View.VISIBLE);
+        } else {
+            ((View)findViewById(R.id.warningText)).setVisibility(View.INVISIBLE);
+        }
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -219,6 +224,7 @@ public class ProProjectActivity extends AppCompatActivity {
         }catch (Exception e) {
 
         }
+        adapter.notifyDataSetChanged();
     }
     class getTeamsTask extends AsyncTask<String, Void, String> {
         String sendMsg, receiveMsg;
