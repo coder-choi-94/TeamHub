@@ -38,7 +38,6 @@ public class ChatFragment extends Fragment {
     private FirebaseDatabase database;
     private DatabaseReference myRef;
 
-
     private ListView chatListView;
     private ChatListViewAdapter adapter;
     private List<ChatDto> chatList;
