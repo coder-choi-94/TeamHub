@@ -29,17 +29,16 @@ import java.util.List;
 
 public class SettingFragment extends Fragment {
     ListView listView;
-    String userId;
-    String userName;
-    String userPhone;
-    String userDept;
-    String userSno;
-    String projectName;
-    String teamName;
-    int projectNum;
-    int professorNum;
-    int teamNum;
-
+    private String userId;
+    private String userName;
+    private String userPhone;
+    private String userDept;
+    private String userSno;
+    private String projectName;
+    private String teamName;
+    private int projectNum;
+    private String professorNum;
+    private int teamNum;
     public SettingFragment(){
 
     }
@@ -60,10 +59,13 @@ public class SettingFragment extends Fragment {
         } else if (bool == 2){ // 교수일때 정보
             projectNum = getArguments().getInt("프로젝트 번호");
             teamNum = getArguments().getInt("팀 번호");
-            professorNum = getArguments().getInt("교수 코드");
-            userName = getArguments().getString("교수 이름");
+            professorNum = getArguments().getString("code");
+            userName = getArguments().getString("name");
             projectName = getArguments().getString("프로젝트 이름");
             teamName = getArguments().getString("팀 이름");
+            userId = getArguments().getString("id");
+            userPhone = getArguments().getString("phone");
+            userDept = getArguments().getString("dept");
         }
 
 
@@ -93,11 +95,14 @@ public class SettingFragment extends Fragment {
                     } else if (bool == 2){ // 교수일때 정보
                         intent.putExtra("구분", 2);
                         intent.putExtra("프로젝트 이름", projectName);
-                        intent.putExtra("교수 이름", userName);
+                        intent.putExtra("name", userName);
                         intent.putExtra("팀 이름", teamName);
-                        intent.putExtra("교수 코드", professorNum);
+                        intent.putExtra("code", professorNum);
                         intent.putExtra("프로젝트 번호", projectNum);
                         intent.putExtra("팀 번호", teamNum);
+                        intent.putExtra("id", userId);
+                        intent.putExtra("phone", userPhone);
+                        intent.putExtra("dept", userDept);
                     }
 
                     startActivity(intent);

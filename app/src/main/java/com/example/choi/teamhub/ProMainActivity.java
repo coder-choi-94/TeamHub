@@ -9,6 +9,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,20 +34,37 @@ public class ProMainActivity extends AppCompatActivity {
     private NoticeFrament noticeFrament = new NoticeFrament();
     private SettingFragment settingFragment = new SettingFragment();
     private TodoFragment todoFragment = new TodoFragment();
+    private String PCODE;
+    private String PNAME;
+    private String P_NAME;
+    private String teamName;
+    private int P_NUM;
+    private int teamNum;
+    private String userId;
+    private String userPhone;
+    private String userDept;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pro_main);
 
         Intent intent = getIntent();
-        final int PCODE = intent.getIntExtra("교수 코드", 0);
-        final String PNAME = intent.getStringExtra("교수 이름");
-        final String P_NAME = intent.getStringExtra("프로젝트 이름");
-        final String teamName = intent.getStringExtra("팀 이름");
-        final int P_NUM = intent.getIntExtra("프로젝트 번호", 0);
-        final int teamNum = intent.getIntExtra("팀 번호", 0);
-
-
+        PCODE = intent.getStringExtra("code");
+        PNAME = intent.getStringExtra("name");
+        P_NAME = intent.getStringExtra("프로젝트 이름");
+        teamName = intent.getStringExtra("팀 이름");
+        P_NUM = intent.getIntExtra("프로젝트 번호", 0);
+        teamNum = intent.getIntExtra("팀 번호", 0);
+        userId = intent.getStringExtra("id");
+        userPhone = intent.getStringExtra("phone");
+        userDept = intent.getStringExtra("dept");
+        Log.e("proMain", String.valueOf(P_NAME));
+        Log.e("proMain", String.valueOf(P_NUM));
+        Log.e("proMain", String.valueOf(PCODE));
+        Log.e("proMain", String.valueOf(PNAME));
+        Log.e("proMain", String.valueOf(userId));
+        Log.e("proMain", String.valueOf(userPhone));
+        Log.e("proMain", String.valueOf(userDept));
 
         String s_num = String.valueOf(P_NUM);
         String message = "교수 코드 : " + PCODE + " / 교수 이름 : " + PNAME + " / 프로젝트 이름 : " + P_NAME + " / 프로젝트 번호 : " + P_NUM;
@@ -106,14 +124,23 @@ public class ProMainActivity extends AppCompatActivity {
 //                        break;
                     case R.id.navigation_setting:
                         bundle = new Bundle(7);
-
                         bundle.putInt("구분", 2);
                         bundle.putInt("프로젝트 번호", P_NUM);
                         bundle.putInt("팀 번호", teamNum);
-                        bundle.putInt("교수 코드", PCODE);
-                        bundle.putString("교수 이름", PNAME);
+                        bundle.putString("code", PCODE);
+                        bundle.putString("name", PNAME);
                         bundle.putString("프로젝트 이름", P_NAME);
                         bundle.putString("팀 이름", teamName);
+                        bundle.putString("id", userId);
+                        bundle.putString("phone", userPhone);
+                        bundle.putString("dept", userDept);
+                        Log.e("proMain", String.valueOf(P_NAME));
+                        Log.e("proMain", String.valueOf(P_NUM));
+                        Log.e("proMain", String.valueOf(PCODE));
+                        Log.e("proMain", String.valueOf(PNAME));
+                        Log.e("proMain", String.valueOf(userId));
+                        Log.e("proMain", String.valueOf(userPhone));
+                        Log.e("proMain", String.valueOf(userDept));
 //                        bundle.putString("userId", userId);
 //                        bundle.putString("userName", userName);
 //                        bundle.putString("userPhone", userPhone);
