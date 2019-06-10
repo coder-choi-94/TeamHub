@@ -101,8 +101,11 @@ public class TodoFragment extends Fragment {
     EditText todoTitle;
     EditText todoText;
     Button todoUploadBtn;
+    Button todoGetFileBtn;
     TextView uploadedFileName;
     ImageView imageView;
+    TextView todoFilaName;
+    TextView todoContent;
 
 
     //파일 업로드 관련
@@ -134,11 +137,14 @@ public class TodoFragment extends Fragment {
         projectNum = getArguments().getInt("프로젝트 번호");
         teamNum = getArguments().getInt("팀 번호");
 
+
+
+        Log.v("@RECV", "스트릭트모드직전");
         StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
                 .permitDiskReads()
                 .permitDiskWrites()
                 .permitNetwork().build());
-
+        Log.v("@RECV", "스트릭트모드직후");
 
 
         View view = inflater.inflate(R.layout.activity_todo_fragment, container, false);
@@ -149,8 +155,11 @@ public class TodoFragment extends Fragment {
         adapter = new TodoListViewAdapter(getActivity().getApplicationContext(), todoList);
         listView.setAdapter(adapter);
 
+        Log.v("@RECV", "투두가져오기직전");
         getTodos();
+        Log.v("@RECV", "투두가져오기직후");
         listView.setSelection(todoList.size()-1);
+
 
 
 
@@ -172,11 +181,14 @@ public class TodoFragment extends Fragment {
                 todoUploadBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        Log.v("@RECV", "파일가져오기버트누름");
                         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                         intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
                         Log.v("@upload", "TYPE:" + MediaStore.Images.Media.CONTENT_TYPE);
                         intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        Log.v("@RECV", "파일가져오기 인테트실행직전");
                         startActivityForResult(intent, 1);
+                        Log.v("@RECV", "파일가져오기 인테트실행직후");
                     }
                 });
 
@@ -237,13 +249,62 @@ public class TodoFragment extends Fragment {
             }
         });
 
+
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                //내가 올린게 아니라면 리턴
+
+                if(!todoList.get(position).getUploaderId().equals(userId)) {
+                    Toast.makeText(getActivity().getApplicationContext(), "내가 올린 파일만 삭제 가능합니다.", Toast.LENGTH_SHORT).show();
+                    return true;
+                }
+                AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
+                alert.setMessage(todoList.get(position).getTitle() + " 파일을 지우시겠습니까?");
+                final int index = position;
+                alert.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        deleteTodo(index);
+                    }
+                });
+                alert.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                alert.show();
+
+                return true;
+            }
+        });
+
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
-                alert.setMessage(todoList.get(position).getTitle() + " 파일을 열어 보시겠습니까?");
+                Log.v("@TEST", "클릭이벤트시작");
+                AlertDialog.Builder builder = new AlertDialog.Builder(getView().getContext());
+                LayoutInflater inflater = getLayoutInflater();
+                formLayout = inflater.inflate(R.layout.activity_todo_file_view, null);
+                builder.setView(formLayout);
+                Log.v("@TEST", "빌더 뷰 입힘");
+
+                todoFilaName = (TextView)formLayout.findViewById(R.id.todoFileName);
+                todoFilaName.setText(todoList.get(position).getTitle());
+                todoContent = (TextView)formLayout.findViewById(R.id.todoContent);
+                todoContent.setText(todoList.get(position).getContent());
+                todoGetFileBtn = (Button)formLayout.findViewById(R.id.todoGetFileBtn);
+
+                Log.v("@TEST", "각 폼 값 가져옴");
                 final int index = position;
-                alert.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                todoGetFileBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
+                        alert.setMessage(todoList.get(index).getTitle() + " 파일을 열어 보시겠습니까?");
+                        alert.setPositiveButton("확인", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 File_Name =
@@ -251,16 +312,17 @@ public class TodoFragment extends Fragment {
                                                 (todoList.get(index).getFilePath().lastIndexOf("/")+1),
                                                 todoList.get(index).getFilePath().length()
                                         );
+                                Log.v("@RECV", "FILE_NAME = "+File_Name );
                                 File_extend =
                                         todoList.get(index).getFilePath().substring(
                                                 (todoList.get(index).getFilePath().lastIndexOf(".")+1),
                                                 todoList.get(index).getFilePath().length()
                                         );
-                                Log.v("@DOWNLOAD", "파일명 : " + File_Name + " / 확장자 : " + File_extend);
+                                Log.v("@RECV", "파일명 : " + File_Name + " / 확장자 : " + File_extend);
                                 try {
                                     fileURL = "http://teamhub.cafe24.com/downloadImage.jsp?fileName=" + URLEncoder.encode(File_Name, "UTF-8"); // URL
                                 } catch(Exception e) {
-                                    Log.v("@DOWNLOAD", "파라미터인코딩 실패");
+                                    Log.v("@RECV", "파라미터인코딩 실패");
                                     e.printStackTrace();
                                 }
 
@@ -270,16 +332,16 @@ public class TodoFragment extends Fragment {
                                 String ext = Environment.getExternalStorageState();
 
                                 if (ext.equals(Environment.MEDIA_MOUNTED)) {
-                                    Log.v("@DOWNLOAD", "마운티드?");
+                                    Log.v("@RECV", "마운티드?");
                                     Save_Path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Download";
-                                    Log.v("@DOWNLOAD", "저장폴더 : " + Save_Path);
+                                    Log.v("@RECV", "저장폴더 : " + Save_Path);
                                 }
                                 File dir = new File(Save_Path);
 
                                 // 폴더가 존재하지 않을 경우 폴더를 만듬
                                 if (!dir.exists()) {
                                     dir.mkdir();
-                                    Log.v("@DOWNLOAD", "폴더없어서 만듦");
+                                    Log.v("@RECV", "폴더없어서 만듦");
                                 }
 
                                 File_Name = todoList.get(index).getTitle() + todoList.get(index).getFilePath().substring(
@@ -288,33 +350,58 @@ public class TodoFragment extends Fragment {
                                 );
                                 // 다운로드 폴더에 동일한 파일명이 존재하는지 확인해서 없으면 다운받고 있으면 해당 파일 실행시킴.
                                 if (new File(Save_Path + "/" + File_Name).exists() == false) {
-                                    Log.v("@DOWNLOAD", "파일 없어서 다운받겠음! : " + Save_Path + "/" + File_Name);
+                                    Log.v("@RECV", "파일 없어서 다운받겠음! : " + Save_Path + "/" + File_Name);
                                     progress = ProgressDialog.show(getActivity(), "", "파일 다운로드중..");
                                     dThread = new DownloadThread(fileURL, Save_Path + "/" + File_Name);
                                     dThread.start();
                                 } else {
-                                    Log.v("@DOWNLOAD", "파일 있어서 바로 보여주겠음!");
+                                    Log.v("@RECV", "파일 있어서 바로 보여주겠음!");
                                     showDownloadFile();
                                 }
                             }
                         });
-                alert.setNegativeButton("취소", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();     //닫기
+                        alert.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();     //닫기
+                            }
+                        });
+                        alert.show();
                     }
                 });
-                alert.show();
+                builder.show();
             }
         });
         return view;
+    }
+
+    public void deleteTodo(int position) {
+        try {
+            Log.v("@RECV", "num@ => " + todoList.get(position).getNum());
+            String result = new delTodoTask().execute(todoList.get(position).getNum()+"").get();
+            Log.v("@RECV", result.length()+"/"+result);
+            if(result.equals("SUCCESS")) {
+                Toast.makeText(getActivity().getApplicationContext(), "삭제 되었습니다.", Toast.LENGTH_SHORT).show();
+                getTodos();
+                adapter.notifyDataSetChanged();
+                listView.setSelection(todoList.size()-1);
+            } else {
+                Toast.makeText(getActivity().getApplicationContext(), "잠시 후 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
+            }
+
+        } catch(Exception e) {
+            Log.v("@GET TODOS", e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     public void getTodos() {
         todoList.clear();
         Log.v("@GET TODOS", "todoListSIze" + todoList.size());
         try {
+            Log.v("@RECV", "투두가져오기 테스크 직전");
             String result = new getTodosTask().execute(teamNum+"").get();
+            Log.v("@RECV", "투두가져오기 테스크 직후");
             Log.v("@GET TODOS", "테스크 끝");
             Log.v("@GET TODOS", result);
             Log.v("@GET TODOS", result.length()+"");
@@ -351,22 +438,70 @@ public class TodoFragment extends Fragment {
                 urlValue = "http://teamhub.cafe24.com/student_get_todos.jsp";
 
                 URL url = new URL(urlValue);
+                Log.v("@RECV", "투두가져오기 커넥트직전");
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                Log.v("@RECV", "투두가져오기 커넥트직후");
                 conn.setRequestMethod("POST");
                 OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
                 sendMsg = "teamNum=" + strings[0];
                 Log.v("@GET TODOS","전송전");
                 osw.write(sendMsg);
                 osw.flush();
-                Log.v("@GET TODOS","전송후");
+                Log.v("@RECV", "투두가져오기 데이터보냄");
+                Log.v("@RECV","전송후");
                 if (conn.getResponseCode() == conn.HTTP_OK) {
-                    Log.v("@GET TODOS","응답옴");
+                    Log.v("@RECV","응답옴");
                     InputStreamReader tmp = new InputStreamReader(conn.getInputStream(), "UTF-8");
                     BufferedReader reader = new BufferedReader(tmp);
                     StringBuffer buffer = new StringBuffer();
                     while ((str = reader.readLine()) != null) {
                         buffer.append(str);
-                        Log.v("@GET TODOS res=>", str);
+                        Log.v("@RECV res=>", str);
+                    }
+                    receiveMsg = buffer.toString();
+
+                } else {
+                    Log.i("통신 결과", conn.getResponseCode() + "에러");
+                }
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return receiveMsg;
+        }
+    }
+
+    class delTodoTask extends AsyncTask<String, Void, String> {
+
+        String sendMsg, receiveMsg;
+        @Override
+        protected String doInBackground(String... strings) {
+            try {
+                String str;
+                String urlValue = "";
+                urlValue = "http://teamhub.cafe24.com/student_del_todo.jsp";
+                URL url = new URL(urlValue);
+                Log.v("@RECV", "삭제 커넥트직전");
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                Log.v("@RECV", "삭제 커넥트직후");
+                conn.setRequestMethod("POST");
+                OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
+                sendMsg = "num=" + strings[0];
+                Log.v("@GET TODOS","전송전");
+                osw.write(sendMsg);
+                osw.flush();
+                Log.v("@RECV", "삭제 데이터보냄");
+                Log.v("@RECV","전송후");
+                if (conn.getResponseCode() == conn.HTTP_OK) {
+                    Log.v("@RECV","응답옴");
+                    InputStreamReader tmp = new InputStreamReader(conn.getInputStream(), "UTF-8");
+                    BufferedReader reader = new BufferedReader(tmp);
+                    StringBuffer buffer = new StringBuffer();
+                    while ((str = reader.readLine()) != null) {
+                        buffer.append(str);
+                        Log.v("@RECV res=>", str);
                     }
                     receiveMsg = buffer.toString();
 
@@ -407,38 +542,40 @@ public class TodoFragment extends Fragment {
 
     public void HttpFileUpload(String urlString, String params, String fileName) {
         try {
+            Log.v("@RECV", "HttpFileUpload 실행시작");
             //파일명 날짜로
             SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
             Date nowdate = new Date();
             String dateString = formatter.format(nowdate);
-            Log.v("!@#!@#", dateString);
+            Log.v("@RECV", "dateString => "+dateString);
             //파일명 날짜.확장자 여기서 겹치는건 jsp defaultFileRenamePolicy가 처리
             String parsedFileName = dateString +File_Name.substring(File_Name.lastIndexOf("."), File_Name.length());
+            Log.v("@RECV", "parsedFileName => "+parsedFileName);
 
             urlString += "?seq=" + teamNum + "&id=" + userId + "&content=" +
                     URLEncoder.encode(todoText.getText().toString(), "UTF-8") + "&title=" + URLEncoder.encode(todoTitle.getText().toString(), "UTF-8");
-            Log.v("!@#!@# : url", urlString);
-            Log.v("!@#!@# : fileName", fileName);
+            Log.v("@RECV : url", urlString);
+            Log.v("@RECV : fileName", fileName);
             FileInputStream mFileInputStream = new FileInputStream(fileName);
-            Log.v("!@#!@# : ", "1 / " + mFileInputStream);
+            Log.v("@RECV", "1 / " + mFileInputStream);
             URL connectUrl = new URL(urlString);
-            Log.v("!@#!@# : ", "2 / " + connectUrl);
-            Log.d("Test", "mFileInputStream  is " + mFileInputStream);
-            Log.v("!@#!@# : ", "3 / " + mFileInputStream);
+            Log.v("@RECV", "2 / " + connectUrl);
+            Log.d("@RECV", "mFileInputStream  is " + mFileInputStream);
+            Log.v("@RECV", "3 / " + mFileInputStream);
 
             // HttpURLConnection 통신
             HttpURLConnection conn = (HttpURLConnection) connectUrl.openConnection();
-            Log.v("!@#!@# : ", "3.1 / ");
+            Log.v("@RECV", "3.1 / ");
             conn.setDoInput(true);
             conn.setDoOutput(true);
             conn.setUseCaches(false);
             conn.setRequestMethod("POST");
             conn.setRequestProperty("Connection", "Keep-Alive");
             conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
-            Log.v("!@#!@# : ", "3.2 / ");
+            Log.v("@RECV", "3.2 / ");
             // write data
             DataOutputStream dos = new DataOutputStream(conn.getOutputStream());
-            Log.v("!@#!@# : ", "3.3 / ");
+            Log.v("@RECV", "3.3 / ");
             dos.writeBytes(twoHyphens + boundary + lineEnd);
 
 
@@ -447,15 +584,15 @@ public class TodoFragment extends Fragment {
 //            dos.writeBytes("Content-Disposition: form-data; seq=\""+teamNum+"\";id=\""+userId+"\";content=\""+todoText+"\"" + lineEnd);
             dos.writeBytes(lineEnd);
 
-            Log.v("!@#!@# : ", "4 / ");
+            Log.v("@RECV", "4 / ");
             int bytesAvailable = mFileInputStream.available();
             int maxBufferSize = 1024;
             int bufferSize = Math.min(bytesAvailable, maxBufferSize);
-            Log.v("!@#!@# : ", "5 / ");
+            Log.v("@RECV", "5 / ");
             byte[] buffer = new byte[bufferSize];
             int bytesRead = mFileInputStream.read(buffer, 0, bufferSize);
-            Log.v("!@#!@# : ", "6 / ");
-            Log.d("!@#!@# :", "image byte is " + bytesRead);
+            Log.v("@RECV", "6 / ");
+            Log.d("@RECV", "image byte is " + bytesRead);
 
             // read image
             while (bytesRead > 0) {
@@ -469,7 +606,7 @@ public class TodoFragment extends Fragment {
             dos.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
 
             // close streams
-            Log.e("!@#!@# :", "File is written");
+            Log.e("@RECV", "File is written");
             mFileInputStream.close();
             dos.flush();
             // finish upload...
@@ -482,11 +619,11 @@ public class TodoFragment extends Fragment {
                 b.append((char) ch);
             }
             is.close();
-            Log.e("!@#!@# :", b.toString() + " / " + todoText.getText().toString());
+            Log.e("@RECV", b.toString() + " / " + todoText.getText().toString());
 
 
         } catch (Exception e) {
-            Log.d("!@#!@# :", "exception " + e.getMessage());
+            Log.d("@RECV", "exception " + e.getMessage());
             e.printStackTrace();
             // TODO: handle exception
         }
@@ -499,17 +636,19 @@ public class TodoFragment extends Fragment {
             // Make sure the request was successful
             if (resultCode == RESULT_OK) {
                 try {
-                    Log.v("@upload",data.getData().getPath());
+                    Log.v("@RECV", " data.getData.getpath => " + data.getData().getPath());
                     File_Name = data.getData().getPath().substring(data.getData().getPath().lastIndexOf("/")+1, data.getData().getPath().length());
                     uploadedFileName.setText(File_Name);
                     file_path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Download/" + File_Name;
-                    Log.v("@upload",file_path);
+//                    file_path = data.getData().getPath();
+
+
 //                    img_path = getImagePathToUri(data.getData()); //이미지의 URI를 얻어 경로값으로 반환.
 //                    // 선택한 이미지에서 비트맵 생성
 //                    InputStream in = getActivity().getContentResolver().openInputStream(data.getData());
 //                    Bitmap img = BitmapFactory.decodeStream(in);
 //                    in.close();
-//
+
 //                    //이곳에 이미지 회전 현상 오류 해결 필요..
 //
 //
@@ -636,7 +775,7 @@ public class TodoFragment extends Fragment {
     };
 
     private void showDownloadFile() {
-        Log.v("@DOWNLOAD", "다운 후파일 실행!");
+        Log.v("@RECV", "다운 후파일 실행!");
 
 
 

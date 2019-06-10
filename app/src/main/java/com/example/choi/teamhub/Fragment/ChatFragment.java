@@ -57,11 +57,11 @@ public class ChatFragment extends Fragment {
         @Override
         public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
             ChatDto chatDto = dataSnapshot.getValue(ChatDto.class);
+            Log.v("#@!#@!", "디비에서 가져온 직후 ChatDto.getUserId => " + chatDto.getUserId());
             chatList.add(chatDto);
             Log.v("##@@ add!!", chatList.size()+"");
             adapter.notifyDataSetChanged();
             chatListView.setSelection(chatList.size()-1);
-
         }
 
         @Override
@@ -107,7 +107,7 @@ public class ChatFragment extends Fragment {
         chatListView = view.findViewById(R.id.chatList);
         chatList = new ArrayList<ChatDto>();
 
-        adapter = new ChatListViewAdapter(getActivity(), chatList);
+        adapter = new ChatListViewAdapter(getActivity().getApplicationContext(), chatList);
         chatListView.setAdapter(adapter);
 
         userId = getArguments().getString("userId");
@@ -156,6 +156,7 @@ public class ChatFragment extends Fragment {
                 chatDto.setWriter(userName);
                 chatDto.setMessage(message.getText().toString());
                 chatDto.setTime(parsedTime);
+                Log.v("#@!#@!", "보내기 전 ChatDto.getUserId => " + chatDto.getUserId());
                 myRef.push().setValue(chatDto);
                 message.setText("");
             }
@@ -167,7 +168,6 @@ public class ChatFragment extends Fragment {
     public void onPause() {
         super.onPause();
         Log.v("##@@ OnPause()", "");
-
         myRef.removeEventListener(myRefEvent);
     }
 
@@ -203,30 +203,25 @@ public class ChatFragment extends Fragment {
 
 
         @Override
-        public View getView(int i, View convertView, ViewGroup parent) {
-            Log.v("##@@ getView()", "@");
-            ListViewHolder viewHolder;
-            if (convertView == null) {
-                LayoutInflater inflater = (LayoutInflater) my_context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                if(chatList.get(i).getUserId().equals(userId)) {
-                    convertView = inflater.inflate(R.layout.chat_row_from_me, parent, false);
-                } else {
-                    convertView = inflater.inflate(R.layout.chat_row_from_other, parent, false);
-                }
-                viewHolder = new ListViewHolder();
-                viewHolder.writer = (TextView)convertView.findViewById(R.id.writer);
-                viewHolder.message = (TextView)convertView.findViewById(R.id.message);
-                viewHolder.time = (TextView)convertView.findViewById(R.id.time);
-
-                convertView.setTag(viewHolder);
+        public View getView(int i, View view, ViewGroup viewGroup) {
+            View v;
+            if (chatList.get(i).getUserId().equals(userId)) {
+                v = View.inflate(getActivity().getApplicationContext(), R.layout.chat_row_from_me, null);
             } else {
-                viewHolder = (ListViewHolder)convertView.getTag();
+                v = View.inflate(getActivity().getApplicationContext(), R.layout.chat_row_from_other, null);
             }
-            viewHolder.writer.setText(chatList.get(i).getWriter());
-            viewHolder.message.setText(chatList.get(i).getMessage());
-            viewHolder.time.setText(chatList.get(i).getTime());
-//            chatListView.setSelection(this.getCount()-1);
-            return convertView;
+            TextView writer = (TextView) v.findViewById(R.id.writer);
+            TextView message = (TextView) v.findViewById(R.id.message);
+            TextView time = (TextView) v.findViewById(R.id.time);
+
+            writer.setText(chatList.get(i).getWriter());
+            message.setText(chatList.get(i).getMessage());
+            time.setText(chatList.get(i).getTime());
+
+            // 가장 아래로 스크롤
+            chatListView.setSelection(this.getCount() - 1);
+            //만든뷰를 반환함
+            return v;
         }
         private class ListViewHolder {
             TextView writer;
