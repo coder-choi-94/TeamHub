@@ -50,7 +50,7 @@ public class SettingFragment extends Fragment {
 
         final int bool = getArguments().getInt("구분");
         if (bool == 1){ // 학생일때 정보
-            String userId = getArguments().getString("userId");
+            userId = getArguments().getString("userId");
             userName = getArguments().getString("userName");
             userPhone = getArguments().getString("userPhone");
             userDept = getArguments().getString("userDept");
