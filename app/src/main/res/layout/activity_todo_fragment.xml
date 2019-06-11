@@ -25,6 +25,7 @@
                 android:layout_height="wrap_content"
                 android:text="5"
                 android:textColor="#ffffff"
+                android:layout_gravity="center_vertical"
                 android:id="@+id/countInTeam"
                 android:layout_marginRight="15dp"/>
         </LinearLayout>
