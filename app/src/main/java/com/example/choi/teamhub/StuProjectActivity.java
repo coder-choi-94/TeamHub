@@ -413,7 +413,7 @@ public class StuProjectActivity extends AppCompatActivity implements View.OnClic
 
                             //result = new StuProjectActivity.makeTeamTask().execute(s_num, userId, name, pwd, userName).get();
                             result = new StuProjectActivity.makeTeamTask().execute(s_num, userId, name, pwd).get();
-
+                            Log.v("!@#!@#", "result = "+ result);
                             if(result.contains("success")) {
                                 d = builder
                                         .setMessage(name + " 팀을 만들었습니다.")
