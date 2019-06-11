@@ -28,6 +28,7 @@ import java.util.List;
 
 public class ProMainActivity extends AppCompatActivity {
     // FrameLayout에 각 메뉴의 Fragment를 바꿔 줌
+    private long pressedTime;
     private FragmentManager fragmentManager = getSupportFragmentManager();
 
     // 3개의 메뉴에 들어갈 Fragment들
@@ -214,6 +215,28 @@ public class ProMainActivity extends AppCompatActivity {
 
             //만든뷰를 반환함
             return v;
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+
+
+        if ( pressedTime == 0 ) {
+            Toast.makeText(this, " 한 번 더 누르면 팀목록 페이지로 전환됩니다." , Toast.LENGTH_LONG).show();
+            pressedTime = System.currentTimeMillis();
+        }
+        else {
+            int seconds = (int) (System.currentTimeMillis() - pressedTime);
+            //1.5초내로 두번 누르면
+            if ( seconds > 1500 ) {
+                Toast.makeText(this, " 한 번 더 누르면 팀목록 페이지로 전환됩니다." , Toast.LENGTH_LONG).show();
+                pressedTime = 0 ;
+            }
+            else {
+                super.onBackPressed();
+//                finish(); // app 종료 시키기
+            }
         }
     }
 }

@@ -225,16 +225,7 @@ public class TodoFragment extends Fragment {
                                         todoTitle.getText().toString().equals("") || todoTitle.getText().toString() == null ||
                                         uploadedFileName.getText().toString().equals("파일 없음")) {
                                     Toast.makeText(getActivity().getApplicationContext(), "모든 항목을 입력해 주세요", Toast.LENGTH_SHORT).show();
-                                    return;
-//                                    AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
-//                                    alert.setMessage("모든 항목을 입력해 주세요");
-//                                    alert.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-//                                                @Override
-//                                                public void onClick(DialogInterface dialog, int which) {
-//                                                    dialog.dismiss();
-//                                                }
-//                                            });
-//                                    alert.show();
+
                                 } else {
                                     try {
                                         DoFileUpload(serverURL, file_path);
@@ -675,6 +666,12 @@ public class TodoFragment extends Fragment {
                 try {
                     Log.v("@RECV", " data.getData.getpath => " + data.getData().getPath());
                     File_Name = data.getData().getPath().substring(data.getData().getPath().lastIndexOf("/")+1, data.getData().getPath().length());
+                    Log.v("!#@$", File_Name);
+                    if(!File_Name.contains(".")) {
+                        Toast.makeText(getActivity().getApplicationContext(), "파일 이름이 올바르지 않습니다..", Toast.LENGTH_SHORT).show();
+                        uploadedFileName.setText("파일 없음");
+                        return;
+                    }
                     uploadedFileName.setText(File_Name);
                     file_path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Download/" + File_Name;
 //                    file_path = data.getData().getPath();

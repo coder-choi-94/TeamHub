@@ -1,6 +1,7 @@
 package com.example.choi.teamhub;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -8,6 +9,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
@@ -16,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.choi.teamhub.DTO.ChatDto;
 import com.example.choi.teamhub.Fragment.ChatFragment;
@@ -27,6 +30,7 @@ import java.util.List;
 
 public class StuMainActivity extends AppCompatActivity {
 
+    private long pressedTime = 0;
     private TextView mTextMessage;
 
     private ListView chatListView;
@@ -49,6 +53,8 @@ public class StuMainActivity extends AppCompatActivity {
     private String userPhone;
     private String userDept;
     private String userSno;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -133,6 +139,8 @@ public class StuMainActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+
     }
     public class ChatListViewAdapter extends BaseAdapter {
 
@@ -177,7 +185,31 @@ public class StuMainActivity extends AppCompatActivity {
             //만든뷰를 반환함
             return v;
         }
+
     }
+
+    @Override
+    public void onBackPressed() {
+
+
+        if ( pressedTime == 0 ) {
+            Toast.makeText(this, " 한 번 더 누르면 팀목록 페이지로 전환됩니다." , Toast.LENGTH_LONG).show();
+            pressedTime = System.currentTimeMillis();
+        }
+        else {
+            int seconds = (int) (System.currentTimeMillis() - pressedTime);
+            //1.5초내로 두번 누르면
+            if ( seconds > 1500 ) {
+                Toast.makeText(this, " 한 번 더 누르면 팀목록 페이지로 전환됩니다." , Toast.LENGTH_LONG).show();
+                pressedTime = 0 ;
+            }
+            else {
+                super.onBackPressed();
+//                finish(); // app 종료 시키기
+            }
+        }
+    }
+
 
 //    @Override
 //    protected void onActivityResult(int requestCode, int resultCode, Intent data) {

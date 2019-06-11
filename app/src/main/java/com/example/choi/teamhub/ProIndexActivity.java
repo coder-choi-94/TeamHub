@@ -43,6 +43,8 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class ProIndexActivity extends AppCompatActivity  implements View.OnClickListener {
+    private long pressedTime;
+
     private Animation fab_open, fab_close;
     private Boolean isFabOpen = false;
     private FloatingActionButton fab;
@@ -415,6 +417,5 @@ public class ProIndexActivity extends AppCompatActivity  implements View.OnClick
             return v;
         }
     }
-
 
 }

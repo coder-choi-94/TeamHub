@@ -14,8 +14,8 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="outputName" value="ic_person_icon" />
-                            <entry key="sourceFile" value="C:\Users\Choi\Desktop\person_icon.svg" />
+                            <entry key="outputName" value="accessbility_icon" />
+                            <entry key="sourceFile" value="C:\Users\Choi\Desktop\baseline-accessibility_new-24px.svg" />
                           </map>
                         </option>
                       </PersistentState>
