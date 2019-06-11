@@ -156,6 +156,11 @@ public class StuIndexActivity extends AppCompatActivity {
                                                     String rst = new joinProjectTask().execute(projectNum, userId).get();
                                                     if(rst.equals("success")) {
                                                         getProjects();  //참여중인 프로젝트 리스트뷰를 동기화 한번 해주고 액티비티 이동하기
+                                                        if(projectList.size() == 0) {
+                                                            ((View)findViewById(R.id.warningText)).setVisibility(View.VISIBLE);
+                                                        } else {
+                                                            ((View)findViewById(R.id.warningText)).setVisibility(View.INVISIBLE);
+                                                        }
                                                         //startactivity 뺀 이유가 여기서 교수코드 프로젝트 번호 등등 넣어줘야하는데
                                                         // 아래처럼 해줄때 position에 접근이 불가능함 나중에 시간남으면 고쳐보기로하고
                                                         //일단은 참여버튼 누르면 프로젝트 리스트만 갱신되게끔함

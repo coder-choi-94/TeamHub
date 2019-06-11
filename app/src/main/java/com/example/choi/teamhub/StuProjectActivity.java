@@ -218,7 +218,6 @@ public class StuProjectActivity extends AppCompatActivity implements View.OnClic
         }
     }
     class getTeamsTask extends AsyncTask<String, Void, String> {
-
         String sendMsg, receiveMsg;
         @Override
         protected String doInBackground(String... strings) {

@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.example.choi.teamhub.DTO.ChatDto;
 import com.example.choi.teamhub.Fragment.ChatFragment;
 import com.example.choi.teamhub.Fragment.NoticeFrament;
+import com.example.choi.teamhub.Fragment.ParticipationFragment;
 import com.example.choi.teamhub.Fragment.SettingFragment;
 import com.example.choi.teamhub.Fragment.TodoFragment;
 
@@ -30,8 +31,8 @@ public class ProMainActivity extends AppCompatActivity {
     private FragmentManager fragmentManager = getSupportFragmentManager();
 
     // 3개의 메뉴에 들어갈 Fragment들
-    private ChatFragment chatFragment = new ChatFragment();
-    private NoticeFrament noticeFrament = new NoticeFrament();
+    //private ChatFragment chatFragment = new ChatFragment();
+    private ParticipationFragment participationFragment = new ParticipationFragment();
     private SettingFragment settingFragment = new SettingFragment();
     private TodoFragment todoFragment = new TodoFragment();
     private String PCODE;
@@ -84,10 +85,10 @@ public class ProMainActivity extends AppCompatActivity {
         bundle.putString("phone", userPhone);
         bundle.putString("dept", userDept);
 
-        todoFragment.setArguments(bundle);
+        participationFragment.setArguments(bundle);
         // 첫 화면 지정
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.frame_layout, todoFragment).commitAllowingStateLoss();
+        transaction.replace(R.id.frame_layout, participationFragment).commitAllowingStateLoss();
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -96,19 +97,21 @@ public class ProMainActivity extends AppCompatActivity {
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
                 Bundle bundle;
                 switch (item.getItemId()) {
-//                    case R.id.navigation_notice:
-//                        bundle = new Bundle(7);
-//                        bundle.putInt("프로젝트 번호", projectNum);
-//                        bundle.putInt("팀 번호", teamNum);
-//                        bundle.putString("userId", userId);
-//                        bundle.putString("userName", userName);
-//                        bundle.putString("userPhone", userPhone);
-//                        bundle.putString("userDept", userDept);
-//                        bundle.putString("userSno", userSno);
-//
-//                        noticeFrament.setArguments(bundle);
-//                        transaction.replace(R.id.frame_layout, noticeFrament).commitAllowingStateLoss();
-//                        break;
+                    case R.id.navigation_participation:
+
+                        bundle = new Bundle(7);
+                        bundle.putInt("구분", 2);
+                        bundle.putInt("프로젝트 번호", P_NUM);
+                        bundle.putInt("팀 번호", teamNum);
+                        bundle.putString("code", PCODE);
+                        bundle.putString("name", PNAME);
+                        bundle.putString("id", userId);
+                        bundle.putString("phone", userPhone);
+                        bundle.putString("dept", userDept);
+
+                        participationFragment.setArguments(bundle);
+                        transaction.replace(R.id.frame_layout, participationFragment).commitAllowingStateLoss();
+                        break;
                     case R.id.navigation_todo:
                         bundle = new Bundle(7);
                         bundle.putInt("구분", 2);

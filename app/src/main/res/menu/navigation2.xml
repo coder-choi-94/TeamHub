@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--<item-->
+        <!--android:id="@+id/navigation_chat"-->
+        <!--android:icon="@drawable/chat_icon"-->
+        <!--android:title="@string/title_chats" />
+        -->
+
+    <item
+        android:id="@+id/navigation_participation"
+        android:icon="@drawable/notification_icon"
+        android:title="참여도" />
     <item
         android:id="@+id/navigation_todo"
         android:icon="@drawable/todo_icon"
         android:title="@string/title_todo"/>
-    <!--<item-->
-        <!--android:id="@+id/navigation_chat"-->
-        <!--android:icon="@drawable/chat_icon"-->
-        <!--android:title="@string/title_chats" />-->
-
     <item
         android:id="@+id/navigation_setting"
         android:icon="@drawable/setting_icon"
