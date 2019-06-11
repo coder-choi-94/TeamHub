@@ -10,6 +10,11 @@
         <!--android:title="@string/title_chats" />-->
 
     <item
+        android:id="@+id/navigation_participation"
+        android:icon="@drawable/notification_icon"
+        android:title="참여도" />
+
+    <item
         android:id="@+id/navigation_setting"
         android:icon="@drawable/setting_icon"
         android:title="@string/title_setting" />

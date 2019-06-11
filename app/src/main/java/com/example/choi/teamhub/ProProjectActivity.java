@@ -197,6 +197,7 @@ public class ProProjectActivity extends AppCompatActivity {
         teamList.clear();
         try {
             String result = new ProProjectActivity.getTeamsTask().execute(s_num).get();
+            Log.e("s_num : ", s_num);
             JSONObject resultJsonObj = new JSONObject(result);
             JSONArray resultJsonData = resultJsonObj.getJSONArray("teams");
             JSONObject jsonObj;
@@ -208,11 +209,10 @@ public class ProProjectActivity extends AppCompatActivity {
                 teamDto.setStudent_id(jsonObj.getString("student_id"));
                 teamDto.setName(jsonObj.getString("name"));
                 teamDto.setPw(jsonObj.getString("pw"));
-                teamDto.setStudent_name(jsonObj.getString("student_name"));
+                teamDto.setStudent_name(jsonObj.getString("stuName"));
                 Log.e("getTeams", "Team1 : " + teamDto.getNum() + ", " + teamDto.getStudent_name());
                 teamList.add(teamDto);    //리스트뷰에 한개씩 추가
             }
-
         }catch (Exception e) {
 
         }
