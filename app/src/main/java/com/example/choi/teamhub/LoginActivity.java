@@ -69,8 +69,8 @@ public class LoginActivity extends AppCompatActivity {
             final String result  = new LoginTask().execute(id,pwd).get();
             final JSONObject resultJsonObj = new JSONObject(result);
 
-            Toast.makeText(this, resultJsonObj.toString(), Toast.LENGTH_SHORT).show();
-            Toast.makeText(this, resultJsonObj.getString("result"), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, resultJsonObj.toString(), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, resultJsonObj.getString("result"), Toast.LENGTH_SHORT).show();
 
             if(resultJsonObj.getString("result").equals("FAILURE")) { //로그인 실패시
                 if(resultJsonObj.getString("content").equals("id")) {

@@ -78,8 +78,8 @@ public class StuProjectActivity extends AppCompatActivity implements View.OnClic
         PW = intent.getStringExtra("비밀번호");
         P_NUM = intent.getIntExtra("프로젝트 번호", 0);
         s_num = String.valueOf(P_NUM);
-        String message = "학생 아이디 : " + userId + " / 이 프로젝트의 교수 코드 : " + PCODE + " / 프로젝트 이름 : " + PNAME + " / 이 프로젝트 비밀번호 : " + PW + " / 프로젝트 번호 : " + P_NUM;
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        //String message = "학생 아이디 : " + userId + " / 이 프로젝트의 교수 코드 : " + PCODE + " / 프로젝트 이름 : " + PNAME + " / 이 프로젝트 비밀번호 : " + PW + " / 프로젝트 번호 : " + P_NUM;
+        //Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
 //------------------------------------------------------------------------
         Context context = this;
         final LayoutInflater inflater = (LayoutInflater)context.getSystemService(context.LAYOUT_INFLATER_SERVICE);

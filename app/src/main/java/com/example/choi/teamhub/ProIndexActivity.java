@@ -105,7 +105,7 @@ public class ProIndexActivity extends AppCompatActivity  implements View.OnClick
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(ProIndexActivity.this, "code : " + code + ", projectList: " + projectList.get(position).getName(), Toast.LENGTH_LONG).show();
+                //Toast.makeText(ProIndexActivity.this, "code : " + code + ", projectList: " + projectList.get(position).getName(), Toast.LENGTH_LONG).show();
                 // 이부분에 클릭시 팀선택화면으로 넘어가도록 만들기.
                 projectIntent(position);
             }

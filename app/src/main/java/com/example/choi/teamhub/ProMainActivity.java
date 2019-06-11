@@ -71,8 +71,8 @@ public class ProMainActivity extends AppCompatActivity {
         Log.e("proMain", String.valueOf(userDept));
 
         String s_num = String.valueOf(P_NUM);
-        String message = "교수 코드 : " + PCODE + " / 교수 이름 : " + PNAME + " / 프로젝트 이름 : " + P_NAME + " / 프로젝트 번호 : " + P_NUM;
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        //String message = "교수 코드 : " + PCODE + " / 교수 이름 : " + PNAME + " / 프로젝트 이름 : " + P_NAME + " / 프로젝트 번호 : " + P_NUM;
+        //Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
 
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.navigation);
