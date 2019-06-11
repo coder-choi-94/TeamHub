@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -138,6 +139,10 @@ class SettingAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent){
         SettingItem settingItem = new SettingItem(parent.getContext());
         settingItem.setItem(arr[position]);
+        if(position == 0)
+            ((ImageView)settingItem.findViewById(R.id.iconImage)).setImageResource(R.drawable.ic_person_icon);
+        else
+            ((ImageView)settingItem.findViewById(R.id.iconImage)).setImageResource(R.drawable.ic_menu_manage);
         return settingItem;
 
     }
