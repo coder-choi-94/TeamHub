@@ -27,7 +27,7 @@
             android:layout_height="50dp"
             android:gravity="center_vertical"
             android:paddingLeft="10dp"
-            android:textSize="20dp"
+            android:textSize="25dp"
             android:textColor="#56CC5B"
             android:id="@+id/projectName"
             android:textStyle="bold"
