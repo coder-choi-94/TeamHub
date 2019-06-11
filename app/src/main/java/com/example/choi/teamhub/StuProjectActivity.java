@@ -44,6 +44,7 @@ public class StuProjectActivity extends AppCompatActivity implements View.OnClic
     private Boolean isFabOpen =false;
     private View formLayout;
 
+    private String countInTeam;
     //유저 정보
     private String userId;
     private String userName;
@@ -114,8 +115,11 @@ public class StuProjectActivity extends AppCompatActivity implements View.OnClic
                 try {
                     String r = new getCheckTask().execute(teamList.get(position).getStringNum(), userId, s_num).get();
                     Log.e("onItemClick", r);
-                    if(r.equals("next")){
+                    if(r.contains("next")){
                         Log.e("onItemClick", "6");
+                        countInTeam = r.split(":")[1];
+                        //여기서 : 로 스플릿하고 가져온 총 인원수 값을 변수에 넣어주고
+                        //그걸 전환액티비티 인수로 넘겨주자 이건 mainIntent 안에서
                         // activity 전환
                         mainIntent(position);
                         Log.e("onItemClick", "7");
@@ -146,6 +150,7 @@ public class StuProjectActivity extends AppCompatActivity implements View.OnClic
             intent.putExtra("교수 코드", PCODE);
             intent.putExtra("프로젝트이름", PNAME);
             intent.putExtra("프로젝트 번호", P_NUM);
+            intent.putExtra("팀 인원", countInTeam);
             intent.putExtra("팀 이름", teamList.get(position).getName());
             intent.putExtra("팀 번호", teamList.get(position).getNum());
             //intent.putExtra("비밀번호", teamList.get(position).getPw());

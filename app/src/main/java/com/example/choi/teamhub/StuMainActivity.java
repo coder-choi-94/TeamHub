@@ -53,6 +53,7 @@ public class StuMainActivity extends AppCompatActivity {
     private String userPhone;
     private String userDept;
     private String userSno;
+    private String countInTeam;
 
 
     @Override
@@ -68,6 +69,7 @@ public class StuMainActivity extends AppCompatActivity {
         userPhone = intent.getStringExtra("userPhone");
         userDept = intent.getStringExtra("userDept");
         userSno = intent.getStringExtra("userSno");
+        countInTeam = intent.getStringExtra("팀 인원");
 
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.navigation);
@@ -82,6 +84,7 @@ public class StuMainActivity extends AppCompatActivity {
         bundle.putString("userPhone", userPhone);
         bundle.putString("userDept", userDept);
         bundle.putString("userSno", userSno);
+        bundle.putString("countInTeam", countInTeam);
 
         todoFragment.setArguments(bundle);
         FragmentTransaction transaction = fragmentManager.beginTransaction();
@@ -104,6 +107,7 @@ public class StuMainActivity extends AppCompatActivity {
                         bundle.putString("userPhone", userPhone);
                         bundle.putString("userDept", userDept);
                         bundle.putString("userSno", userSno);
+                        bundle.putString("countInTeam", countInTeam);
 
                         todoFragment.setArguments(bundle);
                         transaction.replace(R.id.frame_layout, todoFragment).commitAllowingStateLoss();
@@ -117,6 +121,7 @@ public class StuMainActivity extends AppCompatActivity {
                         bundle.putString("userPhone", userPhone);
                         bundle.putString("userDept", userDept);
                         bundle.putString("userSno", userSno);
+                        bundle.putString("countInTeam", countInTeam);
 
                         chatFragment.setArguments(bundle);
                         transaction.replace(R.id.frame_layout, chatFragment).commitAllowingStateLoss();
@@ -131,6 +136,7 @@ public class StuMainActivity extends AppCompatActivity {
                         bundle.putString("userPhone", userPhone);
                         bundle.putString("userDept", userDept);
                         bundle.putString("userSno", userSno);
+                        bundle.putString("countInTeam", countInTeam);
 
                         settingFragment.setArguments(bundle);
                         transaction.replace(R.id.frame_layout, settingFragment).commitAllowingStateLoss();

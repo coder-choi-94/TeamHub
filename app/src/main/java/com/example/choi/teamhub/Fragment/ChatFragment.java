@@ -2,10 +2,13 @@ package com.example.choi.teamhub.Fragment;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.os.Build;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
@@ -19,6 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.choi.teamhub.DTO.ChatDto;
 import com.example.choi.teamhub.R;
@@ -54,6 +58,9 @@ public class ChatFragment extends Fragment {
     private String userSno;
     private int projectNum;
     private int teamNum;
+    private int countInTeam;
+
+    private ViewGroup groupLayout;
 
     ProgressDialog progress;
 
@@ -122,10 +129,28 @@ public class ChatFragment extends Fragment {
         userSno = getArguments().getString("userSno");
         projectNum = getArguments().getInt("프로젝트 번호");
         teamNum = getArguments().getInt("팀 번호");
+        countInTeam = Integer.parseInt(getArguments().getString("countInTeam"));
+        ((TextView)view.findViewById(R.id.countInTeam)).setText(countInTeam + "");
 
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference(projectNum+"/"+teamNum);  //프로젝트번호/팀번호 레퍼런스를 가져옴(식별자용도) -> 내 팀의 채팅db만 가져옴
         myRef.addChildEventListener(myRefEvent);
+
+        groupLayout = (ViewGroup)view.findViewById(R.id.groupLayout);
+                groupLayout.setOnClickListener(new ViewGroup.OnClickListener(){
+                    @Override
+                    public void onClick(View v) {
+                        AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
+                        alert.setMessage("최종명, 조현비, 장우성");
+                        alert.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                        alert.show();
+                    }
+                });
 
 
         sendButton.setOnClickListener(new View.OnClickListener() {

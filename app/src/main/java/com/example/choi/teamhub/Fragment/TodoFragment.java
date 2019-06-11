@@ -91,6 +91,8 @@ public class TodoFragment extends Fragment {
     String File_Name;
     String File_extend;
 
+    private int countInTeam;
+
     String fileURL; // URL
     String Save_Path;
     String Save_folder;
@@ -162,9 +164,12 @@ public class TodoFragment extends Fragment {
 
         if(bool == 1) {
             fragmentView = inflater.inflate(R.layout.activity_todo_fragment, container, false);
+            countInTeam = Integer.parseInt(getArguments().getString("countInTeam"));
+            ((TextView)fragmentView.findViewById(R.id.countInTeam)).setText(countInTeam + "");
         } else if(bool == 2) {
             fragmentView = inflater.inflate(R.layout.activity_todo_fragment_for_pro, container, false);
         }
+
 
 
         listView = fragmentView.findViewById(R.id.todoListView);
