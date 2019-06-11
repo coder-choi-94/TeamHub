@@ -64,6 +64,7 @@ public class ParticipationFragment extends Fragment {
         strTeamNum = String.valueOf(teamNum);
 
         list = new ArrayList<ParticipationDto>();
+        list.clear(); total = 0;
         getFiles();
         for(int i =0; i< list.size(); i++){
             total += list.get(i).getCount();
@@ -73,6 +74,7 @@ public class ParticipationFragment extends Fragment {
         fragmentView = inflater.inflate(R.layout.activity_notice_fragment, container, false);
 
         chart = (PieChart) fragmentView.findViewById(R.id.chart);
+        chart.invalidate();
         chart.setNoDataText("");  // 차트에 데이터가 없을 때 차트 대신 뜰 값
         chart.setCenterText("참여도");
         chart.setCenterTextSize(20f);  // 중앙에 참여도 글자 크기
@@ -89,12 +91,15 @@ public class ParticipationFragment extends Fragment {
 //        chart.setTransparentCircleRadius(61f);
 
         ArrayList<PieEntry> value = new ArrayList<PieEntry>();
-        //Log.e("list size : ", String.valueOf(list.size()));
+        Log.e("list size : ", String.valueOf(list.size()));
         for(int i = 0; i < list.size(); i++){
             float val = 0F;
             int count = list.get(i).getCount();
             val = ((float)count / (float)total) * 100f;
             value.add(new PieEntry(val, list.get(i).getName()));
+//            Log.e("count", String.valueOf(count));
+//            Log.e("val", String.valueOf(val));
+//            Log.e("total", String.valueOf(total));
         }
 
         PieDataSet set = new PieDataSet(value, "Name");
