@@ -160,7 +160,12 @@ public class TodoFragment extends Fragment {
         Log.v("@RECV", "스트릭트모드직후");
 
 
-        View fragmentView = inflater.inflate(R.layout.activity_todo_fragment, container, false);
+        if(bool == 1) {
+            fragmentView = inflater.inflate(R.layout.activity_todo_fragment, container, false);
+        } else if(bool == 2) {
+            fragmentView = inflater.inflate(R.layout.activity_todo_fragment_for_pro, container, false);
+        }
+
 
         listView = fragmentView.findViewById(R.id.todoListView);
         todoList = new ArrayList<TodoDto>();
