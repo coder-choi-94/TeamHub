@@ -19,6 +19,7 @@ import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.animation.Easing.EasingFunction;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
@@ -40,14 +41,16 @@ import java.util.List;
 public class ParticipationFragment extends Fragment {
     PieChart chart;
     View fragmentView;
+    private int teamNum;
+    private String strTeamNum;
+
+    private String professorNum;
     private String userId;
     private String userName;
     private String userPhone;
     private String userDept;
     private int projectNum;
-    private int teamNum;
-    private String professorNum;
-    private String strTeamNum;
+
     private List<ParticipationDto> list;
     private int total;
     @Nullable
@@ -80,6 +83,14 @@ public class ParticipationFragment extends Fragment {
         chart.setCenterTextSize(20f);  // 중앙에 참여도 글자 크기
         chart.setEntryLabelTextSize(15f);  // 차트에 숫자 크기
         chart.setEntryLabelColor(R.color.colorChat);
+        chart.getDescription().setEnabled(false);
+
+        Legend legend = chart.getLegend();
+        legend.setTextSize(15f);
+        legend.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
+        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
+        legend.setOrientation(Legend.LegendOrientation.HORIZONTAL);
+        legend.setDrawInside(false);
 
         chart.animateXY(1200, 1200, Easing.EaseInOutCubic);
 //        chart.setUsePercentValues(true);
@@ -102,7 +113,7 @@ public class ParticipationFragment extends Fragment {
 //            Log.e("total", String.valueOf(total));
         }
 
-        PieDataSet set = new PieDataSet(value, "Name");
+        PieDataSet set = new PieDataSet(value, "");
         set.setSliceSpace(3f);
         set.setSelectionShift(5f);
         set.setColors(ColorTemplate.JOYFUL_COLORS);
@@ -110,6 +121,7 @@ public class ParticipationFragment extends Fragment {
 
         PieData data = new PieData(set);
         data.setValueTextSize(15f);  // 차트 String 크기
+
 
         chart.setData(data);
         chart.invalidate();
