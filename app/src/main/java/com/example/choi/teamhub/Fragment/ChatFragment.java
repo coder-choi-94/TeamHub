@@ -136,21 +136,21 @@ public class ChatFragment extends Fragment {
         myRef = database.getReference(projectNum+"/"+teamNum);  //프로젝트번호/팀번호 레퍼런스를 가져옴(식별자용도) -> 내 팀의 채팅db만 가져옴
         myRef.addChildEventListener(myRefEvent);
 
-        groupLayout = (ViewGroup)view.findViewById(R.id.groupLayout);
-                groupLayout.setOnClickListener(new ViewGroup.OnClickListener(){
-                    @Override
-                    public void onClick(View v) {
-                        AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
-                        alert.setMessage("최종명, 조현비, 장우성");
-                        alert.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        });
-                        alert.show();
-                    }
-                });
+//        groupLayout = (ViewGroup)view.findViewById(R.id.groupLayout);
+//                groupLayout.setOnClickListener(new ViewGroup.OnClickListener(){
+//                    @Override
+//                    public void onClick(View v) {
+//                        AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
+//                        alert.setMessage("최종명, 조현비, 장우성");
+//                        alert.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int which) {
+//                                dialog.dismiss();
+//                            }
+//                        });
+//                        alert.show();
+//                    }
+//                });
 
 
         sendButton.setOnClickListener(new View.OnClickListener() {
