@@ -86,18 +86,7 @@ public class ProProjectActivity extends AppCompatActivity {
         Context context = this;
         final LayoutInflater inflater = (LayoutInflater)context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
         formLayout = inflater.inflate(R.layout.make_team, null, false);
-        fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
-        fab_close = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_close);
 
-        fab = (FloatingActionButton)findViewById(R.id.fab);
-        fab1 = (FloatingActionButton)findViewById(R.id.fab1);
-        fab2 = (FloatingActionButton)findViewById(R.id.fab2);
-
-        /*
-        fab.setOnClickListener(this);
-        fab1.setOnClickListener(this);
-        fab2.setOnClickListener(this);
-        */
 
         listView = findViewById(R.id.teamListView);
         teamList = new ArrayList<TeamDto>();

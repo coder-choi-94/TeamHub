@@ -197,6 +197,7 @@ public class StuProjectActivity extends AppCompatActivity implements View.OnClic
         teamList.clear();
         try {
             String result = new getTeamsTask().execute(s_num, userId).get();
+            Log.v("!@#!@#", "result = " + result);
             JSONObject resultJsonObj = new JSONObject(result);
             JSONArray resultJsonData = resultJsonObj.getJSONArray("teams");
             JSONObject jsonObj;
@@ -208,7 +209,7 @@ public class StuProjectActivity extends AppCompatActivity implements View.OnClic
                 teamDto.setStudent_id(jsonObj.getString("student_id"));
                 teamDto.setName(jsonObj.getString("name"));
                 teamDto.setPw(jsonObj.getString("pw"));
-                teamDto.setStudent_name(jsonObj.getString("student_name"));
+                teamDto.setStudent_name(jsonObj.getString("stuName"));
                 teamList.add(teamDto);    //리스트뷰에 한개씩 추가
             }
 
@@ -231,6 +232,7 @@ public class StuProjectActivity extends AppCompatActivity implements View.OnClic
                 conn.setRequestMethod("POST");
                 OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
                 sendMsg = "project=" + strings[0] + "&id=" + strings[1];
+                Log.v("!@#!@#", "sendMSg = " + sendMsg);
                 osw.write(sendMsg);
                 osw.flush();
                 if (conn.getResponseCode() == conn.HTTP_OK) {

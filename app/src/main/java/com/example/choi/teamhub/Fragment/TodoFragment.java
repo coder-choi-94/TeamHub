@@ -184,6 +184,10 @@ public class TodoFragment extends Fragment {
 
         imageView = (ImageView)fragmentView.findViewById(R.id.imageView);
         fab = (FloatingActionButton) fragmentView.findViewById(R.id.fab);
+
+        // 교수로그인일경우 플로팅액션버튼 제거
+        if(bool == 2) fab.setVisibility(View.INVISIBLE);
+
         final View rootView = fragmentView;
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -210,10 +214,6 @@ public class TodoFragment extends Fragment {
                         Log.v("@RECV", "파일가져오기 인테트실행직후");
                     }
                 });
-
-//                final EditText professorCode = (EditText)formLayout.findViewById(R.id.professorCode);
-//                final EditText roomName = (EditText)formLayout.findViewById(R.id.roomName);
-//                final EditText roomPassword = (EditText)formLayout.findViewById(R.id.roomPassword);
 
 
                 builder.setPositiveButton("파일 올리기",
