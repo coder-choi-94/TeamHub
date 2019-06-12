@@ -377,18 +377,24 @@ public class TodoFragment extends Fragment {
                                     Log.v("@RECV", "폴더없어서 만듦");
                                 }
 
-                                File_Name = todoList.get(index).getTitle() + todoList.get(index).getFilePath().substring(
+                                File_Name = todoList.get(index).getFilePath().substring(
+                                        todoList.get(index).getFilePath().lastIndexOf("/") + 1,
+                                        todoList.get(index).getFilePath().lastIndexOf(".")
+                                ) + todoList.get(index).getTitle() + todoList.get(index).getFilePath().substring(
                                         todoList.get(index).getFilePath().lastIndexOf("."),
                                         todoList.get(index).getFilePath().length()
                                 );
+
+
                                 // 다운로드 폴더에 동일한 파일명이 존재하는지 확인해서 없으면 다운받고 있으면 해당 파일 실행시킴.
+
                                 if (new File(Save_Path + "/" + File_Name).exists() == false) {
                                     Log.v("@RECV", "파일 없어서 다운받겠음! : " + Save_Path + "/" + File_Name);
                                     progress = ProgressDialog.show(getActivity(), "", "파일 다운로드중..");
                                     dThread = new DownloadThread(fileURL, Save_Path + "/" + File_Name);
                                     dThread.start();
                                 } else {
-                                    Log.v("@RECV", "파일 있어서 바로 보여주겠음!");
+                                    Log.v("@RECV", "파일 있어서 바로 보여주겟음");
                                     showDownloadFile();
                                 }
                             }
